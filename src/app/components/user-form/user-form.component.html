@@ -1,0 +1,58 @@
+ <form (ngSubmit)="onSubmit()">
+
+    <div>
+        <input
+        placeholder="Name"
+        [(ngModel)]="user.name"
+        class="from-control my-2"
+        name="name"
+
+        
+        >
+
+    </div>
+    
+    <div>
+        <input
+        name="lastname"
+
+        placeholder="lastname"
+        [(ngModel)]="user.lastname"
+        class="from-control my-2"
+
+        
+        >
+
+    </div>
+     <div>
+        <input
+        name="username"
+
+        placeholder="username"
+        [(ngModel)]="user.username"
+        class="from-control my-2"
+
+        
+        >
+
+    </div>
+    <div>
+        <input
+        name="password"
+        placeholder="password"
+        [(ngModel)]="user.password"
+        class="from-control my-2"
+        type="password"
+        
+        >
+
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-primary my-2">
+            create
+
+        </button>
+    </div>
+
+ </form>
