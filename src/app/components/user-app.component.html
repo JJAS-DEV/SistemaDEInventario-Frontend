@@ -1,13 +1,47 @@
-<div class="alert alert-warning "> {{title}}</div>
+<div class="container m-4" style="text-align: center;"> {{title}}</div>
+<div class="container m-4"> 
+    <button class="btn btn-primary btn-sm" (click)="setOpen()">
+
+        {{open==true? 'cerrar form':'crear usario'}}
+
+    </button>
+
+<div >
+
+
  
-<div class="row">
-    <div class="col">
-       <user-form (newUserEventEmitter)="addUser($event)"></user-form>
 
-    </div>
-    <div class="col">
-        <user [users]="users"/>
+   
+     
+            <user [users]="users" (idUserEventEmitter)="removeUser($event)"
+            
+            (selectdUserEvenEmitter)="setSelectedUser($event)"/>
+    
+        
+    
 
-    </div>
+    
+    
+  
+</div>
+
 
 </div>
+@if(open){ 
+    <div class="abrir-modal animacion fadeIn">
+        <user-form 
+        
+        [user]="userSelected"
+ 
+        (newUserEventEmitter)="addUser($event)"
+        (OpenEvenEmitter)="setOpen()"
+
+        
+        ></user-form>
+
+    </div>
+       
+ 
+
+
+}

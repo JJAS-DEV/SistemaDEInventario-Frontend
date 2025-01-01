@@ -16,8 +16,8 @@ export class UserService {
     username:'jjas',
     password:'21332'
   },{  
-  id:1,
-  name:'andres',
+  id:2,
+  name:'jose',
   lastname:'ayasd',
   email:'ander@dsa.com',
   username:'jjas',

@@ -1,6 +1,8 @@
-import { Component, Output ,EventEmitter} from '@angular/core';
-import {FormsModule} from '@angular/forms'
+import { Component, Output ,EventEmitter,Input} from '@angular/core';
+import {FormsModule, NgForm } from '@angular/forms'
 import { User } from '../../models/user';
+
+
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -11,7 +13,8 @@ import { CommonModule } from '@angular/common';
 })
 export class UserFormComponent {
 
-  user: User;
+  @Input() user: User;
+   @Output() OpenEvenEmitter= new EventEmitter();
 
   @Output() newUserEventEmitter: EventEmitter<User>= new EventEmitter();
   
@@ -19,16 +22,30 @@ constructor(){
   this.user=new User();
 }
 
-onSubmit():void{
+
+onSubmit(userForm:NgForm):void{
+
+if(userForm.valid)  {
   this.newUserEventEmitter.emit(this.user);
   console.log(this.user);
-}
+} 
+
+userForm.reset();
+userForm.resetForm();
+
+   }
+
+   onClear(userForm:NgForm):void{
+    this.user=new User();
+    userForm.reset();
+    userForm.resetForm();
+
+   }
 
 
-
-
-
-
+   onOpen(){
+    this.OpenEvenEmitter.emit();
+   }
 
 
 }
