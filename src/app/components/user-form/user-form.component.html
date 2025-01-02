@@ -60,6 +60,30 @@
 
 
     </div>
+    <div>
+        <input
+        placeholder="email"
+        name="email"
+        [(ngModel)]="user.email"
+        class="from-control my-2"
+        required 
+        #email="ngModel"
+            
+        >
+        @if (email.invalid && (email.dirty || email.touched)){
+
+            @if (email.errors!['required']){
+                <div  class="text-danger">
+                    email es requerido
+                </div>
+
+            }
+        }
+
+    
+
+    </div>
+    
      <div>
         <input
         name="username"

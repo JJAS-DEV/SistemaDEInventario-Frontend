@@ -39,7 +39,8 @@ export class UserComponent {
   }
 
   onSelectedUser(user:User):void{
-    this.sharingData.selectdUserEvenEmitter.emit(user);
+   //   this.sharingData.selectdUserEvenEmitter.emit(user);
+    this.router.navigate(['/users/edit',user.id], {state:{user}});
   }
 
 
