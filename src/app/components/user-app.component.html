@@ -1,47 +1,11 @@
-<div class="container m-4" style="text-align: center;"> {{title}}</div>
-<div class="container m-4"> 
-    <button class="btn btn-primary btn-sm" (click)="setOpen()">
+<navbar [users]="users">
 
-        {{open==true? 'cerrar form':'crear usario'}}
+</navbar>
 
-    </button>
-
-<div >
-
-
- 
-
+<div class="container my-4">
    
-     
-            <user [users]="users" (idUserEventEmitter)="removeUser($event)"
-            
-            (selectdUserEvenEmitter)="setSelectedUser($event)"/>
-    
-        
-    
+    <router-outlet>
 
-    
-    
-  
-</div>
-
+    </router-outlet>
 
 </div>
-@if(open){ 
-    <div class="abrir-modal animacion fadeIn">
-        <user-form 
-        
-        [user]="userSelected"
- 
-        (newUserEventEmitter)="addUser($event)"
-        (OpenEvenEmitter)="setOpen()"
-
-        
-        ></user-form>
-
-    </div>
-       
- 
-
-
-}

@@ -1,13 +1,12 @@
 
 
- <div class="modal" tabindex="-1" style="display: block;">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">form            {{(user.id>0)? 'update':'create'}}         </h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onOpen()"></button>
+ <div class="card" >
+    <div class="card-dialog">
+      <div class="card-content">
+        <div class="card-header">
+          <h5 class="card-title">form            {{(user.id>0)? 'update':'create'}}         </h5>
         </div>
-        <div class="modal-body">
+        <div class="card-body">
             
   <form (ngSubmit)="onSubmit(userForm)" class="m-2" #userForm="ngForm">
 
@@ -149,10 +148,8 @@
 
  </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-          
-          (click)="onOpen()">Close</button>
+        <div class="card-footer">
+         
         </div>
       </div>
     </div>
