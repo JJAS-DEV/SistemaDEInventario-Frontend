@@ -20,10 +20,20 @@ export class UserComponent implements OnInit{
    constructor(
     private service: UserService,
     private sharingData: SharingDataService,
-    private router: Router) { }
-  ngOnInit(): void {
-    console.log('consulta findAll')
-    this.service.findAll().subscribe(users => this.users = users);
+    private router: Router) {
+
+      if (this.router.getCurrentNavigation()?.extras.state){
+        this.users =this.router.getCurrentNavigation()?.extras.state!['users'];
+      }
+     }
+  ngOnInit(): void { 
+    if(this.users == undefined || this.ngOnInit.length == 0 || this.users == null){
+
+      console.log('consulta findAll')
+      this.service.findAll().subscribe(users => this.users = users);
+
+    }
+  
 
 
   }

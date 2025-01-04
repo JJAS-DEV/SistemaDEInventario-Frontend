@@ -12,3 +12,4 @@ export class NavbarComponent {
   @Input()users:User[]=[];
 
 }
+ 
