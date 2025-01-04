@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 import { RouterOutlet, Router, RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SharingDataService } from '../services/sharing-data.service';
+import { error } from 'console';
 
 @Component({
   selector: 'user-app',
@@ -50,18 +51,55 @@ export class UserAppComponent implements OnInit {
       console.log("lo que llega"+ user)
 
       if (user.id > 0) {
-        this.service.update(user).subscribe(userUpdated=>{
-          this.users = this.users.map(u => (u.id == userUpdated.id) ? { ...userUpdated } : u)
-          this.router.navigate(['/users']);
+        this.service.update(user).subscribe({
+          next: (userUpdated) => {
+            // Actualizar la lista de usuarios
+            this.users = this.users.map(u => (u.id === userUpdated.id) ? { ...userUpdated } : u);
+      
+            // Redirigir al listado de usuarios
+            this.router.navigate(['/users']);
+            
+      Swal.fire({
+        title: "actualizado",
+        text: "Usuario"+userUpdated.name+" editado con exito ",
+        icon: "success"
+      });
+          },
+          error: (err) => {
+            // Manejo de errores
+            // console.error(err.error);
+            if(err.status==400){
+              this.sharingData.errorsUSerFormEvenEmitter.emit(err.error);
 
+            }
+          }
         });
-        
-      } else {
-        this.service.create(user).subscribe(userNew=>{
+      }
+         else {
+        this.service.create(user).subscribe({
+          
+          next:(userNew) =>{
+
+          
           console.log(userNew)
 
           this.users = [... this.users, { ...userNew}];
+          Swal.fire({
+            title: "guardado",
+            text: "Usuario"+userNew.name+" guardado con exito ",
+            icon: "success"
+          });
           this.router.navigate(['/users']);
+
+        },
+        error:(err)=>{
+
+          // console.log(err.error)
+          if(err.status==400){
+            this.sharingData.errorsUSerFormEvenEmitter.emit(err.error);
+
+          }
+        }
 
 
 
@@ -69,11 +107,6 @@ export class UserAppComponent implements OnInit {
 
       }
 
-      Swal.fire({
-        title: "guardado",
-        text: "Usuario guardado con exito",
-        icon: "success"
-      });
 
     })
 

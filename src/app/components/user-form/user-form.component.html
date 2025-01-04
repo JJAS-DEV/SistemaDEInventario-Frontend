@@ -16,18 +16,16 @@
         name="name"
         [(ngModel)]="user.name"
         class="from-control my-2"
-        required 
+         
         #name="ngModel"
             
         >
-        @if (name.invalid && (name.dirty || name.touched)){
+        <!-- required -->
+        @if(errors?.name){
+            <div class="text-danger">
 
-            @if (name.errors!['required']){
-                <div  class="text-danger">
-                    nombre es requerido
-                </div>
-
-            }
+                {{errors.name}}
+            </div>
         }
 
     
@@ -43,10 +41,17 @@
         [(ngModel)]="user.lastname"
         class="from-control my-2"
         #lastname="ngModel"
-        required
+        
 
         
         >
+        @if(errors?.lastname){
+            <div class="text-danger">
+
+                {{errors.name}}
+            </div>
+        }
+        <!-- required 
 
         @if (lastname.invalid && (lastname.dirty || lastname.touched)){
 
@@ -56,7 +61,7 @@
                 </div>
 
             }
-        }
+         -->
 
 
     </div>
@@ -66,18 +71,16 @@
         name="email"
         [(ngModel)]="user.email"
         class="from-control my-2"
-        required 
+         
         #email="ngModel"
             
         >
-        @if (email.invalid && (email.dirty || email.touched)){
+        <!-- required -->
+        @if(errors?.email){
+            <div class="text-danger">
 
-            @if (email.errors!['required']){
-                <div  class="text-danger">
-                    email es requerido
-                </div>
-
-            }
+                {{errors.email}}
+            </div>
         }
 
     
@@ -92,28 +95,20 @@
         [(ngModel)]="user.username"
         class="from-control my-2"
         minlength="8"
-        required
+        
         #username="ngModel"
 
         
         >
+        <!-- required -->
 
-        @if (username.invalid && (username.dirty || username.touched)){
+        @if(errors?.username){
+            <div class="text-danger">
 
-            @if (username.errors!['required']){
-                <div class="text-danger">
-                    username es requerido
-                </div>
-            }
-                @if (password.errors!['minlength']){
-                    <div  class="text-danger">
-                        no debe ser menor 8 caracteres
-                    </div>
-    
-                
-
-            }
+                {{errors.username}}
+            </div>
         }
+        
 
     </div>
     <div>
@@ -124,28 +119,17 @@
         class="from-control my-2"
         type="password"
         minlength="8"
-        required
+        
         #password="ngModel"
 
         
         >
 
-        @if (password.invalid && (password.dirty || password.touched)){
+        @if(errors?.password){
+            <div class="text-danger">
 
-            @if (password.errors!['required']){
-                <div  class="text-danger">
-                    password es requerido
-                </div>
-
-            }
-                @if (password.errors!['minlength']){
-                    <div  class="text-danger">
-                        no debe ser menor 8 caracteres
-                    </div>
-    
-                }
-
-          
+                {{errors.password}}
+            </div>
         }
         
 
@@ -154,8 +138,8 @@
     <div>
         <button type="submit" class="btn btn-primary my-2"
         
-        [disabled]="userForm.invalid"
-        >
+    
+        >    <!-- [disabled]="userForm.invalid" -->
         
            {{(user.id>0)? 'update':'create'}} 
 
