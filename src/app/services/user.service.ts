@@ -34,6 +34,8 @@ remove(id:number):Observable<void>{
   return this.http.delete<void>(`${this.url}/${id}`);
  
 }
-
-
+findAllPageable(page:number): Observable<any>{
+  return this.http.get<any[]>(`${this.url}/page/${page}`)
 }
+
+} 

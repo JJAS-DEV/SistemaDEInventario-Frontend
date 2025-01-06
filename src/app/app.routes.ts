@@ -9,7 +9,7 @@ export const routes: Routes = [
 
     path:'',
     pathMatch:'full',
-    redirectTo:'/users'
+    redirectTo:'/users/page/0'
   },
   
     {path:'users',
@@ -17,6 +17,13 @@ export const routes: Routes = [
 
     component:UserComponent,
     
+
+},
+{path:'users/page/:page',
+
+
+  component:UserComponent,
+  
 
 },
 
