@@ -1,12 +1,13 @@
 <h3>
     {{title}}
 </h3>
-   
+@if(admin) { 
    <button type="button" class="btn btn-primary" [routerLink]="['/users/create']"> 
         crear usuario
 
 
     </button>
+}
 
 @if(users.length==0){
     <div class="alert alert-warning "> No hay registros en el sistemas¡</div>
@@ -23,8 +24,16 @@
                 <th>lastname</th>
                 <th>email</th>
                 <th>username</th>
+                @if(admin){
                 <th>password</th>
+                
+              
                 <th>remove</th>
+
+                <th>update</th>
+                
+            }
+                
 
             </tr>
         </thead>
@@ -50,7 +59,7 @@
                     <td>
                         {{user.password}}
                     </td>
-
+                    @if (admin) {
                     <td>
 
                         <button class=" btn btn-danger btn-sm" (click)="onRemoveUser(user.id)">
@@ -64,6 +73,7 @@
                             update
                         </button>
                     </td>
+                }
 
                     
                 </tr>

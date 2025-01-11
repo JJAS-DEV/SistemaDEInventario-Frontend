@@ -12,6 +12,7 @@ private _selectUserEventEmitter=new EventEmitter();
 
 private _errorsUSerFormEvenEmitter = new EventEmitter();
 private _pageUsersEventEmitter= new EventEmitter();
+private _handlerLoginEventEmitter= new EventEmitter();
 
 
   constructor() { }
@@ -38,6 +39,11 @@ private _pageUsersEventEmitter= new EventEmitter();
   get idUserEventEmitter(): EventEmitter <number>{
     return this._idUserEventEmitter;
   }
+
+ get  handlerLoginEventEmitter (){
+    return this._handlerLoginEventEmitter;
+
+ }
 
 
 

@@ -111,6 +111,7 @@
         
 
     </div>
+    @if(user.id=== undefined){
     <div>
         <input
         name="password"
@@ -131,9 +132,10 @@
                 {{errors.password}}
             </div>
         }
-        
+    
 
     </div>
+}
 
     <div>
         <button type="submit" class="btn btn-primary my-2"

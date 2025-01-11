@@ -10,6 +10,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SharingDataService } from '../services/sharing-data.service';
 import { error } from 'console';
 import { state } from '@angular/animations';
+import { AuthService } from '../services/auth.service';
+import { response } from 'express';
 
 @Component({
   selector: 'user-app',
@@ -23,8 +25,12 @@ export class UserAppComponent implements OnInit {
 
   paginator: any={};
   constructor(private service: UserService, private router: Router,
-    private sharingData: SharingDataService, 
-  private route:ActivatedRoute) {
+  private sharingData: SharingDataService,
+  private authService:AuthService, 
+  private route:ActivatedRoute
+
+
+) {
      
 
   }
@@ -43,7 +49,57 @@ export class UserAppComponent implements OnInit {
     this.addUser();
     this.removeUser();
     this.findUserById();
-    this.pageUsersEvent()
+    this.pageUsersEvent();
+    this.handlerLogin();
+    
+
+  }
+  handlerLogin(){
+    this.sharingData.handlerLoginEventEmitter.subscribe(({username, password})=>{
+      console.log(username+"  "+ password);
+
+      this.authService.loginUser({username,password}).subscribe({
+        next: response=>{
+          const token= response.token;
+          console.log(token)
+          const payload= this.authService.getPayload(token);
+          const user ={username:payload.sub}
+
+          const login={
+            user,
+            isAuth:true,
+            isAdmin:payload.isAdmin
+            
+          }
+          console.log(payload);
+          this.authService.token= token;
+          this.authService.user=login;
+          this.router.navigate(['/users/page/0'])
+         
+
+        },
+        error:error=> {
+          if(error.status==401){
+            console.log(error.error);
+            Swal.fire(
+                    'Error en el login',
+                     error.error.messages,
+                    'error'
+                  );
+          }
+          else{
+
+            throw error;
+          }
+        }
+
+      })
+
+
+
+    }
+    
+    )
 
   }
   pageUsersEvent(){

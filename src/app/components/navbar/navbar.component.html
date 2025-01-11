@@ -11,13 +11,25 @@
             [state]="{users,paginator}"
             >users</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link"[routerLink]="['/users/create']"  [state]="{users}"
-            >New User</a>
-          </li>
-          <li class="nav-item">
-          </li>
+          @if(admin){
+            <li class="nav-item">
+              <a class="nav-link"[routerLink]="['/users/create']"  [state]="{users}"
+              >New User</a>
+            </li>
 
+          }
+          
+          <li class="nav-item " >
+              <span class="nav-item text-primary nav-link " >
+                @if(login.isAuth){
+                  {{login.user.username}}
+                  <button (click)="handlerLogout()" class="btn btn-outline-success">logout</button>
+                }@else{
+                <a  class=" btn btn-outline-primary" [routerLink]="['/login']" > Sign In</a>
+                }
+              </span>
+          </li>
+          
           
         </ul>
         

@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { SharingDataService } from '../../services/sharing-data.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PaginatorComponent } from '../paginator/paginator.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'user',
@@ -24,7 +25,8 @@ export class UserComponent implements OnInit{
     private service: UserService,
     private sharingData: SharingDataService,
     private router: Router,
-    private route : ActivatedRoute
+    private route : ActivatedRoute,
+    private authService:AuthService
   
   ) {
 
@@ -74,7 +76,9 @@ export class UserComponent implements OnInit{
    //   this.sharingData.selectdUserEvenEmitter.emit(user);
     this.router.navigate(['/users/edit',user.id]);
   }
-
+  get admin(){
+    return this.authService.isAdmin();
+  }
 
 
 
