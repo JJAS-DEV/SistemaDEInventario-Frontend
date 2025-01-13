@@ -13,8 +13,8 @@
     <div class="alert alert-warning "> No hay registros en el sistemas¡</div>
 
 }@else {
-
-    <table class="table table-hover table-striped">
+    <div class="table-responsive">
+    <table  class="table table-bordered table-striped">
         <thead>
 
             <tr>
@@ -25,7 +25,6 @@
                 <th>email</th>
                 <th>username</th>
                 @if(admin){
-                <th>password</th>
                 
               
                 <th>remove</th>
@@ -56,9 +55,7 @@
                     <td>
                         {{user.username}}
                     </td>
-                    <td>
-                        {{user.password}}
-                    </td>
+                    
                     @if (admin) {
                     <td>
 
@@ -86,6 +83,7 @@
 
 
     </table>  
+    </div>
 }
 
 <paginator [paginator]="paginator" [url]="'/users/page'"></paginator>
