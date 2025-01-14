@@ -1,89 +1,98 @@
 <h3>
     {{title}}
 </h3>
-@if(admin) { 
-   <button type="button" class="btn btn-primary" [routerLink]="['/users/create']"> 
-        crear usuario
+@if(admin) {
+<button type="button" class="btn btn-primary" [routerLink]="['/users/create']">
+    crear usuario
 
 
-    </button>
+</button>
 }
 
 @if(users.length==0){
-    <div class="alert alert-warning "> No hay registros en el sistemas¡</div>
+<div class="alert alert-warning "> No hay registros en el sistemas¡</div>
 
 }@else {
-    <div class="table-responsive">
-    <table  class="table table-bordered table-striped">
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
         <thead>
 
             <tr>
 
-            <!-- <th> id</th>-->
+                <!-- <th> id</th>-->
                 <th>name</th>
                 <th>lastname</th>
                 <th>email</th>
                 <th>username</th>
                 @if(admin){
-                
-              
+
+                <th>Role</th>
                 <th>remove</th>
 
                 <th>update</th>
-                
-            }
-                
+
+                }
+
 
             </tr>
         </thead>
 
         <tbody>
             @for (user of users; track $index){
-                <tr>
-                    <!--<td>
+            <tr>
+                <!--<td>
                         {{user.id}}
                     </td>-->
-                    <td>
-                        {{user.name}}
-                    </td>
-                    <td>
-                        {{user.lastname}}
-                    </td>
-                    <td>
-                        {{user.email}}
-                    </td>
-                    <td>
-                        {{user.username}}
-                    </td>
-                    
-                    @if (admin) {
-                    <td>
+                <td>
+                    {{user.name}}
+                </td>
+                <td>
+                    {{user.lastname}}
+                </td>
+                <td>
+                    {{user.email}}
+                </td>
+                <td>
+                    {{user.username}}
+                </td>
 
-                        <button class=" btn btn-danger btn-sm" (click)="onRemoveUser(user.id)">
-                            remove
-                        </button>
-                    </td>
+                @if (admin) {
                     <td>
+                        @if(user.admin){
+                            admin
+                            
+                        }@else {
+    
+                            user
+                        }
+                   
+                     </td>
+                <td>
 
-                        <button class=" btn btn-info btn-sm"
-                        [routerLink]="['/users/edit',user.id]">
-                            update
-                        </button>
-                    </td>
+                    <button class=" btn btn-danger btn-sm" (click)="onRemoveUser(user.id)">
+                        remove
+                    </button>
+                </td>
+                <td>
+
+                    <button class=" btn btn-info btn-sm" [routerLink]="['/users/edit',user.id]">
+                        update
+                    </button>
+                </td>
                 }
 
-                    
-                </tr>
+
+            </tr>
 
             }
 
-           
+
 
         </tbody>
 
 
-    </table>  
-    </div>
+    </table>
+</div>
 }
 
 <paginator [paginator]="paginator" [url]="'/users/page'"></paginator>
