@@ -98,9 +98,9 @@
         
         #username="ngModel"
 
-        
         >
         <!-- required -->
+         
 
         @if(errors?.username){
             <div class="text-danger">
@@ -108,6 +108,8 @@
                 {{errors.username}}
             </div>
         }
+
+        
         
 
     </div>
@@ -132,17 +134,19 @@
                 {{errors.password}}
             </div>
         }
+
+
     
 
     </div>
 }
-<div class="form-check my-2">
+    <div class="form-check">
     <input type="checkbox"
     [(ngModel)]="user.admin"
     name="admin"
-    class="form-check-input">
-    <label class="form-check-label">Admin</label>
-</div>
+    class="form-check-input" >
+    <label class="form-check-label"> admin</label>
+    </div>
     <div>
         <button type="submit" class="btn btn-primary my-2"
         

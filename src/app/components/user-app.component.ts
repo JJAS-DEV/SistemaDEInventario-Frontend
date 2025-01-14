@@ -185,6 +185,11 @@ export class UserAppComponent implements OnInit {
           // console.log(err.error)
           if(err.status==400){
             this.sharingData.errorsUSerFormEvenEmitter.emit(err.error);
+            Swal.fire(
+              'Error en el registro',
+               err.error.message,
+              'error'
+            );
 
           }
         }
