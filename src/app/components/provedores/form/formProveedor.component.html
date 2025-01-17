@@ -1,0 +1,81 @@
+<div class="card">
+    <div class="card-dialog">
+        <div class="card-content">
+            <div class="card-header">
+                <h5 class="card-title"> form {{(proveedor.id>0)? 'update':'create'}} </h5>
+
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="onSubmit(provedorForm)" class="m-2" #provedorForm="ngForm">
+                   <div>
+                   
+                    <input placeholder="nombre" name="nombre" [(ngModel)]="proveedor.nombre" class="from-control my-2"
+                        #name="ngModel">
+                    <!-- required -->
+                    @if(errors?.nombre){
+                    <div class="text-danger">
+
+                        {{errors.name}}
+                    </div>
+                    }
+
+                </div>
+                <div>
+                    <input placeholder="direccion" name="direccion" [(ngModel)]="proveedor.direccion" class="from-control my-2"
+                    #name="ngModel">
+                <!-- required -->
+                @if(errors?.direccion){
+                <div class="text-danger">
+
+                    {{errors.direccion}}
+                </div>
+                }
+            </div>
+        <div>
+
+                <input placeholder="telefono" name="telefono" [(ngModel)]="proveedor.telefono" class="from-control my-2"
+                #name="ngModel">
+            <!-- required -->
+            @if(errors?.telefono){
+            <div class="text-danger">
+
+                {{errors.telefono}}
+            </div>
+            }
+        </div>
+
+
+            <div>
+                <button type="submit" class="btn btn-primary my-2"
+                
+                
+                >
+                {{(proveedor.id>0)?'update':'create'}}
+
+
+
+                </button>
+
+                <button type="button" class="btn btn-secondary m-2"
+                (click)="onClear(provedorForm)"  
+              >
+              clear</button>
+                  
+
+            </div>
+
+                </form>
+
+
+
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>

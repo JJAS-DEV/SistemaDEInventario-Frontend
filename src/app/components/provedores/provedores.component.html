@@ -1,0 +1,59 @@
+
+@if(proveedores.length==0){
+    <div class="alert alert-warning "> No hay registros en el sistemas¡</div>
+    
+}
+@else {
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+    
+                    <tr>
+                        <th>
+                            name
+                        </th>
+                        <th>
+                            telefono
+                        </th>
+                        <th>
+                            direccion
+                        </th>
+
+
+                    </tr>
+    
+        
+            </thead>
+    
+            <tbody>
+                @for (proveedor of proveedores; track $index){
+                <tr>
+                    <!--<td>
+                            {{user.id}}
+                        </td>-->
+                    <td>
+                        {{proveedor.nombre}}
+                    </td>
+                    <td>
+                        {{proveedor.telefono}}
+                    </td>
+                    <td>
+                        {{proveedor.direccion}}
+                    </td>
+                   
+    
+                    
+    
+    
+                </tr>
+    
+                }
+    
+    
+    
+            </tbody>
+    
+    
+        </table>
+    </div>
+    }

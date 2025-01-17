@@ -27,11 +27,13 @@ export class UserAppComponent implements OnInit {
   paginator: any={};
   user!:User; 
 
+
   constructor(private service: UserService,
     private store:Store<{users:any}>
     ,private router: Router,
   private sharingData: SharingDataService,
-  private authService:AuthService, 
+  private authService:AuthService,
+
   private route:ActivatedRoute) {
 
     this.store.select('users').subscribe(state=>{
@@ -152,8 +154,16 @@ export class UserAppComponent implements OnInit {
           error: (err) => {
             // Manejo de errores
             // console.error(err.error);
-            if(err.status==400){
-              this.sharingData.errorsUSerFormEvenEmitter.emit(err.error);
+       
+              if(err.status==400){
+                this.sharingData.errorsUSerFormEvenEmitter.emit(err.error);
+                Swal.fire(
+                  'Error en el registro',
+                   err.error.message,
+                  'error'
+                );
+    
+              
 
             }
           }

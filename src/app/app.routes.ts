@@ -5,6 +5,8 @@ import path from 'path';
 import { AuthComponent } from './components/auth/auth.component';
 import { authGuard } from './guards/auth.guard';
 import { Forbidden403Component } from './components/forbidden403/forbidden403.component';
+import { ProvedoresComponent } from './components/provedores/provedores.component';
+import { FormProvedor } from './components/provedores/form/formProvedor.component';
 
 export const routes: Routes = [
   
@@ -46,10 +48,17 @@ export const routes: Routes = [
   path:'login',
   component:AuthComponent
 },
+{
+  path:'provedores',
+  component:ProvedoresComponent
+},
 
 {
   path: 'forbidden',
   component:Forbidden403Component
+},
+{
+  path: 'proveedor/form',
+  component:FormProvedor
 }
-
 ];

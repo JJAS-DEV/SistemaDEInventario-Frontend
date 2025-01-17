@@ -18,6 +18,15 @@
             </li>
 
           }
+          @if(login.isAuth){
+            <li class="nav-item">
+              <a class="nav-link"[routerLink]="['/provedores']"  [state]="{users}"
+              >Probedores </a>
+            </li>
+
+
+          }
+          
           
           <li class="nav-item " >
               <span class="nav-item text-primary nav-link " >
