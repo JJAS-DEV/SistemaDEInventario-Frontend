@@ -1,7 +1,7 @@
     
 export class Proveedores{
     id!:number;
-    nombre:string="";
+    nombre!:string;
     telefono!:string;
     direccion!:string;
    

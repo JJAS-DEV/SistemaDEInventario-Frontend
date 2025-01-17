@@ -1,59 +1,100 @@
+<button type="button" class="btn btn-primary mb-3" [routerLink]="['/proveedor/form']">
+    crear proveedor
 
+
+</button>
 @if(proveedores.length==0){
-    <div class="alert alert-warning "> No hay registros en el sistemas¡</div>
-    
+<div class="alert alert-warning "> No hay registros en el sistemas¡</div>
+
 }
+
+
+
 @else {
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead>
-    
-                    <tr>
-                        <th>
-                            name
-                        </th>
-                        <th>
-                            telefono
-                        </th>
-                        <th>
-                            direccion
-                        </th>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+
+            <tr>
+                <th>
+                    name
+                </th>
+                <th>
+                    telefono
+                </th>
+                <th>
+                    direccion
+                </th>
+                <th>update</th>
+                <th>delete</th>
 
 
-                    </tr>
-    
-        
-            </thead>
-    
-            <tbody>
-                @for (proveedor of proveedores; track $index){
-                <tr>
-                    <!--<td>
+
+
+            </tr>
+
+
+        </thead>
+
+        <tbody>
+            @for (proveedor of proveedoresPaginados ; track $index  ){
+            <tr>
+                <!--<td>
                             {{user.id}}
                         </td>-->
-                    <td>
-                        {{proveedor.nombre}}
-                    </td>
-                    <td>
-                        {{proveedor.telefono}}
-                    </td>
-                    <td>
-                        {{proveedor.direccion}}
-                    </td>
-                   
-    
-                    
-    
-    
-                </tr>
-    
-                }
-    
-    
-    
-            </tbody>
-    
-    
-        </table>
-    </div>
-    }
+                <td>
+                    {{proveedor.nombre}}
+                </td>
+                <td>
+                    {{proveedor.telefono}}
+                </td>
+                <td>
+                    {{proveedor.direccion}}
+                </td>
+
+                <td>
+
+                    <button class=" btn btn-info btn-sm" [routerLink]="['/proveedor/edit',proveedor.id]">
+                        update
+                    </button>
+
+
+                </td>
+                <td>
+
+                    <button class=" btn btn-danger btn-sm" (click)="onRemoveUser(proveedor.id)">
+                        delete
+                    </button>
+
+                </td>
+
+
+
+
+
+            </tr>
+
+            }
+
+
+
+        </tbody>
+
+        <tfoot style="margin: auto;">
+
+            <mat-paginator [length]="proveedores.length"
+            [pageSize]="pageSize"
+            [pageIndex]="pageIndex"
+            (page)="cambiarPagina($event)"
+            showFirstLastButtons >
+
+            </mat-paginator>
+        </tfoot>
+        
+
+
+
+
+    </table>
+</div>
+}

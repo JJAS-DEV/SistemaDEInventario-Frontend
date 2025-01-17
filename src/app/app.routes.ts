@@ -14,7 +14,7 @@ export const routes: Routes = [
   {
     path:'',
     pathMatch:'full',
-    redirectTo:'/users/page/0'
+    redirectTo:'/users'
   },
   
     {path:'users',
@@ -44,6 +44,14 @@ export const routes: Routes = [
     canActivate:[authGuard]
     
 },
+{
+path:'proveedor/edit/:id',
+component:FormProvedor,
+canActivate:[authGuard]
+
+},
+
+
 {
   path:'login',
   component:AuthComponent

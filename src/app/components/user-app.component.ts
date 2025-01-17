@@ -231,12 +231,7 @@ export class UserAppComponent implements OnInit {
           this.service.remove(id).subscribe(()=>{
             // this.users = this.users.filter(user => user.id != id);
             this.store.dispatch(remove({id}));
-            this.router.navigate(['/users/create'], { skipLocationChange: true }).then(() => {
-              this.router.navigate(['/users']),{
-                state:{  users: this.users,
-                  paginator: this.paginator
-                }};
-            });
+            
   
           });
 
@@ -245,6 +240,12 @@ export class UserAppComponent implements OnInit {
             title: "eliminado!",
             text: "usuario eliminado con exito",
             icon: "success"
+          });
+          this.router.navigate(['/users/create'], { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/users/']),{
+              state:{  users: this.users,
+                paginator: this.paginator
+              }};
           });
         }
       });

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProvedorserviceService } from '../../../services/provedorservice.service';
 import { NgForm ,FormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormService } from './form.service';
 
 @Component({
   selector: 'app-form',
@@ -19,6 +20,7 @@ constructor(
     private provedorservice: ProvedorserviceService,
     private route: ActivatedRoute,
     private sharingData: ProveedorSharingDatosService,
+    private service:FormService
   ) { 
     this.proveedor = new Proveedores();
 
@@ -42,9 +44,9 @@ constructor(
 
   onSubmit(provedorForm: NgForm): void {
   
-      // if (userForm.valid) {
-        this.sharingData.newProveedorEventEmitter.emit(this.proveedor);
+              
         console.log(this.proveedor);
+        this.service.addUser(this.proveedor);
       // }
   
       // userForm.reset();
