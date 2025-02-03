@@ -32,15 +32,20 @@ export class ProvedoresComponent implements OnInit {
 
    }
   ngOnInit(): void {
-    this.service.findAll().subscribe(proveedores => {
-      // Cargar los proveedores cuando la respuesta esté lista
-      this.proveedores = proveedores;
+      this.service.findAll().subscribe(proveedores => {
+        // Cargar los proveedores cuando la respuesta esté lista
+        this.proveedores = proveedores;
+  
+        // Si ya tienes proveedores, actualiza la paginación inmediatamente
+        if (this.proveedores.length > 0) {
+          this.actualizarPaginacion();
+        }
+      });
 
-      // Si ya tienes proveedores, actualiza la paginación inmediatamente
-      if (this.proveedores.length > 0) {
-        this.actualizarPaginacion();
-      }
-    });
+  
+    
+
+   
 
 
 
@@ -69,6 +74,43 @@ export class ProvedoresComponent implements OnInit {
     onRemoveUser(id:number):void {
       this.servicedata.removeProveedor(id);
     }
+
+    //agregando buscador 
+
+    buscador: string = ''; // Almacena el texto ingresado
+
+  escucharInput(event: any): void {
+    this.buscador = event.target.value; // Asigna el valor del input al texto
+    console.log("Texto ingresado: ", this.buscador);
+
+    if(this.buscador!="")
+      {
+        this.service.findBynombre(this.buscador).subscribe(proveedores => {
+          // Cargar los proveedores cuando la respuesta esté lista
+          this.proveedores = proveedores;
+    
+          // Si ya tienes proveedores, actualiza la paginación inmediatamente
+          if (this.proveedores.length > 0) {
+            this.actualizarPaginacion();
+          }
+        });
+      }else{
+        this.service.findAll().subscribe(proveedores => {
+          // Cargar los proveedores cuando la respuesta esté lista
+          this.proveedores = proveedores;
+    
+          // Si ya tienes proveedores, actualiza la paginación inmediatamente
+          if (this.proveedores.length > 0) {
+            this.actualizarPaginacion();
+          }
+        });
+  
+      } 
+
+
+    
+    // Muestra el texto en consola
+  }
   
 
 

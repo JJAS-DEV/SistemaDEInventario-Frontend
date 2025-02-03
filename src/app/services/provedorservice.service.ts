@@ -28,6 +28,11 @@ remove(id:number):Observable<void>{
   return this.http.delete<void>(`${this.url}/${id}`);
  
 }
+findBynombre(name:String):Observable<Proveedores[]>{
+  return this.http.get<Proveedores[]>(`${this.url}/buscar/${name}`)
+
+
+}
 
 
   

@@ -22,6 +22,11 @@ findById(id:number):Observable<User>{
 
 
 }
+findBynombre(name:String):Observable<User>{
+  return this.http.get<User>(`${this.url}/buscar/${name}`)
+
+
+}
 
 create(user:User): Observable<User>{
   return this.http.post<User>(this.url,user);

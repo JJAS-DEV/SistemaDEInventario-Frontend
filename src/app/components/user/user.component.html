@@ -8,12 +8,16 @@
 
 </button>
 }
+<div> buscador <input type="text"></div>
 
-@if(users.length==0){
+
+@if(users.length<0){
 <div class="alert alert-warning "> No hay registros en el sistemas¡</div>
 
 }@else {
 <div class="table-responsive">
+
+
     <table class="table table-bordered table-striped">
         <thead>
 

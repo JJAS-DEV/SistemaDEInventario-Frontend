@@ -1,12 +1,19 @@
 <button type="button" class="btn btn-primary mb-3" [routerLink]="['/proveedor/form']">
     crear proveedor
 
-
 </button>
+<div>
+    <input type="text" (input)="escucharInput($event)" placeholder="Escribe algo...">
+    <p>Texto ingresado: {{ buscador }}</p>
+
+</div>
+
+
 @if(proveedores.length==0){
 <div class="alert alert-warning "> No hay registros en el sistemas¡</div>
 
 }
+
 
 
 
