@@ -1,0 +1,107 @@
+
+<button type="button" class="btn btn-primary mb-3" [routerLink]="['/producto/form']">
+    crear producto
+
+</button>
+@if(productos.length==0){
+    <div class="alert alert-warning "> No hay registros en el sistemas¡</div>
+    
+    }
+    
+    
+    
+    
+    @else {
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+    
+                <tr>
+                  
+                    <th>codigo_producto</th>
+                    <th>
+                        nombre
+                    </th>
+                    <th>
+                        precio
+                    </th>
+                    <th>proveedor</th>
+                    <th>stock</th>
+
+                    <th>eliminar</th>
+
+                    <th>udate</th>
+
+    
+    
+    
+    
+                </tr>
+    
+    
+            </thead>
+        
+            <tbody>
+                @for (producto of productosPaginados ; track $index  ){
+                <tr>
+                    <td>
+                        {{producto.codigo_producto}}
+                    </td>
+                    <td>
+                        {{producto.nombre}}
+                    </td>
+                    <td>
+                        {{producto.precio}}
+                    </td>
+                    
+                    <td>
+                        {{producto.proveedor.nombre}}
+                    </td>
+
+                    <td>
+                        {{producto.stock}}
+
+                    </td>
+
+                    <td>
+                        <button class=" btn btn-danger btn-sm" (click)="removeProducto(producto.id)">
+                            eliminar
+                        </button>
+                    </td>
+
+    
+                    <td>
+
+                        <button class=" btn btn-info btn-sm" [routerLink]="['/producto/edit',producto.id]">
+                            update
+                        </button>
+    
+    
+                    </td>
+    
+    
+    
+                </tr>
+            
+                }
+    
+            
+                
+           
+            </tbody>
+
+            <tfoot style="margin: auto;">
+
+                <mat-paginator [length]="productos.length"
+                [pageSize]="pageSize"
+                [pageIndex]="pageIndex"
+                (page)="cambiarPagina($event)"
+                showFirstLastButtons >
+    
+                </mat-paginator>
+            </tfoot>
+
+            </table>
+    </div>
+}
+    

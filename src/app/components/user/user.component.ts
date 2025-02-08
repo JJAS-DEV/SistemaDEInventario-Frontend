@@ -81,6 +81,11 @@ export class UserComponent implements OnInit{
   }
 
 
+  get isAuth(){
+    return this.authService.authenticated()
+  }
+
+
 
 }
 

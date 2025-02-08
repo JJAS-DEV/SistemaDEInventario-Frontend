@@ -7,6 +7,8 @@ import { authGuard } from './guards/auth.guard';
 import { Forbidden403Component } from './components/forbidden403/forbidden403.component';
 import { ProvedoresComponent } from './components/provedores/provedores.component';
 import { FormProvedor } from './components/provedores/form/formProvedor.component';
+import { ProductoComponent } from './components/producto/producto.component';
+import { ProducFormComponent } from './components/producto/produc-form/produc-form.component';
 
 export const routes: Routes = [
   
@@ -68,5 +70,20 @@ canActivate:[authGuard]
 {
   path: 'proveedor/form',
   component:FormProvedor
+},
+
+{
+  path: 'productos',
+  component:ProductoComponent
+},
+{
+  path: 'producto/form',
+  component:ProducFormComponent
+},
+{
+path:'producto/edit/:id',
+component:ProducFormComponent,
+
 }
+
 ];

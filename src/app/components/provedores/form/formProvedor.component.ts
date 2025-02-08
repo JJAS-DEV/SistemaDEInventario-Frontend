@@ -15,6 +15,7 @@ import { FormService } from './form.service';
 })
 export class FormProvedor implements OnInit {
   proveedor: Proveedores;
+  
   errors:any={};
 constructor(
     private provedorservice: ProvedorserviceService,

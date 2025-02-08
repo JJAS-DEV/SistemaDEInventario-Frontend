@@ -1,0 +1,190 @@
+<h1>{{(producto.id>0)? 'actualizar':'crear'}}  un producto</h1>
+<h2>selecciona un proveedor</h2>
+<div>
+    <input type="text" (input)="escucharInput($event)" placeholder="Escribe algo...">
+    <p>Texto ingresado: {{ buscador }}</p>
+
+</div>
+
+<div>
+    @if(proveedores.length>0){
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+    
+                <tr>
+                    <th>
+                        name
+                    </th>
+
+                    <th>
+                        seleccionar
+                    </th>
+                   
+    
+    
+    
+    
+                </tr>
+    
+    
+            </thead>
+    
+            <tbody>
+                @for (proveedor of proveedoresPaginados ; track $index  ){
+                <tr>
+                    <!--<td>
+                                {{user.id}}
+                            </td>-->
+                    <td>
+                        {{proveedor.nombre}}
+                    </td>
+                    <td>
+                        <button class=" btn btn-danger btn-sm" (click)="seleccionado(proveedor)">
+                            selccionar
+                        </button>
+                    </td>
+                  
+    
+                    
+    
+    
+    
+    
+                </tr>
+    
+                }
+    
+    
+    
+            </tbody>
+    
+            <tfoot style="margin: auto;">
+    
+                <mat-paginator [length]="proveedores.length"
+                [pageSize]="pageSize"
+                [pageIndex]="pageIndex"
+                (page)="cambiarPagina($event)"
+                showFirstLastButtons >
+    
+                </mat-paginator>
+            </tfoot>
+            
+    
+    
+    
+    
+        </table>
+
+
+</div>
+}
+</div>
+
+
+
+@if(producto.proveedor.id>0){
+<div class="card">
+    <div class="card-dialog">
+        <div class="card-content">
+            <div class="card-header">
+                <h5 class="card-title"> form {{(producto.id>0)? 'update':'create'}} </h5>
+
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="onSubmit(productoForm)" class="m-2" #productoForm="ngForm">
+                   <div>
+                   
+                    <input placeholder="nombre" name="name" [(ngModel)]="producto.nombre" class="from-control my-2"
+                        #name="ngModel">
+                    <!-- required -->
+                    @if(errors?.nombre){
+                    <div class="text-danger">
+
+                        {{errors.nombre}}
+                    </div>
+                    }
+                  
+
+
+                </div>
+               
+                <div>                   
+                    <input placeholder="precio" name="precio" [(ngModel)]="producto.precio" class="from-control my-2"
+                        #name="ngModel">
+                    <!-- required -->
+                    @if(errors?.precio){
+                    <div class="text-danger">
+
+                        {{errors.precio}}
+                    </div>
+                    }
+                </div>
+                <div>                   
+                    <input placeholder="stock" name="stock" [(ngModel)]="producto.stock" class="from-control my-2"
+                        #name="ngModel">
+                    <!-- required -->
+                    @if(errors?.stock){
+                    <div class="text-danger">
+
+                        {{errors.stock}}
+                    </div>
+                    }
+                </div>
+
+
+                <div>                   
+                    <input placeholder="proveedor" name="proveedor" [(ngModel)]="producto.proveedor.id"[disabled]="true"  class="from-control my-2"
+                        #name="ngModel"
+                        [hidden]="true">
+                    <label for="">proveedor:  {{producto.proveedor.nombre}}</label>
+                    <!-- required -->
+                    @if(errors?.proveedor){
+                    <div class="text-danger">
+
+                        {{errors.proveedor}}
+                    </div>
+                    }
+                </div>
+
+
+     
+
+
+            <div>
+                <button type="submit" class="btn btn-primary my-2"
+                
+                
+                >
+                {{(producto.id>0)?'update':'create'}}
+
+
+
+                </button>
+
+                <button type="button" class="btn btn-secondary m-2"
+                (click)="onClear(productoForm)"  
+              >
+              clear</button>
+                  
+
+            
+            
+            
+            </div>
+
+                </form>
+
+
+
+
+
+
+            </div>
+        </div>
+
+    
+    </div>
+
+</div>
+}

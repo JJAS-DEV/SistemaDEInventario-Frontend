@@ -19,8 +19,6 @@ export class ProvedoresComponent implements OnInit {
    pageIndex = 0; 
    pageSize = 5;
    proveedoresPaginados: any[] = [];  // Inicialización de proveedoresPaginados
-
-
    constructor(private service:ProvedorserviceService,
      private router: Router,
         private route : ActivatedRoute,
@@ -28,9 +26,10 @@ export class ProvedoresComponent implements OnInit {
         private servicedata: FormService
 
    ){
-
-
    }
+
+
+  
   ngOnInit(): void {
       this.service.findAll().subscribe(proveedores => {
         // Cargar los proveedores cuando la respuesta esté lista
@@ -110,7 +109,15 @@ export class ProvedoresComponent implements OnInit {
 
     
     // Muestra el texto en consola
+
+
+    //borrar producto 
+
+    
   }
+
+  
+  
   
 
 

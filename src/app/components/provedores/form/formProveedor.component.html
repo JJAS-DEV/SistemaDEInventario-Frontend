@@ -18,6 +18,13 @@
                         {{errors.nombre}}
                     </div>
                     }
+                    @if(errors?.message){
+                        <div class="text-danger">
+    
+                            {{errors.message}}
+                        </div>
+                        }
+
 
                 </div>
                 <div>

@@ -20,8 +20,16 @@
           }
           @if(login.isAuth){
             <li class="nav-item">
-              <a class="nav-link"[routerLink]="['/provedores']"  [state]="{users}"
+              <a class="nav-link"[routerLink]="['/provedores']" 
               >Probedores </a>
+            </li>
+
+
+          }
+          @if(login.isAuth){
+            <li class="nav-item">
+              <a class="nav-link"[routerLink]="['/productos']" 
+              >productoss </a>
             </li>
 
 

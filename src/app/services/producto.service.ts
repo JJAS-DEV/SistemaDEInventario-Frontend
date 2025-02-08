@@ -1,0 +1,37 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Producto } from '../models/producto';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductoService {
+  private url: string = 'http://localhost:8080/api/productos'
+
+
+  constructor(private http: HttpClient) { }
+
+  findAll(): Observable<Producto[]> {
+    return this.http.get<Producto[]>(this.url)
+  }
+
+
+  remove(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${id}`);
+
+  }
+
+  create(user: Producto): Observable<Producto> {
+    return this.http.post<Producto>(this.url, user);
+  }
+  update(user: Producto): Observable<Producto> {
+    return this.http.put<Producto>(`${this.url}/${user.id}`, user);
+  }
+  findById(id: number): Observable<Producto> {
+    return this.http.get<Producto>(`${this.url}/${id}`)
+  }
+  
+
+
+}

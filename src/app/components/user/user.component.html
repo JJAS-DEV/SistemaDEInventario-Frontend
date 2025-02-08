@@ -8,6 +8,8 @@
 
 </button>
 }
+
+@if(isAuth){
 <div> buscador <input type="text"></div>
 
 
@@ -100,3 +102,5 @@
 }
 
 <paginator [paginator]="paginator" [url]="'/users/page'"></paginator>
+
+}
