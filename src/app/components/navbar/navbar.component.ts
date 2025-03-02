@@ -9,8 +9,12 @@ import { AuthService } from '../../services/auth.service';
   imports: [RouterModule],
   templateUrl: './navbar.component.html',
 })
+
 export class NavbarComponent {
+  hola :String;
+
   constructor(private authService:AuthService, private router:Router) {
+    this.hola=authService.getUsername();
     
   }
   @Input()users:User[]=[];

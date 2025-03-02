@@ -34,7 +34,7 @@ export class ProducFormserviceService {
              // Redirigir al listado de usuarios
               this.router.navigate(['/productos']),
               
-        Swal.fire({
+          Swal.fire({
           title: "actualizado",
           text: "Usuario"+provedorUpdate.nombre+" editado con exito ",
           icon: "success"

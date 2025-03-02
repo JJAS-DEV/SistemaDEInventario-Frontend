@@ -6,8 +6,6 @@ export class Producto {
     precio!:number;
     codigo_producto!:string;
     stock!:Number;
-
-
     proveedor:Proveedores=new Proveedores();
     
 

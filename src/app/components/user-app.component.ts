@@ -165,6 +165,14 @@ export class UserAppComponent implements OnInit {
     
               
 
+            }else{
+              this.sharingData.errorsUSerFormEvenEmitter.emit(err.error);
+              Swal.fire(
+                'Error en actualizar el usuario',
+                 err.error.message,
+                'error'
+              );
+
             }
           }
         });

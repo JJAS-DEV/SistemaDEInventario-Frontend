@@ -31,7 +31,10 @@ export class ProductoService {
   findById(id: number): Observable<Producto> {
     return this.http.get<Producto>(`${this.url}/${id}`)
   }
-  
+
+  productosbyproveedor(id:number): Observable<Producto[]> {
+    return this.http.post<Producto[]>(`${this.url}/provedor`,{ proveedor_id: id })
+  }
 
 
 }

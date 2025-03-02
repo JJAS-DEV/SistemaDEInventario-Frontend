@@ -18,12 +18,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 })
 export class ProducFormComponent  implements OnInit{
 
-  producto:Producto;
-     proveedores: Proveedores[] = [];
+    producto:Producto;
+    proveedores: Proveedores[] = [];
 
-     pageIndex = 0; 
-     pageSize = 5;
+    pageIndex = 0; 
+    pageSize = 5;
      proveedoresPaginados: any[] = []; 
+
+     productos:Producto[]=[];
   
 
   
@@ -91,12 +93,12 @@ onClear(provedorForm: NgForm): void {
     
           // Si ya tienes proveedores, actualiza la paginación inmediatamente
           if (this.proveedores.length > 0) {
-            this.actualizarPaginacion();
+            this.actualizarPaginacion(this.proveedores);
           }
         });
       }else if(this.buscador===""){
         this.proveedores=[];
-        this.actualizarPaginacion();
+        this.actualizarPaginacion(this.proveedores);
 
       }
 
@@ -110,30 +112,47 @@ onClear(provedorForm: NgForm): void {
     
   }
 
-  actualizarPaginacion() {
-    this.proveedoresPaginados = this.proveedores.slice(
+ 
+
+  actualizarPaginacion(     lista: any[]
+  ) {
+    this.proveedoresPaginados = lista.slice(
       this.pageIndex * this.pageSize, 
       (this.pageIndex +1) * this.pageSize
     );
   }
 
- cambiarPagina(event: any) {
+ cambiarPagina(event: any ,lista: any[]) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.proveedoresPaginados = this.proveedores.slice(this.pageIndex * this.pageSize, (this.pageIndex + 1) * this.pageSize);
+    this.proveedoresPaginados = lista.slice(this.pageIndex * this.pageSize, (this.pageIndex + 1) * this.pageSize);
   }
 provedorSeleccionado:Proveedores= new Proveedores();
 
   seleccionado(proveedor:Proveedores){
     this.producto.proveedor=proveedor;
-
+   
     this.proveedores=[];
+    this.productoService.productosbyproveedor(proveedor.id).subscribe(producto => {
+      // Cargar los proveedores cuando la respuesta esté lista
+      this.productos = producto;
+
+
+     
+      // Si ya tienes proveedores, actualiza la paginación inmediatamente
+      
+    });
+
+
+
 
 
 
 
   
   }
+
+
   
   
 }

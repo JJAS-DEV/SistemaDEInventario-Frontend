@@ -1,6 +1,8 @@
+@if(isAuth){
 <h3>
     {{title}}
 </h3>
+}
 @if(admin) {
 <button type="button" class="btn btn-primary" [routerLink]="['/users/create']">
     crear usuario

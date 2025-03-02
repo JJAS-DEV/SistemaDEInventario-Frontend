@@ -9,6 +9,7 @@ import { ProvedoresComponent } from './components/provedores/provedores.componen
 import { FormProvedor } from './components/provedores/form/formProvedor.component';
 import { ProductoComponent } from './components/producto/producto.component';
 import { ProducFormComponent } from './components/producto/produc-form/produc-form.component';
+import { EntradaProductosComponent } from './components/producto/entrada-productos/entrada-productos.component';
 
 export const routes: Routes = [
   
@@ -83,6 +84,11 @@ canActivate:[authGuard]
 {
 path:'producto/edit/:id',
 component:ProducFormComponent,
+
+},
+{
+path:'entradaproducto',
+component:EntradaProductosComponent,
 
 }
 

@@ -61,9 +61,7 @@ export class UserFormComponent implements OnInit {
   }
 
   onClear(userForm: NgForm): void {
-    this.user = new User();
     userForm.reset();
-    userForm.resetForm();
 
   }
 
