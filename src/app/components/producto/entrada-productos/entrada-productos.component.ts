@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormControl, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Producto } from '../../../models/producto';
 import { ProductoService } from '../../../services/producto.service';
 import { ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ import { ServicespaginadoService } from './services/servicespaginado.service';
 @Component({
   selector: 'app-entrada-productos',
   standalone: true,
-  imports: [FormsModule, CommonModule,MatPaginatorModule],
+  imports: [FormsModule, CommonModule,MatPaginatorModule, ReactiveFormsModule],
   templateUrl: './entrada-productos.component.html',
   styleUrl: './entrada-productos.component.css'
 })
@@ -23,13 +23,21 @@ export class EntradaProductosComponent implements OnInit {
 
   producto:Producto;
   proveedores: Proveedores[] = [];
-
+  proveedor_selecc:boolean=true;
   pageIndex = 0; 
   pageSize = 5;
    proveedoresPaginados:any[] = []; 
    productos:Producto[]=[];
-
+  productos_seleccionado:Producto[]=[];
    errors:any={};
+
+   Stock_entrada:number=1;
+
+   numeroControl = new FormControl('', [
+    Validators.required,
+    Validators.min(1),
+    Validators.max(100),
+  ]);
 
    constructor(
          private productoService: ProductoService,
@@ -46,7 +54,7 @@ export class EntradaProductosComponent implements OnInit {
        }
   ngOnInit(): void {
     this.sharingData.errorsUSerFormEvenEmitter.subscribe(errors=> this.errors= errors);
-
+  
 
   }
 
@@ -62,22 +70,15 @@ export class EntradaProductosComponent implements OnInit {
         this.serviceprovedor.findBynombre(this.buscador).subscribe(proveedores => {
           // Cargar los proveedores cuando la respuesta esté lista
           this.proveedores = proveedores;
-          alert(proveedores[0].id)
+
     
           // Si ya tienes proveedores, actualiza la paginación inmediatamente
           if (this.proveedores.length > 0) {
-            alert("entro aqui"+proveedores[0].id)
 
             this.proveedoresPaginados= this.servicepaginado.actualizarPaginacion(this.proveedores);
-            alert( this.proveedoresPaginados[0]);
 
           }
         });
-      }else if(this.buscador===""){
-        this.proveedores=[];
-        this.proveedoresPaginados= this.servicepaginado.actualizarPaginacion(this.proveedores);
-       alert( this.proveedoresPaginados[0]);
-
       }
 
 
@@ -88,10 +89,14 @@ export class EntradaProductosComponent implements OnInit {
     provedorSeleccionado:Proveedores= new Proveedores();
 
   seleccionado(proveedor:Proveedores){
-
+    this.proveedor_selecc=false;
     this.producto.proveedor=proveedor;
+
    
     this.productoService.productosbyproveedor(proveedor.id).subscribe(producto => {
+      producto.forEach(p => {
+        p.stock = 1; // Asignar el stock a 1
+      });
       // Cargar los proveedores cuando la respuesta esté lista
       this.productos = producto;
 
@@ -100,7 +105,6 @@ export class EntradaProductosComponent implements OnInit {
       if (this.proveedores.length > 0) {
 
         this.proveedoresPaginados= this.servicepaginado.actualizarPaginacion(this.productos);
-        alert( this.proveedoresPaginados[0]);
 
       }
     });
@@ -133,5 +137,24 @@ cambiarPagina(event: any ,lista: any[]) {
    this.proveedoresPaginados=this.servicepaginado.cambiarPagina(event,lista);
 
  
+}
+
+agregarProductoAlista(producto:Producto){
+  alert("entro")
+  alert(producto.nombre)
+  this.productos_seleccionado.push({ ...producto }); // Agrega copia del producto
+
+
+
+}
+
+eliminarProducto(nombreProducto: string) {
+  alert(nombreProducto)
+  
+
+  this.productos_seleccionado = this.productos_seleccionado.filter(producto => producto.nombre !== nombreProducto);
+
+
+
 }
 }

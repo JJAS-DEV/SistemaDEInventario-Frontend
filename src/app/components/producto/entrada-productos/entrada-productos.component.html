@@ -1,3 +1,4 @@
+@if(proveedor_selecc){
 <h1>{{(producto.id>0)? 'actualizar':'crear entrada de '}}   productos</h1>
 <h2>selecciona un proveedor</h2>
 <div>
@@ -7,6 +8,7 @@
 </div>
 
 <div>
+
     @if(proveedores.length>0 && productos.length<=0){
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
@@ -81,9 +83,9 @@
 }
 </div>
 
+}
 
-
-                
+          
 
 @if (productos.length>0 && buscador!=""){
     <div>
@@ -99,6 +101,12 @@
                         </th>
                         <th>
                             precio
+                        </th>
+
+                        <th>Stock_entrada</th>
+
+                        <th>
+                            seleccionar
                         </th>
         
                     </tr>
@@ -118,6 +126,16 @@
                         <td>
                             {{producto.precio}}
                         </td>
+                        <td>
+                            <input placeholder="number" type="number" name="stock" [(ngModel)]="producto.stock" class="from-control my-2"
+                            #name="ngModel" min="1" >
+                        </td>
+                        <td>
+                            <button class=" btn btn-primary btn-sm" (click)="agregarProductoAlista(producto)" >
+                                selccionar
+                            </button>
+                        </td>
+                       
                         
                         </tr>
                     }
@@ -135,6 +153,69 @@
             </table>
         </div>
     </div>
+}
+
+@if(productos_seleccionado.length>0){
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+    
+                <tr>
+                  
+                    <th>codigo_producto</th>
+                    <th>
+                        nombre
+                    </th>
+                    <th>
+                        precio
+                    </th>
+                    <th>Stock_entrada</th>
+
+
+                    <th>eleminar</th>
+    
+                </tr>
+    
+    
+            </thead>
+        
+            <tbody>
+                @for (producto of productos_seleccionado ; track $index ){
+                <tr>
+                    <td>
+                        {{producto.codigo_producto}}
+                    </td>
+                    <td>
+                        {{producto.nombre}}
+                    </td>
+                    <td>
+                        {{producto.precio}}
+                    </td>
+                    
+                    
+                   
+
+                    
+                        <td>
+                            <input placeholder="number" type="number" name="stock" [(ngModel)]="producto.stock" class="from-control my-2"
+                            #name="ngModel" min="1" >
+                        </td>
+                       
+                 
+
+                    <td>
+                        <button class=" btn btn-primary btn-sm" (click)="eliminarProducto(producto.nombre)" >
+                            eliminar
+                        </button>
+                    </td>
+                    
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
 }
 
 
