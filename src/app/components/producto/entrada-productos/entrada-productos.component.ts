@@ -31,13 +31,9 @@ export class EntradaProductosComponent implements OnInit {
   productos_seleccionado:Producto[]=[];
    errors:any={};
 
-   Stock_entrada:number=1;
+   producto_new:boolean=false;
 
-   numeroControl = new FormControl('', [
-    Validators.required,
-    Validators.min(1),
-    Validators.max(100),
-  ]);
+ 
 
    constructor(
          private productoService: ProductoService,
@@ -140,11 +136,32 @@ cambiarPagina(event: any ,lista: any[]) {
 }
 
 agregarProductoAlista(producto:Producto){
-  alert("entro")
-  alert(producto.nombre)
+  if (!producto.stock || producto.stock.toString().trim() === "") {
+    alert("Debe ingresar una cantidad válida.");
+    return; // Detener la ejecución si está vacío
+  }
+
+  // Convertir cantidad a número
+  const cantidad = Number(producto.stock);
+
+  // Validar que la cantidad no sea negativa, cero o NaN
+  if (isNaN(cantidad) || cantidad <= 0) {
+    alert("La cantidad debe ser un número positivo.");
+    return; // Detener la ejecución si el número es inválido
+  }
+
+
+
+  let productoExistente = this.productos_seleccionado.find(prod => prod.nombre === producto.nombre);
+
+  if (productoExistente) {
+    // Si existe, aumentar la cantidad
+    productoExistente.stock = Number(productoExistente.stock) + Number(producto.stock);
+  }else{
+
   this.productos_seleccionado.push({ ...producto }); // Agrega copia del producto
 
-
+  }
 
 }
 
@@ -153,8 +170,19 @@ eliminarProducto(nombreProducto: string) {
   
 
   this.productos_seleccionado = this.productos_seleccionado.filter(producto => producto.nombre !== nombreProducto);
+}
+
+camabiarProveedor(){
+
+  this.proveedor_selecc=true;
+  this.productos_seleccionado=[];
 
 
 
 }
+
+  crearPRoducto(){
+    this.producto_new=true;
+
+  }
 }

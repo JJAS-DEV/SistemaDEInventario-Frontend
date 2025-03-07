@@ -86,9 +86,29 @@
 }
 
           
-
+@if(!proveedor_selecc){
 @if (productos.length>0 && buscador!=""){
     <div>
+
+        <div  style="display: flex;">
+
+        <div style="padding: 4px;">
+            <button class=" btn btn-primary btn-sm" (click)="camabiarProveedor()" >
+                cambiar proveedor
+            </button>
+        </div>
+        <div style="padding: 4px;">
+            <button class=" btn btn-success btn-sm" (click)="crearPRoducto()" >
+                agregar producto nuevo
+            </button>
+        </div>
+        </div>
+
+
+            
+
+      
+     
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>
@@ -141,6 +161,13 @@
                     }
                 </tbody>
                 <tfoot>
+
+            
+                        
+
+                        
+
+                 
                     
                 <mat-paginator [length]="productos.length"
                 [pageSize]="pageSize"
@@ -219,7 +246,7 @@
 }
 
 
-@if(producto.proveedor.id>0){
+@if(producto.proveedor.id>0 && producto_new==true ){
 <div class="card">
     <div class="card-dialog">
         <div class="card-content">
@@ -323,4 +350,5 @@
     </div>
 
 </div>
+}
 }
