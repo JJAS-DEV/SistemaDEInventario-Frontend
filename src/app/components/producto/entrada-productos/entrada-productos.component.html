@@ -182,6 +182,106 @@
     </div>
 }
 
+@if(producto.proveedor.id>0 && producto_new==true ){
+    <div class="card">
+        <div class="card-dialog">
+            <div class="card-content">
+                <div class="card-header">
+                    <h5 class="card-title"> form {{(producto.id>0)? 'update':'create'}} </h5>
+    
+                </div>
+                <div class="card-body">
+                    <form (ngSubmit)="onSubmit(productoForm)" class="m-2" #productoForm="ngForm">
+                       <div>
+                       
+                        <input placeholder="nombre" name="name" [(ngModel)]="producto.nombre" class="from-control my-2"
+                            #name="ngModel">
+                        <!-- required -->
+                        @if(errors?.nombre){
+                        <div class="text-danger">
+    
+                            {{errors.nombre}}
+                        </div>
+                        }
+                      
+    
+    
+                    </div>
+                   
+                    <div>                   
+                        <input placeholder="precio" name="precio" [(ngModel)]="producto.precio" class="from-control my-2"
+                            #name="ngModel">
+                        <!-- required -->
+                        @if(errors?.precio){
+                        <div class="text-danger">
+    
+                            {{errors.precio}}
+                        </div>
+                        }
+                    </div>
+                    <div>                   
+                        <input placeholder="stock" name="stock" [(ngModel)]="producto.stock" class="from-control my-2"
+                            #name="ngModel">
+                        <!-- required -->
+                        @if(errors?.stock){
+                        <div class="text-danger">
+    
+                            {{errors.stock}}
+                        </div>
+                        }
+                    </div>
+    
+    
+                    <div>                   
+                        <input placeholder="proveedor" name="proveedor" [(ngModel)]="producto.proveedor.id"[disabled]="true"  class="from-control my-2"
+                            #name="ngModel"
+                            [hidden]="true">
+                        <label for="">proveedor:  {{producto.proveedor.nombre}}</label>
+                        <!-- required -->
+                        @if(errors?.proveedor){
+                        <div class="text-danger">
+    
+                            {{errors.proveedor}}
+                        </div>
+                        }
+                    </div>
+    
+    
+         
+    
+    
+                <div>
+                    <button type="submit" class="btn btn-primary my-2"
+                    
+                    
+                    >
+                    {{(producto.id>0)?'update':'create'}}
+    
+    
+    
+                    </button>
+    
+    
+                
+                
+                
+                </div>
+    
+                    </form>
+    
+    
+    
+    
+    
+    
+                </div>
+            </div>
+    
+        
+        </div>
+    
+    </div>
+    }
 @if(productos_seleccionado.length>0){
 
     <div class="table-responsive">
@@ -225,8 +325,8 @@
 
                     
                         <td>
-                            <input placeholder="number" type="number" name="stock" [(ngModel)]="producto.stock" class="from-control my-2"
-                            #name="ngModel" min="1" >
+                            {{producto.stock}}
+                           
                         </td>
                        
                  
@@ -236,119 +336,22 @@
                             eliminar
                         </button>
                     </td>
+
+                    
                     
                     </tr>
                 }
             </tbody>
+
+            <tfoot>
+                <button class=" btn btn-primary btn-sm" (click)="crearEntrada(productos_seleccionado)" >
+                    enviarEntrda
+                </button>
+            </tfoot>
         </table>
     </div>
 
 }
 
 
-@if(producto.proveedor.id>0 && producto_new==true ){
-<div class="card">
-    <div class="card-dialog">
-        <div class="card-content">
-            <div class="card-header">
-                <h5 class="card-title"> form {{(producto.id>0)? 'update':'create'}} </h5>
-
-            </div>
-            <div class="card-body">
-                <form (ngSubmit)="onSubmit(productoForm)" class="m-2" #productoForm="ngForm">
-                   <div>
-                   
-                    <input placeholder="nombre" name="name" [(ngModel)]="producto.nombre" class="from-control my-2"
-                        #name="ngModel">
-                    <!-- required -->
-                    @if(errors?.nombre){
-                    <div class="text-danger">
-
-                        {{errors.nombre}}
-                    </div>
-                    }
-                  
-
-
-                </div>
-               
-                <div>                   
-                    <input placeholder="precio" name="precio" [(ngModel)]="producto.precio" class="from-control my-2"
-                        #name="ngModel">
-                    <!-- required -->
-                    @if(errors?.precio){
-                    <div class="text-danger">
-
-                        {{errors.precio}}
-                    </div>
-                    }
-                </div>
-                <div>                   
-                    <input placeholder="stock" name="stock" [(ngModel)]="producto.stock" class="from-control my-2"
-                        #name="ngModel">
-                    <!-- required -->
-                    @if(errors?.stock){
-                    <div class="text-danger">
-
-                        {{errors.stock}}
-                    </div>
-                    }
-                </div>
-
-
-                <div>                   
-                    <input placeholder="proveedor" name="proveedor" [(ngModel)]="producto.proveedor.id"[disabled]="true"  class="from-control my-2"
-                        #name="ngModel"
-                        [hidden]="true">
-                    <label for="">proveedor:  {{producto.proveedor.nombre}}</label>
-                    <!-- required -->
-                    @if(errors?.proveedor){
-                    <div class="text-danger">
-
-                        {{errors.proveedor}}
-                    </div>
-                    }
-                </div>
-
-
-     
-
-
-            <div>
-                <button type="submit" class="btn btn-primary my-2"
-                
-                
-                >
-                {{(producto.id>0)?'update':'create'}}
-
-
-
-                </button>
-
-                <button type="button" class="btn btn-secondary m-2"
-                (click)="onClear(productoForm)"  
-              >
-              clear</button>
-                  
-
-            
-            
-            
-            </div>
-
-                </form>
-
-
-
-
-
-
-            </div>
-        </div>
-
-    
-    </div>
-
-</div>
-}
 }

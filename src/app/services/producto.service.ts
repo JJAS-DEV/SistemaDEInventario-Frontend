@@ -36,5 +36,9 @@ export class ProductoService {
     return this.http.post<Producto[]>(`${this.url}/provedor`,{ proveedor_id: id })
   }
 
+  validarProducto(producto:Producto):Observable<boolean>{
+    return this.http.post<boolean>(`${this.url}/validarProducto`,producto);
+  }
+
 
 }

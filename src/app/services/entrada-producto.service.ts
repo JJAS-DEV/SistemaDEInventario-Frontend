@@ -1,0 +1,18 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Producto } from '../models/producto';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EntradaProductoService {
+
+  private url: string = 'http://localhost:8080/api/entradaProducto'
+
+  constructor(private http: HttpClient) { }
+
+  create(Listproducto: Producto[]): Observable<Producto[]> {
+      return this.http.post<Producto[]>(this.url, Listproducto);
+    }
+}
