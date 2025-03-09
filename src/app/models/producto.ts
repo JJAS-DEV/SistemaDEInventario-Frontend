@@ -5,7 +5,7 @@ export class Producto {
     nombre!:string;
     precio!:number;
     codigo_producto!:string;
-    stock!:Number;
+    stock!:number ;
     proveedor:Proveedores=new Proveedores();
     
 

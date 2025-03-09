@@ -1,5 +1,5 @@
 @if(proveedor_selecc){
-<h1>{{(producto.id>0)? 'actualizar':'crear entrada de '}}   productos</h1>
+<h1>{{(producto.id>0)? 'actualizar':'crear entrada de '}} productos</h1>
 <h2>selecciona un proveedor</h2>
 <div>
     <input type="text" (input)="escucharInput($event)" placeholder="Escribe algo...">
@@ -9,11 +9,10 @@
 
 <div>
 
-    @if(proveedores.length>0 && productos.length<=0){
-    <div class="table-responsive">
+    @if(proveedores.length>0 && productos.length<=0){ <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead>
-    
+
                 <tr>
                     <th>
                         name
@@ -22,18 +21,18 @@
                     <th>
                         seleccionar
                     </th>
-                   
-    
-    
-    
-    
+
+
+
+
+
                 </tr>
-    
-    
+
+
             </thead>
-    
+
             <tbody>
-                @for (proveedor of proveedoresPaginados ; track $index  ){
+                @for (proveedor of proveedoresPaginados ; track $index ){
                 <tr>
                     <!--<td>
                                 {{user.id}}
@@ -46,36 +45,33 @@
                             selccionar
                         </button>
                     </td>
-                  
-    
-                    
-    
-    
-    
-    
+
+
+
+
+
+
+
                 </tr>
-    
+
                 }
-    
-    
-    
+
+
+
             </tbody>
-    
+
             <tfoot style="margin: auto;">
-    
-                <mat-paginator [length]="proveedores.length"
-                [pageSize]="pageSize"
-                [pageIndex]="pageIndex"
-                (page)="cambiarPagina($event, proveedores)"
-                showFirstLastButtons >
-    
+
+                <mat-paginator [length]="proveedores.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
+                    (page)="cambiarPagina($event, proveedores)" showFirstLastButtons>
+
                 </mat-paginator>
             </tfoot>
-            
-    
-    
-    
-    
+
+
+
+
+
         </table>
 
 
@@ -85,211 +81,40 @@
 
 }
 
-          
-@if(!proveedor_selecc){
-@if (productos.length>0 && buscador!=""){
-    <div>
 
-        <div  style="display: flex;">
+@if(!proveedor_selecc){
+@if (provedorSeleccionado.id>0){
+<div>
+
+    <div style="display: flex;">
 
         <div style="padding: 4px;">
-            <button class=" btn btn-primary btn-sm" (click)="camabiarProveedor()" >
+            <button class=" btn btn-primary btn-sm" (click)="camabiarProveedor()">
                 cambiar proveedor
             </button>
         </div>
         <div style="padding: 4px;">
-            <button class=" btn btn-success btn-sm" (click)="crearPRoducto()" >
+            <button class=" btn btn-success btn-sm" (click)="crearPRoducto()">
                 agregar producto nuevo
             </button>
         </div>
-        </div>
+        <div>
+            <input type="text" (input)="escucharInputpraBuscarProducto($event)" placeholder="Escribe algo...">
 
-
-            
-
-      
-     
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead>
-        
-                    <tr>
-                      
-                        <th>codigo_producto</th>
-                        <th>
-                            nombre
-                        </th>
-                        <th>
-                            precio
-                        </th>
-
-                        <th>Stock_entrada</th>
-
-                        <th>
-                            seleccionar
-                        </th>
-        
-                    </tr>
-        
-        
-                </thead>
-            
-                <tbody>
-                    @for (producto of proveedoresPaginados ; track $index ){
-                    <tr>
-                        <td>
-                            {{producto.codigo_producto}}
-                        </td>
-                        <td>
-                            {{producto.nombre}}
-                        </td>
-                        <td>
-                            {{producto.precio}}
-                        </td>
-                        <td>
-                            <input placeholder="number" type="number" name="stock" [(ngModel)]="producto.stock" class="from-control my-2"
-                            #name="ngModel" min="1" >
-                        </td>
-                        <td>
-                            <button class=" btn btn-primary btn-sm" (click)="agregarProductoAlista(producto)" >
-                                selccionar
-                            </button>
-                        </td>
-                       
-                        
-                        </tr>
-                    }
-                </tbody>
-                <tfoot>
-
-            
-                        
-
-                        
-
-                 
-                    
-                <mat-paginator [length]="productos.length"
-                [pageSize]="pageSize"
-                [pageIndex]="pageIndex"
-                (page)="cambiarPagina($event, productos)"
-                showFirstLastButtons >
-    
-                </mat-paginator>
-                </tfoot>
-            </table>
         </div>
     </div>
-}
 
-@if(producto.proveedor.id>0 && producto_new==true ){
-    <div class="card">
-        <div class="card-dialog">
-            <div class="card-content">
-                <div class="card-header">
-                    <h5 class="card-title"> form {{(producto.id>0)? 'update':'create'}} </h5>
-    
-                </div>
-                <div class="card-body">
-                    <form (ngSubmit)="onSubmit(productoForm)" class="m-2" #productoForm="ngForm">
-                       <div>
-                       
-                        <input placeholder="nombre" name="name" [(ngModel)]="producto.nombre" class="from-control my-2"
-                            #name="ngModel">
-                        <!-- required -->
-                        @if(errors?.nombre){
-                        <div class="text-danger">
-    
-                            {{errors.nombre}}
-                        </div>
-                        }
-                      
-    
-    
-                    </div>
-                   
-                    <div>                   
-                        <input placeholder="precio" name="precio" [(ngModel)]="producto.precio" class="from-control my-2"
-                            #name="ngModel">
-                        <!-- required -->
-                        @if(errors?.precio){
-                        <div class="text-danger">
-    
-                            {{errors.precio}}
-                        </div>
-                        }
-                    </div>
-                    <div>                   
-                        <input placeholder="stock" name="stock" [(ngModel)]="producto.stock" class="from-control my-2"
-                            #name="ngModel">
-                        <!-- required -->
-                        @if(errors?.stock){
-                        <div class="text-danger">
-    
-                            {{errors.stock}}
-                        </div>
-                        }
-                    </div>
-    
-    
-                    <div>                   
-                        <input placeholder="proveedor" name="proveedor" [(ngModel)]="producto.proveedor.id"[disabled]="true"  class="from-control my-2"
-                            #name="ngModel"
-                            [hidden]="true">
-                        <label for="">proveedor:  {{producto.proveedor.nombre}}</label>
-                        <!-- required -->
-                        @if(errors?.proveedor){
-                        <div class="text-danger">
-    
-                            {{errors.proveedor}}
-                        </div>
-                        }
-                    </div>
-    
-    
-         
-    
-    
-                <div>
-                    <button type="submit" class="btn btn-primary my-2"
-                    
-                    
-                    >
-                    {{(producto.id>0)?'update':'create'}}
-    
-    
-    
-                    </button>
-    
-    
-                
-                
-                
-                </div>
-    
-                    </form>
-    
-    
-    
-    
-    
-    
-                </div>
-            </div>
-    
-        
-        </div>
-    
-    </div>
-    }
-@if(productos_seleccionado.length>0){
+
+
+
+
 
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead>
-    
+
                 <tr>
-                  
+
                     <th>codigo_producto</th>
                     <th>
                         nombre
@@ -297,18 +122,20 @@
                     <th>
                         precio
                     </th>
-                    <th>Stock_entrada</th>
+                    <th>Stock_Entradad</th>
 
 
-                    <th>eleminar</th>
-    
+                    <th>
+                        seleccionar
+                    </th>
+
                 </tr>
-    
-    
+
+
             </thead>
-        
+
             <tbody>
-                @for (producto of productos_seleccionado ; track $index ){
+                @for (producto of proveedoresPaginados ; track $index ){
                 <tr>
                     <td>
                         {{producto.codigo_producto}}
@@ -320,36 +147,205 @@
                         {{producto.precio}}
                     </td>
                     
-                    
-                   
 
                     
-                        <td>
-                            {{producto.stock}}
-                           
-                        </td>
-                       
-                 
-
                     <td>
-                        <button class=" btn btn-primary btn-sm" (click)="eliminarProducto(producto.nombre)" >
-                            eliminar
+                        <input placeholder="number" type="number" name="stock" [(ngModel)]="producto.stock"
+                            class="from-control my-2" #name="ngModel" min="1" >
+                    </td>
+                    <td>
+                        <button class=" btn btn-primary btn-sm" (click)="agregarProductoAlista(producto)">
+                            selccionar
                         </button>
                     </td>
 
-                    
-                    
-                    </tr>
+
+                </tr>
                 }
             </tbody>
-
             <tfoot>
-                <button class=" btn btn-primary btn-sm" (click)="crearEntrada(productos_seleccionado)" >
-                    enviarEntrda
-                </button>
+
+
+                <mat-paginator [length]="productos.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
+
+                    (page)="cambiarPagina($event, productos)" showFirstLastButtons>
+
+                </mat-paginator>
             </tfoot>
         </table>
     </div>
+</div>
+}
+
+@if(producto.proveedor.id>0 && producto_new==true ){
+<div class="card">
+    <div class="card-dialog">
+        <div class="card-content">
+            <div class="card-header">
+                <div style="display: flex;">
+
+                    <h5 class="card-title"> producto nuevo </h5>
+                        <button class="btn-close" style="margin-left: 92%" aria-label="Close" (click)="cerraformularioProducto()"></button>
+
+
+                </div>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="onSubmit(productoForm)" class="m-2" #productoForm="ngForm">
+                    <div>
+
+                        <input placeholder="nombre" name="name" [(ngModel)]="producto.nombre" class="from-control my-2"
+                            #name="ngModel">
+                        <!-- required -->
+                        @if(errors?.nombre){
+                        <div class="text-danger">
+
+                            {{errors.nombre}}
+                        </div>
+                        }
+
+
+
+                    </div>
+
+                    <div>
+                        <input type="number" placeholder="precio" name="precio" [(ngModel)]="producto.precio"
+                            class="from-control my-2" #name="ngModel">
+                        <!-- required -->
+                        @if(errors?.precio){
+                        <div class="text-danger">
+
+                            {{errors.precio}}
+                        </div>
+                        }
+                    </div>
+                    <div>
+                        <input type="number" placeholder="stock" name="stock" [(ngModel)]="producto.stock"
+                            class="from-control my-2" #name="ngModel">
+                        <!-- required -->
+                        @if(errors?.Stock){
+                        <div class="text-danger">
+
+                            {{errors.Stock}}
+                        </div>
+                        }
+                    </div>
+
+
+                    <div>
+                        <input placeholder="proveedor" name="proveedor" [(ngModel)]="producto.proveedor.id"
+                            [disabled]="true" class="from-control my-2" #name="ngModel" [hidden]="true">
+                        <label for="">proveedor: {{producto.proveedor.nombre}}</label>
+                        <!-- required -->
+                        @if(errors?.proveedor){
+                        <div class="text-danger">
+
+                            {{errors.proveedor}}
+                        </div>
+                        }
+                    </div>
+
+
+
+
+
+                    <div>
+                        <button type="submit" class="btn btn-primary my-2">
+                            {{(producto.id>0)?'update':'create'}}
+
+
+
+                        </button>
+
+
+
+
+
+                    </div>
+
+                </form>
+
+
+
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+}
+@if(productos_seleccionado.length>0){
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+
+            <tr>
+
+                <th>codigo_producto</th>
+                <th>
+                    nombre
+                </th>
+                <th>
+                    precio
+                </th>
+                <th>Stock_entrada</th>
+
+
+                <th>eleminar</th>
+
+            </tr>
+
+
+        </thead>
+
+        <tbody>
+            @for (producto of productos_seleccionado ; track $index ){
+            <tr>
+                <td>
+                    {{producto.codigo_producto}}
+                </td>
+                <td>
+                    {{producto.nombre}}
+                </td>
+                <td>
+                    {{producto.precio}}
+                </td>
+
+
+
+
+
+                <td>
+                    {{producto.stock}}
+
+                </td>
+
+
+
+                <td>
+                    <button class=" btn btn-primary btn-sm" (click)="eliminarProducto(producto.nombre)">
+                        eliminar
+                    </button>
+                </td>
+
+
+
+            </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            <button class=" btn btn-primary btn-sm" (click)="crearEntrada(productos_seleccionado)">
+                enviarEntrda
+            </button>
+        </tfoot>
+    </table>
+</div>
 
 }
 

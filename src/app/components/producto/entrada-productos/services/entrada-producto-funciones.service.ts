@@ -26,7 +26,6 @@ export class EntradaProductoFuncionesService {
                   text:  " guardado con exito ",
                   icon: "success"
                 });
-                window.location.reload();
 
       
               },

@@ -34,7 +34,7 @@ export class EntradaProductosComponent implements OnInit {
   productos_seleccionado: Producto[] = [];
   errors: any = {};
   producto_new: boolean = false;
-  private entradaProductoService= EntradaProductoService;
+  private entradaProductoService = EntradaProductoService;
 
 
 
@@ -46,7 +46,7 @@ export class EntradaProductosComponent implements OnInit {
     private serviceprovedor: ProvedorserviceService,
     private servicepaginado: ServicespaginadoService,
     private entradaProductosFunciones: EntradaProductoFuncionesService
-    
+
 
 
   ) {
@@ -58,10 +58,19 @@ export class EntradaProductosComponent implements OnInit {
   ngOnInit(): void {
     this.sharingData.errorsUSerFormEvenEmitter.subscribe(errors => this.errors = errors);
 
+ this.serviceprovedor.findAll().subscribe(proveedorees=>{
+  this.proveedores=proveedorees;
+  this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.proveedores);
+
+ } 
+
+ )
+
 
   }
 
   buscador: string = ''; // Almacena el texto ingresado
+  
 
   escucharInput(event: any): void {
     this.buscador = event.target.value; // Asigna el valor del input al texto
@@ -73,6 +82,7 @@ export class EntradaProductosComponent implements OnInit {
         // Cargar los proveedores cuando la respuesta esté lista
         this.proveedores = proveedores;
         this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.proveedores);
+        
 
 
         // Si ya tienes proveedores, actualiza la paginación inmediatamente
@@ -107,23 +117,30 @@ export class EntradaProductosComponent implements OnInit {
 
 
   }
-  provedorSeleccionado: Proveedores = new Proveedores();
 
+  producto_stock:Producto[]=[];
+  provedorSeleccionado: Proveedores = new Proveedores();
   seleccionado(proveedor: Proveedores) {
     this.proveedor_selecc = false;
     this.producto.proveedor = proveedor;
+    this.provedorSeleccionado=proveedor;
+
 
 
     this.productoService.productosbyproveedor(proveedor.id).subscribe(producto => {
       producto.forEach(p => {
-        p.stock = 1; // Asignar el stock a 1
+
+
+        p.stock=1;
       });
+      this.producto_stock=this.productos;
       // Cargar los proveedores cuando la respuesta esté lista
       this.productos = producto;
 
 
       // Si ya tienes proveedores, actualiza la paginación inmediatamente
       if (this.proveedores.length > 0) {
+       
 
         this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
 
@@ -144,13 +161,7 @@ export class EntradaProductosComponent implements OnInit {
     // userForm.resetForm();
 
   }
-  onClear(provedorForm: NgForm): void {
-    this.producto = new Producto();
-    provedorForm.reset();
-    provedorForm.resetForm();
 
-
-  }
 
   cambiarPagina(event: any, lista: any[]) {
     this.proveedoresPaginados = this.servicepaginado.cambiarPagina(event, lista);
@@ -208,9 +219,12 @@ export class EntradaProductosComponent implements OnInit {
 
 
   validarProducto(producto: Producto) {
+
+  
     this.productoService.validarProducto(producto).subscribe({
 
       next: (productonew) => {
+
         this.agregarProductoAlista(producto);
 
 
@@ -221,6 +235,8 @@ export class EntradaProductosComponent implements OnInit {
         producto.nombre = "";
         producto.stock = 0;
         producto.precio = 0;
+        this.errors={};
+
         return true
 
       },
@@ -239,11 +255,21 @@ export class EntradaProductosComponent implements OnInit {
 
 
 
-        }
+        }else if (err == null){
+
+        Swal.fire(
+          'Error en el registro',
+          err.error.message,
+          'error'
+        );
+        this.sharingData.errorsUSerFormEvenEmitter.emit(err.error);
+
+      }
 
       }
     });
 
+  
 
 
 
@@ -251,11 +277,88 @@ export class EntradaProductosComponent implements OnInit {
 
   }
 
-  crearEntrada( productos:Producto[]){
+  crearEntrada(productos: Producto[]) {
 
-    this.entradaProductosFunciones.addUser( productos);
+
+    this.entradaProductosFunciones.addUser(productos);
+
 
 
 
   }
+
+  escucharInputpraBuscarProducto(event: any): void {
+    this.buscador = event.target.value; // Asigna el valor del input al texto
+    this.pageIndex=0;
+    console.log("Texto ingresado: ", this.buscador);
+    this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
+    this.productos.forEach(p => {
+        
+      p.stock=1; // Asignar el stock a 1
+    });
+
+    if (this.buscador != "") {
+      alert(this.provedorSeleccionado.id);
+
+      this.productoService.buscarProductosByProvedor(this.buscador, this.provedorSeleccionado.id).subscribe(productos => {
+        // Cargar los proveedores cuando la respuesta esté lista
+        productos.forEach(p => {
+        
+          p.stock=1; // Asignar el stock a 1
+        });
+        this.productos=productos
+        this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
+
+
+        // Si ya tienes proveedores, actualiza la paginación inmediatamente
+        if (this.proveedores.length > 0) {
+
+          this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
+
+        }
+      });
+
+
+    } else if (this.buscador === "") {
+      this.productoService.findAll().subscribe(productos => {
+        productos.forEach(p => {
+        
+          p.stock=1; // Asignar el stock a 1
+        });
+
+        
+        // Cargar los proveedores cuando la respuesta esté lista
+         this.productos= productos;
+
+        // Si ya tienes proveedores, actualiza la paginación inmediatamente
+
+        // Si ya tienes proveedores, actualiza la paginación inmediatamente
+        if (this.proveedores.length > 0) {
+          
+
+          this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
+
+        }
+      });
+
+
+    }
+
+
+
+
+  }
+
+  cerraformularioProducto(){
+    alert("entro aqui")
+    this.producto_new = false
+    this.errors={};
+
+
+    
+
+  }
+
+
+
 }
