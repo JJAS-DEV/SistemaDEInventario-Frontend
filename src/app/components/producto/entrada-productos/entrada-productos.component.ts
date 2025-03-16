@@ -118,20 +118,20 @@ export class EntradaProductosComponent implements OnInit {
 
 
   }
+  listaNumerosDiferentes: { id: number, cantidad: number }[] = [];
 
-  producto_stock:Producto[]=[];
   provedorSeleccionado: Proveedores = new Proveedores();
   seleccionado(proveedor: Proveedores) {
     this.proveedor_selecc = false;
     this.producto.proveedor = proveedor;
     this.provedorSeleccionado=proveedor;
 
+
     this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
 
 
     this.productoService.productosbyproveedor(proveedor.id).subscribe(producto => {
      
-      this.producto_stock=this.productos;
       // Cargar los proveedores cuando la respuesta esté lista
       this.productos = producto;
 
@@ -141,10 +141,19 @@ export class EntradaProductosComponent implements OnInit {
        
 
         this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
+        this.listaNumerosDiferentes = this.productos.map(producto => ({
+          id: producto.id,
+          cantidad: producto.stock
+        }));
 
       }
     });
 
+  }
+  bucarStockexistente(id:number){
+    return this.listaNumerosDiferentes.find(producto => producto.id === id)?.cantidad;
+
+   
   }
 
   onSubmit(provedorForm: NgForm): void {
@@ -167,17 +176,20 @@ export class EntradaProductosComponent implements OnInit {
 
   }
 
-  agregarProductoAlista(producto: Producto, stock_entrada:any) {
+  agregarProductoAlista(productos: Producto, stock_entrada:any) {
 
-    producto.stock=stock_entrada;
 
-    if (!producto.stock || producto.stock.toString().trim() === "") {
+    let productoNuevo=productos;
+
+    productoNuevo.stock=stock_entrada;
+
+    if (!productoNuevo.stock || productoNuevo.stock.toString().trim() === "") {
       alert("Debe ingresar una cantidad válida.");
       return; // Detener la ejecución si está vacío
     }
 
     // Convertir cantidad a número
-    const cantidad = Number(producto.stock);
+    const cantidad = Number(productoNuevo.stock);
 
     // Validar que la cantidad no sea negativa, cero o NaN
     if (isNaN(cantidad) || cantidad <= 0) {
@@ -187,14 +199,14 @@ export class EntradaProductosComponent implements OnInit {
 
 
 
-    let productoExistente = this.productos_seleccionado.find(prod => prod.nombre === producto.nombre);
+    let productoExistente = this.productos_seleccionado.find(prod => prod.nombre === productoNuevo.nombre);
 
     if (productoExistente) {
       // Si existe, aumentar la cantidad
-      productoExistente.stock = Number(productoExistente.stock) + Number(producto.stock);
+      productoExistente.stock = Number(productoExistente.stock) + Number(productoNuevo.stock);
     } else {
 
-      this.productos_seleccionado.push({ ...producto }); // Agrega copia del producto
+      this.productos_seleccionado.push({ ...productoNuevo }); // Agrega copia del producto
 
     }
 

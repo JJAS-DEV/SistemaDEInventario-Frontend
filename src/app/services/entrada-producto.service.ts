@@ -23,6 +23,11 @@ export class EntradaProductoService {
     findAll(): Observable<EntradaProductos[]> {
       return this.http.get<EntradaProductos[]>(this.url)
     }
+    update(productos: Producto[], id: number): Observable<Producto[]> {
+     console.log( `${this.url}/${id}`);
+      return this.http.put<Producto[]>(`${this.url}/${id}`,  productos ); // Enviar el array directamente
+  }
+  
     
 
 }

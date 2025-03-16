@@ -35,12 +35,12 @@ export class DetalleEntradaComponent implements OnInit {
     
 
   }
-  
+  idPagina!:number;
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const id: number = +(params.get('id') || '0');
       if (id > 0) {
-
+        this.idPagina=id;
         this.service.findById(id).subscribe(entrada => {
           this.entrada = entrada;  // Se asegura de tener los datos
           this.producto = this.entrada.productos;  // Asignar productos
@@ -52,16 +52,9 @@ export class DetalleEntradaComponent implements OnInit {
               id: producto.producto.id,
               cantidad: producto.cantidad
             }));
-            this.producto.forEach(producto=>{
-              
-              this.productosmodficados.push(producto.producto,
-                
-
-              );
-            })
+          
     
             console.log("Lista de productos:", this.listaNumerosDiferentes); 
-            console.log("Lista de productos modificados:", this.productosmodficados);  // Verifica la lista
             // Verifica la lista
           } else {
             console.warn('⚠ No hay productos disponibles.');
@@ -101,57 +94,71 @@ export class DetalleEntradaComponent implements OnInit {
 
   productosmodficados:Producto[]=[];
 productod!:Producto;
-  EnviarListaModificado(productosModificdos: ProductoProductoEntrada[]) {
-    productosModificdos.forEach(producto=>{
-      console.log(producto.producto.id)
-     this.productoservice.findById(producto.producto.id).subscribe( {
-      next: (pr: Producto) => {
-        // Aquí manejas la respuesta exitosa
-        this.productod = pr;
-        console.log('Producto cargado con éxito:', this.productod);
-    
-        // Aquí puedes continuar con otras operaciones después de cargar el producto
-      },
-      error: (error) => {
-        // Aquí manejas cualquier error que ocurra
-        console.error('Error al obtener el producto:', error);
-      },
-      complete: () => {
-        // Aquí puedes ejecutar código cuando la suscripción termine
-        console.log(this.productod.nombre)
-        if(this.productod.stock>=this.buscarProducto(producto.producto.id)!){
-          const cantidads = Number(producto.producto.stock);
-
-    if (!producto.producto.stock || producto.producto.stock.toString().trim() === "") {
-      alert("Debe ingresar una cantidad válida."+producto.producto.nombre);
-       // Detener la ejecución si está vacío
-       
-    }else if (isNaN(cantidads) || producto.producto.stock <= 0) {
-      alert("La cantidad debe ser un número positivo."+producto.producto.nombre);
-       // Detener la ejecución si el número es inválido
-    }else{
-
-      alert("se pudo modificar")
+  async EnviarListaModificado(productosModificdos: ProductoProductoEntrada[]) {
+    const promesas = productosModificdos.map(producto =>
+      new Promise<void>((resolve, reject) => {
+        this.productoservice.findById(producto.producto.id).subscribe({
+          next: (pr: Producto) => {
+            console.log('Producto cargado con éxito:', pr);
+  
+  
+              if (!producto.producto.stock || producto.producto.stock.toString().trim() === "") {
+                alert("Debe ingresar una cantidad válida. " + producto.producto.nombre);
+                reject("Cantidad inválida");
+              } else if (isNaN(producto.producto.stock) || producto.producto.stock <= 0) {
+                alert("La cantidad debe ser un número positivo. " + producto.producto.nombre);
+                reject("Cantidad negativa o no numérica");
+              } else {
+                alert("Se pudo modificar");
+                producto.producto.stock = producto.cantidad;
+                this.productosmodficados.push(producto.producto);
+                resolve();
+              }
+          
+          },
+          error: (error) => {
+            console.error('Error al obtener el producto:', error);
+            reject(error);
+          }
+        });
+      })
+      
+    );
+    try {
+      await Promise.all(promesas); // Espera que todas las peticiones terminen
+      console.log("Todos los productos han sido procesados.");
+      this.enviarActualizacion(); // Llamar la función cuando todo esté listo
+    } catch (error) {
+      console.error("Error en el procesamiento:", error);
     }
-
-    
-
-
-   }else{
-
-    console.log("poducto no se puede modificar"+this.productod.stock)
-    
-   }
-      }
-    });
-
-    
+  
+  
+  }
 
 
-    })
+  eliminar(id:number){
+
+    this.entrada.productos = this.entrada.productos.filter(producto => producto.producto.id !== id);
+    console.log( this.entrada.productos)
+
 
   }
 
+  enviarActualizacion() {
+      console.log(this.idPagina);
+      console.log(this.productosmodficados)
+
+      this.service.update(this.productosmodficados, this.idPagina).subscribe({
+        next: (response) => {
+          console.log("✅ Actualización exitosa:", response);
+          alert("Productos actualizados correctamente.");
+        },
+        error: (error) => {
+          console.error("❌ Error al actualizar:", error);
+          alert("Error al actualizar los productos. Revisa la consola.");
+        }
+      });
+  }
 
 
 }

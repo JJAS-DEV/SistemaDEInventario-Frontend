@@ -26,6 +26,11 @@
                 @if(modificar){
                     <th>estock modifcado</th>
                 }
+                @if(modificar){
+                    <th>eliminar</th>
+                }
+
+                
 
             </tr>
 
@@ -53,26 +58,48 @@
                     {{producto.producto.precio}}
                 </td>
                @if(modificar){
+
+                @if(buscarProducto(producto.producto.id)!<=producto.producto.stock){
                 <td>
                     <input placeholder="number" type="number" #stockInput
                     class="form-control my-2" min="1"  [(ngModel)]="producto.cantidad" >
 
                 </td>
+                <td>
+                    <button class=" btn btn-danger btn-sm" (click)="eliminar(producto.producto.id)">
+                        eliminar
+                        </button>
+                    </td>
 
-               }
-               
+            }@else {
+                <td>
+                    no se puede modificar
 
-            </tr>
+                </td>
+                <td>
+                    no se puede elimnar
+
+                </td>
+
+
             }
+        }
+    </tr>
+    }
+    
+          
+            
+
         </tbody>
         <tfoot>
       
            
         </tfoot>
+        @if(modificar){
         <div><button class=" btn btn-success btn-sm" (click)="EnviarListaModificado(entrada.productos)">
             enviar modificacion
         </button></div>
-
+    }
 
 
     </table>
