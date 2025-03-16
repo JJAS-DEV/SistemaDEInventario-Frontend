@@ -1,5 +1,8 @@
 
 <div class="table-responsive">
+    <div><button class=" btn btn-danger btn-sm" (click)="Ifmodificar()">
+        modificar entrada
+    </button></div>
     <table class="table table-bordered table-striped">
         <thead>
 
@@ -20,7 +23,9 @@
                     precio 
 
                 </th>
-                
+                @if(modificar){
+                    <th>estock modifcado</th>
+                }
 
             </tr>
 
@@ -40,13 +45,21 @@
                     {{producto.producto.stock}}
                 </td>
                 <td>
-                    {{producto.cantidad}}
+                    {{buscarProducto(producto.producto.id)}}
 
 
                 </td>
                 <td>
                     {{producto.producto.precio}}
                 </td>
+               @if(modificar){
+                <td>
+                    <input placeholder="number" type="number" #stockInput
+                    class="form-control my-2" min="1"  [(ngModel)]="producto.cantidad" >
+
+                </td>
+
+               }
                
 
             </tr>
@@ -54,7 +67,13 @@
         </tbody>
         <tfoot>
       
-
+           
         </tfoot>
+        <div><button class=" btn btn-success btn-sm" (click)="EnviarListaModificado(entrada.productos)">
+            enviar modificacion
+        </button></div>
+
+
+
     </table>
 </div>

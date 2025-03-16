@@ -51,6 +51,7 @@ export class EntradaProductosComponent implements OnInit {
 
   ) {
     this.producto = new Producto();
+    this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.proveedores);
 
 
 
@@ -125,14 +126,11 @@ export class EntradaProductosComponent implements OnInit {
     this.producto.proveedor = proveedor;
     this.provedorSeleccionado=proveedor;
 
+    this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
 
 
     this.productoService.productosbyproveedor(proveedor.id).subscribe(producto => {
-      producto.forEach(p => {
-
-
-        p.stock=1;
-      });
+     
       this.producto_stock=this.productos;
       // Cargar los proveedores cuando la respuesta esté lista
       this.productos = producto;
@@ -169,7 +167,10 @@ export class EntradaProductosComponent implements OnInit {
 
   }
 
-  agregarProductoAlista(producto: Producto) {
+  agregarProductoAlista(producto: Producto, stock_entrada:any) {
+
+    producto.stock=stock_entrada;
+
     if (!producto.stock || producto.stock.toString().trim() === "") {
       alert("Debe ingresar una cantidad válida.");
       return; // Detener la ejecución si está vacío
@@ -225,7 +226,7 @@ export class EntradaProductosComponent implements OnInit {
 
       next: (productonew) => {
 
-        this.agregarProductoAlista(producto);
+        this.agregarProductoAlista(producto, producto.stock);
 
 
 
@@ -302,10 +303,7 @@ export class EntradaProductosComponent implements OnInit {
 
       this.productoService.buscarProductosByProvedor(this.buscador, this.provedorSeleccionado.id).subscribe(productos => {
         // Cargar los proveedores cuando la respuesta esté lista
-        productos.forEach(p => {
-        
-          p.stock=1; // Asignar el stock a 1
-        });
+      
         this.productos=productos
         this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
 
@@ -321,10 +319,7 @@ export class EntradaProductosComponent implements OnInit {
 
     } else if (this.buscador === "") {
       this.productoService.findAll().subscribe(productos => {
-        productos.forEach(p => {
-        
-          p.stock=1; // Asignar el stock a 1
-        });
+     
 
         
         // Cargar los proveedores cuando la respuesta esté lista
