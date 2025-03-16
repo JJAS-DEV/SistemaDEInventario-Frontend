@@ -122,6 +122,8 @@
                     <th>
                         precio
                     </th>
+                    <th>Stock_existente</th>
+
                     <th>Stock_Entradad</th>
 
 
@@ -146,13 +148,14 @@
                     <td>
                         {{producto.precio}}
                     </td>
-                    
+                    <td>
+                        {{producto.stock}}
+                    </td>
 
                     
-                    <td>
-                        <input placeholder="number" type="number" name="stock" [(ngModel)]="producto.stock"
-                            class="from-control my-2" #name="ngModel" min="1" >
-                    </td>
+                    <input placeholder="number" type="number" #stockInput
+                    class="form-control my-2" min="1">
+
                     <td>
                         <button class=" btn btn-primary btn-sm" (click)="agregarProductoAlista(producto)">
                             selccionar

@@ -10,6 +10,8 @@ import { FormProvedor } from './components/provedores/form/formProvedor.componen
 import { ProductoComponent } from './components/producto/producto.component';
 import { ProducFormComponent } from './components/producto/produc-form/produc-form.component';
 import { EntradaProductosComponent } from './components/producto/entrada-productos/entrada-productos.component';
+import { EntradasComponent } from './components/producto/entrada-productos/ListaEntradas/entradas/entradas.component';
+import { DetalleEntradaComponent } from './components/producto/entrada-productos/detatelle_entrada/detalle-entrada/detalle-entrada.component';
 
 export const routes: Routes = [
   
@@ -90,6 +92,16 @@ component:ProducFormComponent,
 path:'entradaproducto',
 component:EntradaProductosComponent,
 
-}
+},
+{
+path:'ListaDeEntradas',
+component:EntradasComponent
+
+},
+{path:'entradaproducto/detalle/:id',
+  component:DetalleEntradaComponent,
+  
+  },
+
 
 ];

@@ -1,0 +1,60 @@
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+
+            <tr>
+
+                <th>id</th>
+                <th>
+                    producto
+                </th>
+                <th>
+                    stock
+                </th>
+
+                <th>
+                    entrada
+                </th>
+                <th>
+                    precio 
+
+                </th>
+                
+
+            </tr>
+
+
+        </thead>
+
+        <tbody>
+            @for (producto of entrada.productos ; track $index ){
+            <tr>
+                <td>
+                    {{producto.id}}
+                </td>
+                <td>
+                    {{producto.producto.nombre}}
+                </td>
+                <td>
+                    {{producto.producto.stock}}
+                </td>
+                <td>
+                    {{producto.cantidad}}
+
+
+                </td>
+                <td>
+                    {{producto.producto.precio}}
+                </td>
+               
+
+            </tr>
+            }
+        </tbody>
+        <tfoot>
+      
+
+        </tfoot>
+    </table>
+</div>

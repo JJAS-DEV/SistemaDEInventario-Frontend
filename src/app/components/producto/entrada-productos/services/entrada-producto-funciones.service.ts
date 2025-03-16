@@ -2,14 +2,20 @@ import { Injectable } from '@angular/core';
 import { EntradaProductoService } from '../../../../services/entrada-producto.service';
 import { Producto } from '../../../../models/producto';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { EntradaProductos } from '../../../../models/productoEntrada';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class EntradaProductoFuncionesService {
+  private listaEntrada :EntradaProductos[] =[];
 
   constructor(
-   private entradaService: EntradaProductoService
+   private entradaService: EntradaProductoService,
+       private router: Router
+   
   ) { }
 
 
@@ -25,9 +31,19 @@ export class EntradaProductoFuncionesService {
                   title: "guardado",
                   text:  " guardado con exito ",
                   icon: "success"
-                });
+                  
+                }).then((result) => {
+                  // Espera a que el usuario haga clic en "Ok" y luego recarga la página
+                  if (result.isConfirmed) {
+                    window.location.reload();
+                  }
+              })  ;
+                
 
-      
+
+               
+
+
               },
               error: (err) => {
       
@@ -46,6 +62,13 @@ export class EntradaProductoFuncionesService {
 
     }
 
+    findAlld(){
+
+      this.entradaService.findAll();
+
+    }
+
+    
 
 
 }
