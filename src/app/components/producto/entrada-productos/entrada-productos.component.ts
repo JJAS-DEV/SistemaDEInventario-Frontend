@@ -330,7 +330,7 @@ export class EntradaProductosComponent implements OnInit {
 
 
     } else if (this.buscador === "") {
-      this.productoService.findAll().subscribe(productos => {
+      this.productoService.buscarProductosByProvedor(this.buscador, this.provedorSeleccionado.id).subscribe(productos => {
      
 
         

@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Producto } from '../../../../../models/producto';
 import { Observable, of } from 'rxjs';
 import { ProductoService } from '../../../../../services/producto.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detalle-entrada',
@@ -94,46 +95,75 @@ export class DetalleEntradaComponent implements OnInit {
 
   productosmodficados:Producto[]=[];
 productod!:Producto;
-  async EnviarListaModificado(productosModificdos: ProductoProductoEntrada[]) {
-    const promesas = productosModificdos.map(producto =>
-      new Promise<void>((resolve, reject) => {
-        this.productoservice.findById(producto.producto.id).subscribe({
-          next: (pr: Producto) => {
-            console.log('Producto cargado con éxito:', pr);
+   EnviarListaModificado(productosModificdos: ProductoProductoEntrada[]) {
+let verificador=true;
+   productosModificdos.forEach(pr=>{
+      if (!pr.cantidad ||pr.cantidad.toString().trim() === "") {
+        verificador=false// Detener la ejecución si está vacío
+      }
   
+      // Convertir cantidad a número
+      const cantidad = Number(pr.cantidad);
   
-              if (!producto.producto.stock || producto.producto.stock.toString().trim() === "") {
-                alert("Debe ingresar una cantidad válida. " + producto.producto.nombre);
-                reject("Cantidad inválida");
-              } else if (isNaN(producto.producto.stock) || producto.producto.stock <= 0) {
-                alert("La cantidad debe ser un número positivo. " + producto.producto.nombre);
-                reject("Cantidad negativa o no numérica");
-              } else {
-                alert("Se pudo modificar");
-                producto.producto.stock = producto.cantidad;
-                this.productosmodficados.push(producto.producto);
-                resolve();
-              }
+      // Validar que la cantidad no sea negativa, cero o NaN
+      if ( cantidad < 0) {
+        verificador=false // Detener la ejecución si el número es inválido
+      }
+    })
+
+
+    if(verificador){
+     productosModificdos.forEach(pr=>{
+      pr.producto.stock=pr.cantidad;
+      this.productosmodficados.push(pr.producto)
+     }) 
+      this.service.update(this.productosmodficados, this.idPagina).subscribe({
+        next: (response) => {
+          console.log("✅ Actualización exitosa:", response);
+          alert("Productos actualizados correctamente.");
+        },
+        error: (error) => {
+          console.error("❌ Error al actualizar:", error);
+          alert("Error al actualizar los productos. Revisa la consola.");
+        },
+        complete:() =>{
+
+
+          Swal.fire({
+                            title: "guardado",
+                            text:  " modificado con exito ",
+                            icon: "success"
+                            
+                          }).then((result) => {
+                            // Espera a que el usuario haga clic en "Ok" y luego recarga la página
+                            if (result.isConfirmed) {
+                              window.location.reload();
+                            }
+                        })  ;
+
+
+
           
-          },
-          error: (error) => {
-            console.error('Error al obtener el producto:', error);
-            reject(error);
-          }
-        });
-      })
-      
-    );
-    try {
-      await Promise.all(promesas); // Espera que todas las peticiones terminen
-      console.log("Todos los productos han sido procesados.");
-      this.enviarActualizacion(); // Llamar la función cuando todo esté listo
-    } catch (error) {
-      console.error("Error en el procesamiento:", error);
+            
+        }
+      });
+
+
+    }else{
+       Swal.fire(
+                          'Error en la modificacion',
+                          'error'
+                        );
+
+
+
     }
-  
+    
   
   }
+
+
+
 
 
   eliminar(id:number){
