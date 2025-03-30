@@ -112,6 +112,9 @@ let verificador=true;
     })
 
 
+  
+
+
     if(verificador){
      productosModificdos.forEach(pr=>{
       pr.producto.stock=pr.cantidad;
@@ -173,6 +176,9 @@ let verificador=true;
 
 
   }
+
+
+
 
   enviarActualizacion() {
       console.log(this.idPagina);
