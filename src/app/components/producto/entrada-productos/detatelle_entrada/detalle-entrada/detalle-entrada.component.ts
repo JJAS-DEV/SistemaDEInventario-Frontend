@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EntradaProductos } from '../../../../../models/productoEntrada';
 import { EntradaProductoService } from '../../../../../services/entrada-producto.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductoProductoEntrada } from '../../../../../models/ProductoProductoEntrada';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Producto } from '../../../../../models/producto';
@@ -21,6 +21,7 @@ export class DetalleEntradaComponent implements OnInit {
   service: EntradaProductoService;
   producto: ProductoProductoEntrada[] = [];
   modificar: boolean = false;
+  eliminarEntradad:boolean=true;
 
   listaNumerosDiferentes: { id: number, cantidad: number }[] = [];
     
@@ -28,7 +29,9 @@ export class DetalleEntradaComponent implements OnInit {
 
 
   constructor(service: EntradaProductoService, private route: ActivatedRoute,
-    private productoservice:ProductoService
+    private productoservice:ProductoService,
+           private router: Router,
+    
   ) {
     this.entrada = new EntradaProductos;
     this.service = service;
@@ -36,7 +39,13 @@ export class DetalleEntradaComponent implements OnInit {
     
 
   }
+
+
+
+
   idPagina!:number;
+
+  
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const id: number = +(params.get('id') || '0');
@@ -53,7 +62,7 @@ export class DetalleEntradaComponent implements OnInit {
               id: producto.producto.id,
               cantidad: producto.cantidad
             }));
-          
+          this.sepuedeEliminar(this.entrada);
     
             console.log("Lista de productos:", this.listaNumerosDiferentes); 
             // Verifica la lista
@@ -74,7 +83,17 @@ export class DetalleEntradaComponent implements OnInit {
     
    
   }
+sepuedeEliminar(productos:EntradaProductos){
+  productos.productos.forEach(productos=>{
+    if(productos.cantidad>productos.producto.stock){
+      this.eliminarEntradad=false;
+      
+    }
+  })
 
+
+
+}
  
   Ifmodificar() {
     if(this.modificar){
@@ -112,10 +131,16 @@ let verificador=true;
     })
 
 
-  
-
-
-    if(verificador){
+  if(productosModificdos.length===0){
+    Swal.fire({
+      title: "Do you want to save the changes?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Save",
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      if (result.isConfirmed) {
+         if(verificador){
      productosModificdos.forEach(pr=>{
       pr.producto.stock=pr.cantidad;
       this.productosmodficados.push(pr.producto)
@@ -125,13 +150,37 @@ let verificador=true;
           console.log("✅ Actualización exitosa:", response);
           alert("Productos actualizados correctamente.");
         },
-        error: (error) => {
-          console.error("❌ Error al actualizar:", error);
-          alert("Error al actualizar los productos. Revisa la consola.");
+        error: ( err) => {
+
+           if (err.status == 200){
+            Swal.fire({
+              title: "elimnado",
+              text:  " se elimino la entrada ",
+              icon: "success"
+              
+            }).then((result) => {
+              // Espera a que el usuario haga clic en "Ok" y luego recarga la página
+              if (result.isConfirmed) {
+                this.router.navigate(['/ListaDeEntradas'])              
+                        }
+          })  ;
+
+
+
+
+
+
+
+           }else{
+            console.error("❌ Error al actualizar: ", err);
+            alert("Error al actualizar los productos. Revisa la consola.");
+
+           }
+         
+
+        
         },
         complete:() =>{
-
-
           Swal.fire({
                             title: "guardado",
                             text:  " modificado con exito ",
@@ -140,8 +189,8 @@ let verificador=true;
                           }).then((result) => {
                             // Espera a que el usuario haga clic en "Ok" y luego recarga la página
                             if (result.isConfirmed) {
-                              window.location.reload();
-                            }
+                              this.router.navigate(['/ListaDeEntradas'])              
+                                      }
                         })  ;
 
 
@@ -150,6 +199,116 @@ let verificador=true;
             
         }
       });
+
+
+    }
+    
+    
+    else{
+       Swal.fire(
+                          'Error en la modificacion',
+                          'error'
+                        );
+
+
+
+    }
+        Swal.fire("Saved!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info").then((result) => {
+          // Espera a que el usuario haga clic en "Ok" y luego recarga la página
+          if (result.isConfirmed) {
+            window.location.reload();
+                        
+                    }
+      }) ;
+
+
+      
+      }
+    });
+  }
+
+
+    else if(verificador){
+
+
+
+      Swal.fire({
+        title: "Do you want to save the changes?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "Save",
+        denyButtonText: `Don't save`
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+
+          productosModificdos.forEach(pr=>{
+            pr.producto.stock=pr.cantidad;
+            this.productosmodficados.push(pr.producto)
+           }) 
+            this.service.update(this.productosmodficados, this.idPagina).subscribe({
+              next: (response) => {
+               
+              },
+              error: ( err) => {
+      
+                 if (err.status == 200){
+                  Swal.fire({
+                    title: "elimnado",
+                    text:  " se elimino la entrada ",
+                    icon: "success"
+                    
+                  }).then((result) => {
+                    // Espera a que el usuario haga clic en "Ok" y luego recarga la página
+                    if (result.isConfirmed) {
+                      this.router.navigate(['/ListaDeEntradas'])              
+                              }
+                })  ;
+                 }else{
+                  console.error("❌ Error al actualizar: ", err);
+                  alert("Error al actualizar los productos. Revisa la consola.");
+      
+      
+      
+                 }
+               
+      
+              
+              },
+              complete:() =>{
+                Swal.fire({
+                                  title: "guardado",
+                                  text:  " modificado con exito ",
+                                  icon: "success"
+                                  
+                                }).then((result) => {
+                                  // Espera a que el usuario haga clic en "Ok" y luego recarga la página
+                                  if (result.isConfirmed) {
+                                    this.router.navigate(['/ListaDeEntradas'])              
+                                            }
+                              })  ;
+      
+      
+      
+                
+                  
+              }
+            });
+        } else if (result.isDenied) {
+          Swal.fire("Changes are not saved", "", "info").then((result) => {
+            // Espera a que el usuario haga clic en "Ok" y luego recarga la página
+            if (result.isConfirmed) {
+              window.location.reload();
+                          
+                      }
+        }) ;
+          
+          
+        }
+      });
+   
 
 
     }else{
@@ -176,6 +335,8 @@ let verificador=true;
 
 
   }
+
+
 
 
 
