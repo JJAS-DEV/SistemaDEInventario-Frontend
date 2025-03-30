@@ -1,45 +1,36 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Proveedores } from '../../../../models/proveedores';
 import { Producto } from '../../../../models/producto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' // Hace que el servicio esté disponible en toda la aplicación
 })
 export class ServicespaginadoService {
 
-  constructor() { 
-    this.producto = new Producto();
+  producto: Producto = new Producto();
+  proveedores: Proveedores[] = [];
+  pageIndex = 0;
+  pageSize = 5;
+  proveedoresPaginados: any[] = [];
+  productos: Producto[] = [];
 
-  }
-   producto:Producto;
-      proveedores: Proveedores[] = [];
-  
-      pageIndex = 0; 
-      pageSize = 5;
-      proveedoresPaginados: any[] = []; 
-  
-       productos:Producto[]=[];
+  constructor() { }
 
-  cambiarPagina(event: any ,lista: any[]) {
+  cambiarPagina(event: any, lista: any[]): any[] {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    return this.proveedoresPaginados = lista.slice(this.pageIndex * this.pageSize, (this.pageIndex + 1) * this.pageSize);
-
+    return this.actualizarPaginacion(lista);
   }
 
-  actualizarPaginacion(lista: any[]
-  ) {
+  actualizarPaginacion(lista: any[]): any[] {
+    
+
     this.proveedoresPaginados = lista.slice(
-      this.pageIndex * this.pageSize, 
-      (this.pageIndex +1) * this.pageSize
-      
-
+      this.pageIndex * this.pageSize,
+      (this.pageIndex + 1) * this.pageSize
     );
+    this.pageIndex=0;
+
     return this.proveedoresPaginados;
-
   }
-
-
-
-
 }

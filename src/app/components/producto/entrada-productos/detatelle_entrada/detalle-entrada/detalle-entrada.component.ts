@@ -357,5 +357,42 @@ let verificador=true;
       });
   }
 
+  EliminarEntrada(){
+
+    Swal.fire({
+      title: "quieres eliminar la entradad?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "eliminar entradad ",
+      denyButtonText: `no eliminar la entrada'`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("eliminado! con exito"+ this.idPagina, "", "success");
+        this.service.remove(this.idPagina).subscribe({
+          next: (respuesta) => {
+            console.log('Eliminación exitosa. Respuesta:', respuesta);
+            // Aquí puedes agregar la lógica que necesites después de una eliminación exitosa
+          },
+          error: (error) => {
+            console.error('Error al eliminar:', error);
+
+            this.router.navigate(['/ListaDeEntradas'])              
+
+            // Aquí puedes manejar el error, por ejemplo, mostrar un mensaje al usuario
+          }
+        });
+
+
+      } else if (result.isDenied) {
+        Swal.fire("los cambios no se realizaron", "", "info");
+        window.location.reload();
+
+      }
+    });
+   
+
+  }
+
 
 }

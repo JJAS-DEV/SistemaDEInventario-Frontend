@@ -27,7 +27,11 @@ export class EntradaProductoService {
      console.log( `${this.url}/${id}`);
       return this.http.put<Producto[]>(`${this.url}/${id}`,  productos ); // Enviar el array directamente
   }
-  
+
+  remove(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/${id}`);
+
+  }
     
 
 }

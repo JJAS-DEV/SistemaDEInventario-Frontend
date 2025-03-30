@@ -3,9 +3,8 @@
     <h1>  provedor {{entrada.proveedor.nombre}}</h1>
 </div>
 
-<div>{{eliminarEntradad}}</div>
 <div class="table-responsive">
-    <div><button class=" btn btn-danger btn-sm" (click)="Ifmodificar()">
+    <div style="padding: 5px;"><button class=" btn btn-danger btn-sm" (click)="Ifmodificar()">
         modificar entrada
     </button></div>
     <table class="table table-bordered table-striped">
@@ -100,12 +99,30 @@
       
            
         </tfoot>
-        @if(modificar){
-        <div><button class=" btn btn-success btn-sm" (click)="EnviarListaModificado(entrada.productos)">
-            enviar modificacion
-        </button></div>
-    }
+       
 
 
     </table>
+</div>
+
+<div style="display: flex;  ">
+
+
+    @if(modificar){
+       <div style="padding: 5px;"><button class=" btn btn-success btn-sm" (click)="EnviarListaModificado(entrada.productos)">
+            enviar modificacion
+        </button></div>
+
+            @if(eliminarEntradad){
+                <div style="padding: 5px;"><button class=" btn btn-danger btn-sm" (click)="EliminarEntrada()">
+                    eliminar la entrada
+                </button></div>
+        
+                
+            }@else{
+            <span style="padding: 5px;"> no se puede eliminar la entrada</span>
+            }
+    }
+
+   
 </div>

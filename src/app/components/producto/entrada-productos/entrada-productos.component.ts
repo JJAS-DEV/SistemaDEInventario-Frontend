@@ -122,33 +122,45 @@ export class EntradaProductosComponent implements OnInit {
 
   provedorSeleccionado: Proveedores = new Proveedores();
   seleccionado(proveedor: Proveedores) {
-    this.proveedor_selecc = false;
     this.producto.proveedor = proveedor;
-    this.provedorSeleccionado=proveedor;
-
-
-    this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
-
-
-    this.productoService.productosbyproveedor(proveedor.id).subscribe(producto => {
-     
-      // Cargar los proveedores cuando la respuesta esté lista
-      this.productos = producto;
-
-
-      // Si ya tienes proveedores, actualiza la paginación inmediatamente
-      if (this.proveedores.length > 0) {
+    this.provedorSeleccionado = proveedor;
+  
+    // Mostrar un indicador de carga mientras se obtiene la respuesta
+    this.proveedor_selecc = true; 
+  
+    // Llamada al servicio para obtener los productos por proveedor
+    this.productoService.productosbyproveedor(proveedor.id).subscribe({
+      next: (producto) => {
+        // Se ejecuta cuando la respuesta de la API es exitosa
+        this.productos = producto;
+  
        
-
-        this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
-        this.listaNumerosDiferentes = this.productos.map(producto => ({
-          id: producto.id,
-          cantidad: producto.stock
-        }));
-
+      },
+      error: (error) => {
+        // Manejo de errores
+        console.error('Error al obtener productos del proveedor:', error);
+        alert('Hubo un error al obtener los productos del proveedor.');
+      },
+      complete: () => {
+         // Si hay productos, actualizar la paginación
+         if (this.productos.length > 0) {
+          this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
+  
+          // Crear lista de cantidades de stock de cada producto
+          this.listaNumerosDiferentes = this.productos.map(prod => ({
+            id: prod.id,
+            cantidad: prod.stock
+          }));
+        } else {
+          // Si no hay productos, limpiar la lista paginada
+          this.proveedoresPaginados = [];
+        }
+  
+        alert(`Proveedor seleccionado: ${proveedor.id}`);
+        // Se ejecuta cuando la petición finaliza exitosamente (con o sin datos)
+        this.proveedor_selecc = false; // Ocultar el indicador de carga
       }
     });
-
   }
   bucarStockexistente(id:number){
     return this.listaNumerosDiferentes.find(producto => producto.id === id)?.cantidad;
@@ -302,16 +314,9 @@ export class EntradaProductosComponent implements OnInit {
 
   escucharInputpraBuscarProducto(event: any): void {
     this.buscador = event.target.value; // Asigna el valor del input al texto
-    this.pageIndex=0;
-    console.log("Texto ingresado: ", this.buscador);
-    this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
-    this.productos.forEach(p => {
-        
-      p.stock=1; // Asignar el stock a 1
-    });
+   
 
     if (this.buscador != "") {
-      alert(this.provedorSeleccionado.id);
 
       this.productoService.buscarProductosByProvedor(this.buscador, this.provedorSeleccionado.id).subscribe(productos => {
         // Cargar los proveedores cuando la respuesta esté lista
@@ -321,12 +326,13 @@ export class EntradaProductosComponent implements OnInit {
 
 
         // Si ya tienes proveedores, actualiza la paginación inmediatamente
-        if (this.proveedores.length > 0) {
+        if (this.productos.length > 0) {
 
           this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
 
         }
       });
+
 
 
     } else if (this.buscador === "") {
@@ -336,11 +342,12 @@ export class EntradaProductosComponent implements OnInit {
         
         // Cargar los proveedores cuando la respuesta esté lista
          this.productos= productos;
+         this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
 
         // Si ya tienes proveedores, actualiza la paginación inmediatamente
 
         // Si ya tienes proveedores, actualiza la paginación inmediatamente
-        if (this.proveedores.length > 0) {
+        if (this.productos.length > 0) {
           
 
           this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
