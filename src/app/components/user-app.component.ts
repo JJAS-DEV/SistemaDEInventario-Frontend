@@ -85,17 +85,30 @@ export class UserAppComponent implements OnInit {
         error:error=> {
           if(error.status==401){
             console.log(error.error);
+            console.log("entro aqui en 401")
             Swal.fire(
-                    'Error en el login',
-                     error.error.messages,
+                    error.error.error,
+                    error.error.messages,
                     'error'
                   );
-          }
-          else{
 
-            throw error;
+
+
           }
+
+          if(error.status === 0){
+
+            Swal.fire(
+              "sin conexión al servidor",
+              "sin conexión",
+              'error'
+            );
+
+          }
+          
+
         }
+
 
       })
 
