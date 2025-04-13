@@ -12,6 +12,7 @@ import { ProducFormComponent } from './components/producto/produc-form/produc-fo
 import { EntradaProductosComponent } from './components/producto/entrada-productos/entrada-productos.component';
 import { EntradasComponent } from './components/producto/entrada-productos/ListaEntradas/entradas/entradas.component';
 import { DetalleEntradaComponent } from './components/producto/entrada-productos/detatelle_entrada/detalle-entrada/detalle-entrada.component';
+import { Error404Component } from './components/forbidden403/error404/error404.component';
 
 export const routes: Routes = [
   
@@ -19,7 +20,7 @@ export const routes: Routes = [
   {
     path:'',
     pathMatch:'full',
-    redirectTo:'/users'
+    redirectTo:'/login'
   },
   
     {path:'users',
@@ -103,5 +104,5 @@ component:EntradasComponent
   
   },
 
-
+  { path: '**', component: Error404Component }
 ];

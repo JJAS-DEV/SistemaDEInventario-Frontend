@@ -70,6 +70,11 @@ export class AuthService {
   authenticated() {
     return this.user.isAuth;
   }
+  isauthenticated(){
+    
+
+    return
+  }
 
   logout() {
     this._token = undefined;

@@ -56,7 +56,14 @@ export class ProducFormserviceService {
 
 
 
+
+
           }
+          Swal.fire(
+            'Error en el registro',
+          "error en el formulario",
+            'error'
+          );
         }
       });
     }
