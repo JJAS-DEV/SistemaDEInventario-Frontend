@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Salidad De Productos</title>
+</head>
+<body>
+    <h1>
+        Lista Salidad De productos
+    </h1>
+        <table class="table table-bordered table-striped">
+            <thead>
+
+                <tr>
+                   <th>
+                    fecha
+                   </th>
+                   <th>
+                    motivo
+                   </th>
+                   <th>
+                    observaciones
+                   </th>
+                   <th>
+                    usuarioResponsable
+                   </th>
+                   
+
+
+
+
+
+                </tr>
+
+
+            </thead>
+
+            <tbody>
+                @for (listapaginadoss of listapaginados ; track $index ){
+                <tr>
+                    <!--<td>
+                                {{user.id}}
+                            </td>-->
+                    <td>
+                        
+                        {{listapaginadoss.fecha|date:'medium'}}
+                    </td>
+                    <td>
+
+                        {{listapaginadoss.motivo}}
+                    </td>
+                    <td>
+
+                        {{listapaginadoss.observaciones}}
+                    </td>
+                    <td>
+
+                        {{listapaginadoss.usuarioResponsable}}
+                    </td>
+
+                </tr>
+
+                }
+
+
+
+            </tbody>
+
+            <tfoot style="margin: auto;">
+
+                <mat-paginator [length]="salidadProducto.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
+                    (page)="cambiarPagina($event, salidadProducto)" showFirstLastButtons>
+
+                </mat-paginator>
+            </tfoot>
+
+
+
+
+
+        </table>
+    
+</body>
+</html>
+

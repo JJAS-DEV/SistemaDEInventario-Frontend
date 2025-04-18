@@ -13,6 +13,7 @@ import { EntradaProductosComponent } from './components/producto/entrada-product
 import { EntradasComponent } from './components/producto/entrada-productos/ListaEntradas/entradas/entradas.component';
 import { DetalleEntradaComponent } from './components/producto/entrada-productos/detatelle_entrada/detalle-entrada/detalle-entrada.component';
 import { Error404Component } from './components/forbidden403/error404/error404.component';
+import { SalidadProductoComponent } from './components/producto/salidad-producto/salidad-producto.component';
 
 export const routes: Routes = [
   
@@ -103,6 +104,12 @@ component:EntradasComponent
   component:DetalleEntradaComponent,
   
   },
+
+  {path:'salidadProductos',
+    component:SalidadProductoComponent,
+    
+    },
+
 
   { path: '**', component: Error404Component }
 ];

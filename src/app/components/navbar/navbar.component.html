@@ -19,6 +19,13 @@
             </li>
 
           }
+          @if(admin){
+            <li class="nav-item">
+              <a class="nav-link"[routerLink]="['/salidadProductos']"  [state]="{users}"
+              >Lista Salidas</a>
+            </li>
+
+          }
           @if(login.isAuth){
             <li class="nav-item">
               <a class="nav-link"[routerLink]="['/provedores']" 
@@ -43,6 +50,8 @@
 
 
           }
+
+          
           
           
           <li class="nav-item " >
