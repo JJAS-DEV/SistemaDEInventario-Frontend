@@ -1,78 +1,51 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="#">usersApp</a>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" [routerLink]="['/users']"
-            [state]="{users,paginator}"
-            >users</a>
-          </li>
-          @if(admin){
-            <li class="nav-item">
-              <a class="nav-link"[routerLink]="['/users/create']"  [state]="{users}"
-              >New User</a>
-            </li>
-
-          }
-          @if(admin){
-            <li class="nav-item">
-              <a class="nav-link"[routerLink]="['/salidadProductos']"  [state]="{users}"
-              >Lista Salidas</a>
-            </li>
-
-          }
-          @if(login.isAuth){
-            <li class="nav-item">
-              <a class="nav-link"[routerLink]="['/provedores']" 
-              >proveedores </a>
-            </li>
-
-
-          }
-          @if(login.isAuth){
-            <li class="nav-item">
-              <a class="nav-link"[routerLink]="['/productos']" 
-              >productoss </a>
-            </li>
-
-
-          }
-          @if(login.isAuth){
-            <li class="nav-item">
-              <a class="nav-link"[routerLink]="['/ListaDeEntradas']" 
-              >Lista De entradas </a>
-            </li>
-
-
-          }
-
-          
-          
-          
-          <li class="nav-item " >
-              <span class="nav-item text-primary nav-link " >
-                @if(login.isAuth){
-                  {{login.user.username}}
-                  <button (click)="handlerLogout()" class="btn btn-outline-success">logout</button>
-                }@else{
-                <a  class=" btn btn-outline-primary" [routerLink]="['/login']" > Sign In</a>
-                }
-              </span>
-          </li>
-          
-          
-        </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-primary" href="#">usersApp</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" [routerLink]="['/users']" [state]="{users,paginator}">👤 Usuarios</a>
+        </li>
+        @if(admin){
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/users/create']" [state]="{users}">➕ Nuevo Usuario</a>
+        </li>
+        }
+        @if(admin){
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/salidadProductos']" [state]="{users}">📦 Salidas</a>
+        </li>
+        }
         @if(login.isAuth){
-        <span>
-          {{hola}}
-        </span>
-      }
-        
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/provedores']">🏢 Proveedores</a>
+        </li>
+        }
+        @if(login.isAuth){
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/productos']">🛒 Productos</a>
+        </li>
+        }
+        @if(login.isAuth){
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/ListaDeEntradas']">📥 Entradas</a>
+        </li>
+        }
+      </ul>
+      <div class="d-flex align-items-center">
+        @if(login.isAuth){
+        <span class="me-3 text-primary">👋 {{login.user.username}}</span>
+        <button (click)="handlerLogout()" class="btn btn-outline-danger btn-sm">🚪 Logout</button>
+        }@else{
+        <a class="btn btn-outline-primary btn-sm" [routerLink]="['/login']">🔑 Sign In</a>
+        }
+        @if(login.isAuth){
+        <span class="ms-3 text-muted">{{hola}}</span>
+        }
       </div>
     </div>
-  </nav>
+  </div>
+</nav>

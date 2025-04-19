@@ -1,108 +1,72 @@
-@if(isAuth){
-<h3>
-    {{title}}
-</h3>
-}
-@if(admin) {
-<button type="button" class="btn btn-primary" [routerLink]="['/users/create']">
-    crear usuario
-
-
-</button>
-}
-
-@if(isAuth){
-<div> buscador <input type="text"></div>
-
-
-@if(users.length<0){
-<div class="alert alert-warning "> No hay registros en el sistemas¡</div>
-
-}@else {
-<div class="table-responsive">
-
-
-    <table class="table table-bordered table-striped">
-        <thead>
-
-            <tr>
-
-                <!-- <th> id</th>-->
-                <th>name</th>
-                <th>lastname</th>
-                <th>email</th>
-                <th>username</th>
-                @if(admin){
-
-                <th>Role</th>
-                <th>remove</th>
-
-                <th>update</th>
-
-                }
-
-
-            </tr>
-        </thead>
-
-        <tbody>
-            @for (user of users; track $index){
-            <tr>
-                <!--<td>
-                        {{user.id}}
-                    </td>-->
-                <td>
-                    {{user.name}}
-                </td>
-                <td>
-                    {{user.lastname}}
-                </td>
-                <td>
-                    {{user.email}}
-                </td>
-                <td>
-                    {{user.username}}
-                </td>
-
-                @if (admin) {
-                    <td>
-                        @if(user.admin){
-                            admin
-                            
-                        }@else {
-    
-                            user
-                        }
-                   
-                     </td>
-                <td>
-
-                    <button class=" btn btn-danger btn-sm" (click)="onRemoveUser(user.id)">
-                        remove
-                    </button>
-                </td>
-                <td>
-
-                    <button class=" btn btn-info btn-sm" [routerLink]="['/users/edit',user.id]">
-                        update
-                    </button>
-                </td>
-                }
-
-
-            </tr>
-
+<div class="container mt-5">
+    @if(isAuth){
+    <h1 class="mb-4 text-center text-primary fw-bold">{{ title }}</h1>
+    }
+  
+    @if(admin) {
+    <div class="d-flex justify-content-end mb-3">
+      <button type="button" class="btn btn-success" [routerLink]="['/users/create']">
+        ➕ Crear Usuario
+      </button>
+    </div>
+    }
+  
+    @if(isAuth){
+  
+  
+    @if(users.length == 0){
+    <div class="alert alert-warning shadow-sm rounded-4">⚠️ No hay usuarios registrados en el sistema.</div>
+    }@else {
+    <div class="table-responsive shadow-sm rounded-4">
+      <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>👤 Nombre</th>
+            <th>📝 Apellido</th>
+            <th>📧 Email</th>
+            <th>🏷️ Nombre de Usuario</th>
+            @if(admin){
+            <th>🛡️ Rol</th>
+            <th>🗑️ Eliminar</th>
+            <th>✏️ Editar</th>
             }
-
-
-
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of users; track $index){
+          <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.lastname }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.username }}</td>
+            @if (admin) {
+            <td>
+              @if(user.admin){
+              <span class="badge bg-danger">Admin</span>
+              }@else {
+              <span class="badge bg-secondary">Usuario</span>
+              }
+            </td>
+            <td>
+              <button class="btn btn-danger btn-sm" (click)="onRemoveUser(user.id)">
+                Eliminar
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-info btn-sm" [routerLink]="['/users/edit', user.id]">
+                Editar
+              </button>
+            </td>
+            }
+          </tr>
+          }
         </tbody>
-
-
-    </table>
-</div>
-}
-
-<paginator [paginator]="paginator" [url]="'/users/page'"></paginator>
-
-}
+      </table>
+    </div>
+    }
+  
+    <div class="mt-3">
+      <paginator [paginator]="paginator" [url]="'/users/page'"></paginator>
+    </div>
+    }
+  </div>

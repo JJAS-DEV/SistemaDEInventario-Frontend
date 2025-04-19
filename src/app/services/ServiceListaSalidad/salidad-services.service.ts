@@ -7,14 +7,25 @@ import { SalidadProducto } from '../../models/SalidadProducto';
   providedIn: 'root'
 })
 export class SalidadServicesService {
-    private url: string = 'http://localhost:8080/api/salidadProducto'
-  
-    constructor(private http: HttpClient, ) { }
+  private url: string = 'http://localhost:8080/api/salidadProducto'
+
+  constructor(private http: HttpClient,) { }
 
 
-    
+
   findAll(): Observable<SalidadProducto[]> {
-      return this.http.get<SalidadProducto[]>(this.url)
+    return this.http.get<SalidadProducto[]>(this.url)
+  }
+
+  create(salidadProducto: SalidadProducto) {
+    return this.http.post<SalidadProducto>(this.url, salidadProducto);
+  }
+
+
+   findById(id: number): Observable<SalidadProducto> {
+      return this.http.get<SalidadProducto>(`${this.url}/${id}`)
     }
+
+
 
 }

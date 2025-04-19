@@ -40,11 +40,18 @@ export class ProductoService {
     return this.http.post<boolean>(`${this.url}/validarProducto`,producto);
   }
 
+  
   buscarProductosByProvedor(name: string, idProveedor: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.url}/buscar`, {
       params: { name, idProveedor: idProveedor.toString() }
     });
   }
+  buscarProductosByNombre(name: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}/buscarXnombre`, {
+      params: {name}
+    });
+  }
+  
 
 
 }

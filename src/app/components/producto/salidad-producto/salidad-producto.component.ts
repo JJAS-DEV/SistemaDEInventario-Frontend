@@ -4,12 +4,13 @@ import { SalidadServicesService } from '../../../services/ServiceListaSalidad/sa
 import { ServicespaginadoService } from '../entrada-productos/services/servicespaginado.service';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule, DatePipe } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-salidad-producto',
   standalone: true,
-  imports: [MatPaginatorModule,CommonModule],
+  imports: [MatPaginatorModule,CommonModule,RouterModule],
   templateUrl: './salidad-producto.component.html',
   providers: [DatePipe]
   
@@ -22,7 +23,7 @@ export class SalidadProductoComponent implements OnInit {
   listapaginados: any[] = [];
 
   constructor(private salidadServicesService:SalidadServicesService, private servicepaginado: ServicespaginadoService,private datePipe: DatePipe
-  
+  ,private router: Router
   ){
     
 
@@ -61,5 +62,7 @@ export class SalidadProductoComponent implements OnInit {
 
 
   }
+
+  
 
 }

@@ -1,86 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista Salidad De Productos</title>
-</head>
-<body>
-    <h1>
-        Lista Salidad De productos
-    </h1>
-        <table class="table table-bordered table-striped">
-            <thead>
 
-                <tr>
-                   <th>
-                    fecha
-                   </th>
-                   <th>
-                    motivo
-                   </th>
-                   <th>
-                    observaciones
-                   </th>
-                   <th>
-                    usuarioResponsable
-                   </th>
-                   
-
-
-
-
-
-                </tr>
-
-
-            </thead>
-
-            <tbody>
-                @for (listapaginadoss of listapaginados ; track $index ){
-                <tr>
-                    <!--<td>
-                                {{user.id}}
-                            </td>-->
-                    <td>
-                        
-                        {{listapaginadoss.fecha|date:'medium'}}
-                    </td>
-                    <td>
-
-                        {{listapaginadoss.motivo}}
-                    </td>
-                    <td>
-
-                        {{listapaginadoss.observaciones}}
-                    </td>
-                    <td>
-
-                        {{listapaginadoss.usuarioResponsable}}
-                    </td>
-
-                </tr>
-
-                }
-
-
-
-            </tbody>
-
-            <tfoot style="margin: auto;">
-
-                <mat-paginator [length]="salidadProducto.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
-                    (page)="cambiarPagina($event, salidadProducto)" showFirstLastButtons>
-
-                </mat-paginator>
-            </tfoot>
-
-
-
-
-
-        </table>
-    
-</body>
-</html>
-
+<div class="container mt-5">
+    <h1 class="mb-4 text-center text-primary fw-bold">📋 Lista de Salida de Productos</h1>
+  
+    <div class="d-flex justify-content-end mb-3">
+      <button type="button" class="btn btn-success" [routerLink]="['/crar-salidadProductos']">
+        ➕ Crear Salida
+      </button>
+    </div>
+  
+    <div class="table-responsive shadow-sm rounded-4">
+      <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>📅 Fecha</th>
+            <th>📝 Motivo</th>
+            <th>💬 Observaciones</th>
+            <th>👤 Usuario Responsable</th>
+            <th>🔍 Detalle</th>
+            <th>#ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (listapaginadoss of listapaginados; track $index) {
+          <tr>
+            <td>{{ listapaginadoss.fecha | date: 'medium' }}</td>
+            <td>{{ listapaginadoss.motivo }}</td>
+            <td>{{ listapaginadoss.observaciones }}</td>
+            <td>{{ listapaginadoss.usuarioResponsable }}</td>
+            <td>
+              <button class="btn btn-info btn-sm" [routerLink]="['/salidadProdutos/detalle/', listapaginadoss.id]">
+                Detalle
+              </button>
+            </td>
+            <td>{{ listapaginadoss.id }}</td>
+          </tr>
+          }
+        </tbody>
+  
+        <tfoot>
+          <tr>
+            <td colspan="6" class="text-center">
+              <mat-paginator
+                [length]="salidadProducto.length"
+                [pageSize]="pageSize"
+                [pageIndex]="pageIndex"
+                (page)="cambiarPagina($event, salidadProducto)"
+                showFirstLastButtons>
+              </mat-paginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
