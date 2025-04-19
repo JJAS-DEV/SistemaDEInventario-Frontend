@@ -118,6 +118,11 @@ component:EntradasComponent
       
       },
 
+      {
+        path:'crar-salidadProductos/:id',
+      component:CrearSalidadComponent,
+      },
+
       {path:'salidadProdutos/detalle/:id',
         component:DetallesSalidasComponent,
         

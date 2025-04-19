@@ -1,107 +1,80 @@
-<button type="button" class="btn btn-primary mb-3" [routerLink]="['/proveedor/form']">
-    crear proveedor
-
-</button>
-<div>
-    <input type="text" (input)="escucharInput($event)" placeholder="Escribe algo...">
-    <p>Texto ingresado: {{ buscador }}</p>
-
-</div>
-
-
-@if(proveedores.length==0){
-<div class="alert alert-warning "> No hay registros en el sistemas¡</div>
-
-}
-
-
-
-
-@else {
-<div class="table-responsive">
-    <table class="table table-bordered table-striped">
-        <thead>
-
+<div class="container mt-5">
+    <h1 class="mb-4 text-center text-primary fw-bold">🏢 Lista de Proveedores</h1>
+  
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
+      <button type="button" class="btn btn-primary mb-2" [routerLink]="['/proveedor/form']">
+        ➕ Crear Proveedor
+      </button>
+  
+      <div class="mb-2">
+        <input
+          type="text"
+          class="form-control"
+          (input)="escucharInput($event)"
+          placeholder="🔍 Buscar proveedor..."
+        />
+        <p class="mt-2">Texto ingresado: <strong>{{ buscador }}</strong></p>
+      </div>
+    </div>
+  
+    @if (proveedores.length == 0) {
+      <div class="alert alert-warning text-center">
+        ⚠️ No hay registros en el sistema.
+      </div>
+    } @else {
+      <div class="table-responsive shadow-sm rounded-4">
+        <table class="table table-bordered table-hover align-middle text-center">
+          <thead class="table-dark">
             <tr>
-                <th>
-                    name
-                </th>
-                <th>
-                    telefono
-                </th>
-                <th>
-                    direccion
-                </th>
-                <th>update</th>
-                <th>delete</th>
-
-
-
-
+              <th>📛 Nombre</th>
+              <th>📞 Teléfono</th>
+              <th>📍 Dirección</th>
+              <th>✏️ Modificar</th>
+              <th>🗑️ Eliminar</th>
             </tr>
-
-
-        </thead>
-
-        <tbody>
-            @for (proveedor of proveedoresPaginados ; track $index  ){
+          </thead>
+  
+          <tbody>
+            @for (proveedor of proveedoresPaginados; track $index) {
             <tr>
-                <!--<td>
-                            {{user.id}}
-                        </td>-->
-                <td>
-                    {{proveedor.nombre}}
-                </td>
-                <td>
-                    {{proveedor.telefono}}
-                </td>
-                <td>
-                    {{proveedor.direccion}}
-                </td>
-
-                <td>
-
-                    <button class=" btn btn-info btn-sm" [routerLink]="['/proveedor/edit',proveedor.id]">
-                        update
-                    </button>
-
-
-                </td>
-                <td>
-
-                    <button class=" btn btn-danger btn-sm" (click)="onRemoveUser(proveedor.id)">
-                        delete
-                    </button>
-
-                </td>
-
-
-
-
-
+              <td>{{ proveedor.nombre }}</td>
+              <td>{{ proveedor.telefono }}</td>
+              <td>{{ proveedor.direccion }}</td>
+              <td>
+                <button
+                  class="btn btn-info btn-sm"
+                  [routerLink]="['/proveedor/edit', proveedor.id]"
+                >
+                  Modificar
+                </button>
+              </td>
+              <td>
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="onRemoveUser(proveedor.id)"
+                >
+                  Eliminar
+                </button>
+              </td>
             </tr>
-
             }
-
-
-
-        </tbody>
-
-        <tfoot style="margin: auto;">
-
-            <mat-paginator [length]="proveedores.length"
-            [pageSize]="pageSize"
-            [pageIndex]="pageIndex"
-            (page)="cambiarPagina($event)"
-            showFirstLastButtons >
-
-            </mat-paginator>
-        </tfoot>
-        
-
-
-
-
-    </table>
-</div>
-}
+          </tbody>
+  
+          <tfoot>
+            <tr>
+              <td colspan="5">
+                <mat-paginator
+                  [length]="proveedores.length"
+                  [pageSize]="pageSize"
+                  [pageIndex]="pageIndex"
+                  (page)="cambiarPagina($event)"
+                  showFirstLastButtons
+                >
+                </mat-paginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    }
+  </div>

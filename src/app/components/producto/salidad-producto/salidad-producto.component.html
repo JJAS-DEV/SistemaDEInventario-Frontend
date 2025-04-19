@@ -5,6 +5,7 @@
     <div class="d-flex justify-content-end mb-3">
       <button type="button" class="btn btn-success" [routerLink]="['/crar-salidadProductos']">
         ➕ Crear Salida
+        
       </button>
     </div>
   
@@ -17,8 +18,8 @@
             <th>💬 Observaciones</th>
             <th>👤 Usuario Responsable</th>
             <th>🔍 Detalle</th>
-            <th>#ID</th>
-          </tr>
+            <th>📝 Modificar</th>
+            <th>🗑️ Eliminar</th>           
         </thead>
         <tbody>
           @for (listapaginadoss of listapaginados; track $index) {
@@ -32,7 +33,12 @@
                 Detalle
               </button>
             </td>
-            <td>{{ listapaginadoss.id }}</td>
+            <td> <button class="btn btn-info btn-sm" [routerLink]="['/crar-salidadProductos', listapaginadoss.id]">
+              modificar
+            </button></td>
+            <td> <button class="btn btn-info btn-sm" (click)="onRemoveUser(listapaginadoss.id)" >
+              eliminar
+            </button></td>
           </tr>
           }
         </tbody>

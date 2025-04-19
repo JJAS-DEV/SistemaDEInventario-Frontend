@@ -26,6 +26,13 @@ export class SalidadServicesService {
       return this.http.get<SalidadProducto>(`${this.url}/${id}`)
     }
 
+    update(salidadProducto: SalidadProducto): Observable<SalidadProducto> {
+        return this.http.put<SalidadProducto>(`${this.url}/${salidadProducto.id}`, salidadProducto);
+      }
+      remove(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.url}/${id}`);
+    
+      }
 
 
 }

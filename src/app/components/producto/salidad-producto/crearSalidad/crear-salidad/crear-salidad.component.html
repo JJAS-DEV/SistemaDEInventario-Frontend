@@ -1,209 +1,103 @@
-<p>crear-salidad works!</p>
+<div class="container mt-5">
+  <h2 class="text-center fw-bold text-primary mb-4">
+    📝 {{ salidadProducto.id > 0 ? 'Modificar' : 'Crear' }} Salida de Producto
+  </h2>
 
+  <!-- Buscador de productos -->
+  <div class="mb-3">
+    <input
+      type="text"
+      class="form-control"
+      (input)="escucharInput($event)"
+      placeholder="🔎 Buscar producto..."
+    />
+    <p class="mt-2 text-muted">Texto ingresado: {{ buscador }}</p>
+  </div>
 
+  <!-- Tabla de productos paginados -->
+  <div *ngIf="listapaginados.length > 0 && buscador != ''" class="table-responsive shadow-sm rounded-3 mb-4">
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>📦 Nombre</th>
+          <th>📊 Stock</th>
+          <th>🔢 Cantidad</th>
+          <th>✅ Seleccionar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of listapaginados; let i = index">
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.stock }}</td>
+          <td>
+            <input
+              type="number"
+              #stockInput
+              class="form-control"
+              min="1"
+              placeholder="Cantidad"
+            />
+          </td>
+          <td>
+            <button
+              class="btn btn-success btn-sm"
+              (click)="agregarProductoAlista(producto, stockInput.value)"
+            >
+              ➕ Seleccionar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4" class="text-center">
+            <mat-paginator
+              [length]="productos.length"
+              [pageSize]="pageSize"
+              [pageIndex]="pageIndex"
+              (page)="cambiarPagina($event, productos)"
+              showFirstLastButtons
+            ></mat-paginator>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 
-<div>
-    <input type="text" (input)="escucharInput($event)"  placeholder="Escribe algo...">
-    <p>Texto ingresado: {{ buscador }}</p>
-
-</div>
-
-
-<div>
-    @if(listapaginados.length>0 && buscador!=""){
-    <div class="table-responsive">
-           <table class="table table-bordered table-striped">
-               <thead>
-   
-                   <tr>
-                       <th>
-                           name
-                       </th>
-
-                       <th>
-                        stock
-                       </th>
-                       <th>cantidad</th>
-   
-                       <th>
-                           seleccionar
-                       </th>
-   
-   
-   
-   
-   
-                   </tr>
-   
-   
-               </thead>
-   
-               <tbody>
-                   @for (producto of listapaginados ; track $index ){
-                   <tr>
-                       <!--<td>
-                                   {{user.id}}
-                               </td>-->
-                       <td>
-                           {{producto.nombre}}
-                       </td>
-                       <td>
-                        {{producto.stock}}
-                       </td>
-                       <td>   <input placeholder="number" type="number" #stockInput
-                        class="form-control my-2" min="1"></td>
-                    
-
-                        <td> 
-                            <button class=" btn btn-primary btn-sm" (click)="agregarProductoAlista(producto,stockInput.value)">
-                                selccionar
-                            </button>
-                        </td>
-                       
-                   </tr>
-   
-                   
-   
-                }
-   
-               </tbody>
-   
-               <tfoot style="margin: auto;">
-   
-                   <mat-paginator [length]="productos.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
-                       (page)="cambiarPagina($event, productos)" showFirstLastButtons>
-   
-                   </mat-paginator>
-               </tfoot>
-   
-   
-   
-   
-   
-           </table>
-
-        
-
+  <!-- Productos seleccionados -->
+  <div *ngIf="salidadProducto.productos.length > 0">
+    <h4 class="text-primary fw-semibold mt-4 mb-3">🧾 Productos Seleccionados</h4>
+    <div class="table-responsive shadow-sm rounded-3 mb-4">
+      <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>📦 Nombre</th>
+            <th>📊 Stock</th>
+            <th>🔢 Cantidad</th>
+            <th>💰 Precio</th>
+            <th>🗑️ Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let producto of salidadProducto.productos; let i = index">
+            <td>{{ producto.producto.nombre }}</td>
+            <td>{{ producto.producto.stock }}</td>
+            <td>{{ producto.cantidad }}</td>
+            <td>
+              $ {{ producto.producto.precio | number: '1.0-0' }} <!-- Número formateado -->
+            </td>
+            <td>
+              <button
+                class="btn btn-danger btn-sm"
+                (click)="eliminarProducto(producto.producto.nombre)"
+              >
+                🗑️ Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    }
-
-
-    
-
-</div>
-
-
-@if(salidadProducto.productos.length>0){
-<div>
-
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead>
-
-                <tr>
-                    <th>
-                        name
-                    </th>
-
-                    <th>
-                     stock
-                    </th>
-                    <th>cantidad de salidad</th>
-
-                    <th>
-                        eliminar
-                    </th>
-
-
-
-
-
-                </tr>
-
-
-            </thead>
-
-            <tbody>
-                @for (producto of salidadProducto.productos ; track $index ){
-                <tr>
-                    <!--<td>
-                                {{user.id}}
-                            </td>-->
-                    <td>
-                        {{producto.producto.nombre}}
-                    </td>
-                    <td>
-                     {{producto.producto.stock}}
-                    </td>
-                    <td> {{producto.cantidad}}</td>
-
-                 
-
-                   
-                    
-                    <td>
-                        <button class=" btn btn-primary btn-sm" (click)="eliminarProducto(producto.producto.nombre)">
-                            eliminar
-                        </button>
-                    </td>
-                </tr>
-
-                
-
-                
-
-             }
-
-            </tbody>
-
-      
-
-
-
-
-
-        </table>
-
-     
-
- </div>
-</div>
-
-}
-
-<div class="container mt-4">
-    <form>
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Responsable {{salidadProducto.usuarioResponsable}}</label>
-        </div>
-  
-        <div class="col-md-6">
-          <label for="motivo" class="form-label">Motivo</label>
-          <select id="motivo" class="form-select" [(ngModel)]="salidadProducto.motivo" name="motivo" required>
-            <option value="">Seleccione un motivo</option>
-            <option value="Venta">Venta</option>
-            <option value="Reemplazo">Reemplazo</option>
-          </select>
-        </div>
-      </div>
-  
-      <div class="mb-3">
-        <label for="observaciones" class="form-label">Observaciones</label>
-        <textarea id="observaciones" rows="3" class="form-control" [(ngModel)]="salidadProducto.observaciones" name="observaciones"></textarea>
-      </div>
-  
-    </form>
   </div>
-
-  <button class=" btn btn-primary btn-sm" (click)="crearSalidad(salidadProducto)">
-  Registrar Salidad
-</button>
-
-  <div>
-
-  </div>
-
-
-
+</div>
+  

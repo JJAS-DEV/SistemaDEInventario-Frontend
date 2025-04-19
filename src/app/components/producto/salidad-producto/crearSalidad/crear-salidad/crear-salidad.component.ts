@@ -1,20 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,LOCALE_ID } from '@angular/core';
 import { ProductoService } from '../../../../../services/producto.service';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Producto } from '../../../../../models/producto';
 import { ServicespaginadoService } from '../../../entrada-productos/services/servicespaginado.service';
 import { SalidadProducto } from '../../../../../models/SalidadProducto';
 import { ProductoSalidad } from '../../../../../models/ProductoSalidad';
 import { AuthService } from '../../../../../services/auth.service';
 import { SalidadServiceService } from '../service/salidad-service.service';
+import { ActivatedRoute } from '@angular/router';
+import { SalidadServicesService } from '../../../../../services/ServiceListaSalidad/salidad-services.service';
+import localeEs from '@angular/common/locales/es'; 
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeEs, 'es');
 
 @Component({
   selector: 'app-crear-salidad',
   standalone: true,
   imports: [FormsModule, CommonModule, MatPaginatorModule, ReactiveFormsModule],
   templateUrl: './crear-salidad.component.html',
+  providers: [DatePipe,  { provide: LOCALE_ID, useValue: 'es' }]
+
 })
 export class CrearSalidadComponent implements OnInit {
 
@@ -32,13 +40,31 @@ export class CrearSalidadComponent implements OnInit {
   
 constructor(
  private productoService:ProductoService, private servicepaginado: ServicespaginadoService
- ,private authService:AuthService,private serviceSalidad:SalidadServiceService
+ ,private authService:AuthService,private serviceSalidad:SalidadServiceService,    private route: ActivatedRoute,private salidadServicesService:SalidadServicesService
+,private datePipe: DatePipe
+ 
   ){
     
 this.salidadProducto.usuarioResponsable=authService.getUsername();
   }
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const id: number = +(params.get('id') || '0');
+      if (id > 0) {
+        this.salidadServicesService.findById(id).subscribe(salidadProducto =>{
+          this.salidadProducto=salidadProducto;
+          this.salidadProducto.usuarioResponsable=this.authService.getUsername();
 
+        });
+
+
+      }
+
+
+      
+    
+    }
+    )
     
   }
 

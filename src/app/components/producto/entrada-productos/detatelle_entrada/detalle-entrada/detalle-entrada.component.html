@@ -1,128 +1,87 @@
-
-<div>
-    <h1>  provedor {{entrada.proveedor.nombre}}</h1>
-</div>
-
-<div class="table-responsive">
-    <div style="padding: 5px;"><button class=" btn btn-danger btn-sm" (click)="Ifmodificar()">
-        modificar entrada
-    </button></div>
-    <table class="table table-bordered table-striped">
-        <thead>
-
-            <tr>
-
-                <th>id</th>
-                <th>
-                    producto
-                </th>
-                <th>
-                    stock
-                </th>
-
-                <th>
-                    entrada
-                </th>
-                <th>
-                    precio 
-
-                </th>
-                @if(modificar){
-                    <th>estock modifcado</th>
-                }
-                @if(modificar){
-                    <th>eliminar</th>
-                }
-
-                
-
-            </tr>
-
-
+<div class="container mt-5">
+    <h1 class="mb-4 text-center text-primary fw-bold">📦 Proveedor: {{ entrada.proveedor.nombre }}</h1>
+  
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-danger btn-sm" (click)="Ifmodificar()">
+        ✏️ Modificar Entrada
+      </button>
+    </div>
+  
+    <div class="table-responsive shadow-sm rounded-4">
+      <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th># ID</th>
+            <th>📦 Producto</th>
+            <th>📦 Stock</th>
+            <th>📥 Entrada</th>
+            <th>💲 Precio</th>
+            @if (modificar) {
+              <th>🔁 Stock Modificado</th>
+              <th>🗑️ Eliminar</th>
+            }
+          </tr>
         </thead>
-
+  
         <tbody>
-            @for (producto of entrada.productos ; track $index ){
-            <tr>
+          @for (producto of entrada.productos; track $index) {
+          <tr>
+            <td>{{ producto.id }}</td>
+            <td>{{ producto.producto.nombre }}</td>
+            <td>{{ producto.producto.stock }}</td>
+            <td>{{ buscarProducto(producto.producto.id) }}</td>
+            <td>{{ producto.producto.precio }}</td>
+  
+            @if (modificar) {
+              @if (buscarProducto(producto.producto.id)!<=producto.producto.stock) {
                 <td>
-                    {{producto.id}}
+                  <input
+                    type="number"
+                    placeholder="Cantidad"
+                    class="form-control my-2"
+                    min="1"
+                    [(ngModel)]="producto.cantidad"
+                  />
                 </td>
                 <td>
-                    {{producto.producto.nombre}}
+                  <button
+                    class="btn btn-danger btn-sm"
+                    (click)="eliminar(producto.producto.id)"
+                  >
+                    Eliminar
+                  </button>
                 </td>
-                <td>
-                    {{producto.producto.stock}}
-                </td>
-                <td>
-                    {{buscarProducto(producto.producto.id)}}
-
-
-                </td>
-                <td>
-                    {{producto.producto.precio}}
-                </td>
-               @if(modificar){
-
-                @if(buscarProducto(producto.producto.id)!<=producto.producto.stock){
-                <td>
-                    <input placeholder="number" type="number" #stockInput
-                    class="form-control my-2" min="1"  [(ngModel)]="producto.cantidad" >
-
-                </td>
-                <td>
-                    <button class=" btn btn-danger btn-sm" (click)="eliminar(producto.producto.id)">
-                        eliminar
-                        </button>
-                    </td>
-
-            }@else {
-                <td>
-                    no se puede modificar
-
-                </td>
-                <td>
-                    no se puede elimnar
-
-                </td>
-
-
+              } @else {
+                <td>❌ No se puede modificar</td>
+                <td>❌ No se puede eliminar</td>
+              }
             }
-        }
-    </tr>
-    }
-    
-          
-            
-
+          </tr>
+          }
         </tbody>
-        <tfoot>
-      
-           
-        </tfoot>
-       
-
-
-    </table>
-</div>
-
-<div style="display: flex;  ">
-
-
-    @if(modificar && eliminarEntradad){
-       <div style="padding: 5px;"><button class=" btn btn-success btn-sm" (click)="EnviarListaModificado(entrada.productos)">
-            enviar modificacion
-        </button></div>
-
-            @if(eliminarEntradad){
-                <div style="padding: 5px;"><button class=" btn btn-danger btn-sm" (click)="EliminarEntrada()">
-                    eliminar la entrada
-                </button></div>
-        
-                
-            }@else{
-            <span style="padding: 5px;"> no se puede eliminar la entrada</span>
-            }
-    }
-
-   
-</div>
+      </table>
+    </div>
+  
+    <div class="d-flex flex-wrap justify-content-start mt-3">
+      @if (modificar) {
+        <div class="me-2 mb-2">
+          <button
+            class="btn btn-success btn-sm"
+            (click)="EnviarListaModificado(entrada.productos)"
+          >
+            ✅ Enviar Modificación
+          </button>
+        </div>
+  
+        @if (eliminarEntradad) {
+          <div class="me-2 mb-2">
+            <button class="btn btn-danger btn-sm" (click)="EliminarEntrada()">
+              🗑️ Eliminar la Entrada
+            </button>
+          </div>
+        } @else {
+          <span class="text-danger ms-2">⚠️ No se puede eliminar la entrada</span>
+        }
+      }
+    </div>
+  </div>

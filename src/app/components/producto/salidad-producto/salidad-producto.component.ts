@@ -5,6 +5,7 @@ import { ServicespaginadoService } from '../entrada-productos/services/servicesp
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { SalidadServiceService } from './crearSalidad/service/salidad-service.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class SalidadProductoComponent implements OnInit {
   listapaginados: any[] = [];
 
   constructor(private salidadServicesService:SalidadServicesService, private servicepaginado: ServicespaginadoService,private datePipe: DatePipe
-  ,private router: Router
+  ,private router: Router,private SalidadServiceServices:SalidadServiceService
+
   ){
     
 
@@ -61,6 +63,9 @@ export class SalidadProductoComponent implements OnInit {
     this.listapaginados = this.servicepaginado.cambiarPagina(event, lista);
 
 
+  }
+  onRemoveUser(id:number):void {
+    this.SalidadServiceServices.removeProveedor(id);
   }
 
   

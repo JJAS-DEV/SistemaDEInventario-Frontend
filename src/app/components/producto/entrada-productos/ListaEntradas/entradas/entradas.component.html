@@ -1,57 +1,49 @@
-<div class="table-responsive">
-    <table class="table table-bordered table-striped">
-        <thead>
-
-            <tr>
-
-                <th>id</th>
-                <th>
-                    provedor
-                </th>
-                <th>
-                    
-                    fecha
-                </th>
-
-                <th>
-                    detalle
-                </th>
-                
-
-            </tr>
-
-
+<div class="container mt-5">
+    <h1 class="mb-4 text-center text-primary fw-bold">📦 Lista de Entradas de Productos</h1>
+  
+    <div class="table-responsive shadow-sm rounded-4">
+      <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>🆔 ID</th>
+            <th>🏢 Proveedor</th>
+            <th>📅 Fecha</th>
+            <th>🔍 Detalle</th>
+          </tr>
         </thead>
-
+  
         <tbody>
-            @for (entrada of listaEntradasPaginados ; track $index ){
-            <tr>
-                <td>
-                    {{entrada.id}}
-                </td>
-                <td>
-                    {{entrada.proveedor.nombre}}
-                </td>
-                <td>
-                    {{entrada.fecha| date:'medium'}}
-                </td>
-                <td>
-                    <button class=" btn btn-info btn-sm" [routerLink]="['/entradaproducto/detalle',entrada.id]">
-                        Detalle
-                    </button>
-                    </td>
-                    
-
-               
-
-            </tr>
-            }
+          @for (entrada of listaEntradasPaginados; track $index) {
+          <tr>
+            <td>{{ entrada.id }}</td>
+            <td>{{ entrada.proveedor.nombre }}</td>
+            <td>{{ entrada.fecha | date: 'medium' }}</td>
+            <td>
+              <button
+                class="btn btn-info btn-sm"
+                [routerLink]="['/entradaproducto/detalle', entrada.id]"
+              >
+                Ver Detalle
+              </button>
+            </td>
+          </tr>
+          }
         </tbody>
+  
         <tfoot>
-            <mat-paginator [length]="listaEntrada.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
-            (page)="cambiarPagina($event, listaEntrada)" showFirstLastButtons>
-
-        </mat-paginator>
+          <tr>
+            <td colspan="4">
+              <mat-paginator
+                [length]="listaEntrada.length"
+                [pageSize]="pageSize"
+                [pageIndex]="pageIndex"
+                (page)="cambiarPagina($event, listaEntrada)"
+                showFirstLastButtons
+              >
+              </mat-paginator>
+            </td>
+          </tr>
         </tfoot>
-    </table>
-</div>
+      </table>
+    </div>
+  </div>
