@@ -25,7 +25,7 @@ export class PruebaScanerComponent implements  AfterViewInit  {
   // Mantener SafeUrl para seguridad
 
   constructor(private sanitizer: DomSanitizer) {
-    this.myAngularxQrCode = 'jjjas'; 
+    this.myAngularxQrCode = 'jonathan'; 
         LOAD_WASM('assets/wasm/ngx-scanner-qrcode.wasm').subscribe();
 
     // Datos para el QR
