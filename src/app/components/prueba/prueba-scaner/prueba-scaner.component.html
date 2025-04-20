@@ -10,3 +10,14 @@
 
 
 
+<ngx-scanner-qrcode #action="scanner"></ngx-scanner-qrcode>
+
+<!-- Resultado del escaneo -->
+<p>Resultado: {{  scannedData}}</p>
+
+
+
+<!-- Botón para iniciar/detener escaneo -->
+<button (click)="action.isStart ? action.stop() : action.start()">
+  {{ action.isStart ? 'Detener' : 'Iniciar escaneo' }}
+</button>
