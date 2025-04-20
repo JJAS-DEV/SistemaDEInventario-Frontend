@@ -98,6 +98,47 @@
         </tbody>
       </table>
     </div>
+
+
   </div>
 </div>
+  <div class="container mt-4">
+    <form>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Responsable {{salidadProducto.usuarioResponsable}}</label>
+        </div>
+  
+        <div class="col-md-6">
+          <label for="motivo" class="form-label">Motivo</label>
+          <select id="motivo" class="form-select" [(ngModel)]="salidadProducto.motivo" name="motivo" required>
+            <option value="">Seleccione un motivo</option>
+            <option value="Venta">Venta</option>
+            <option value="Reemplazo">Reemplazo</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="observaciones" class="form-label">Observaciones</label>
+        <textarea id="observaciones" rows="3" class="form-control" [(ngModel)]="salidadProducto.observaciones" name="observaciones"></textarea>
+      </div>
+  
+    </form>
+  </div>
+  <div>
+    @if(salidadProducto.id){
+
+
+      <button class=" btn btn-primary btn-sm" (click)="crearSalidad(salidadProducto)">
+      Registrar Salidad
+    </button>
+    }@else{
+      <button class=" btn btn-primary btn-sm" (click)="crearSalidad(salidadProducto)">
+        modificar Salidad</button>
+    
+    }
+  </div>
+
+
   
