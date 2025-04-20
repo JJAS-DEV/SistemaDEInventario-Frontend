@@ -34,6 +34,11 @@
           <a class="nav-link" [routerLink]="['/ListaDeEntradas']">📥 Entradas</a>
         </li>
         }
+        @if(login.isAuth){
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/salidadProdutos/pruebaScarner']">📥 pruebaScaner</a>
+          </li>
+          }
       </ul>
       <div class="d-flex align-items-center">
         @if(login.isAuth){

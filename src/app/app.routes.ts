@@ -16,6 +16,7 @@ import { Error404Component } from './components/forbidden403/error404/error404.c
 import { SalidadProductoComponent } from './components/producto/salidad-producto/salidad-producto.component';
 import { CrearSalidadComponent } from './components/producto/salidad-producto/crearSalidad/crear-salidad/crear-salidad.component';
 import { DetallesSalidasComponent } from './components/producto/salidad-producto/detalles/detalles-salidas/detalles-salidas.component';
+import { PruebaScanerComponent } from './components/prueba/prueba-scaner/prueba-scaner.component';
 
 export const routes: Routes = [
   
@@ -127,6 +128,13 @@ component:EntradasComponent
         component:DetallesSalidasComponent,
         
         },
+
+        {path:'salidadProdutos/pruebaScarner',
+          component:PruebaScanerComponent,
+          
+          },
+
+
 
 
 
