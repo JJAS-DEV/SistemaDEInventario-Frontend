@@ -1,0 +1,51 @@
+<div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+  
+        <!-- Card del producto -->
+        <div class="card shadow-sm border-0 rounded-4">
+          <div class="card-body">
+  
+            <h3 class="card-title text-center mb-4">📦 Detalles del Productos</h3>
+  
+            <div class="row">
+              <!-- QR Code -->
+              <div class="col-md-6 text-center mb-3">
+                <qrcode 
+                  [qrdata]="myAngularxQrCode" 
+                  [width]="200" 
+                  [errorCorrectionLevel]="'M'"
+                  (qrCodeURL)="onChangeURL($event)"
+                  >                </qrcode>
+                <br />
+                <a class="btn btn-outline-primary mt-2" [href]="qrCodeDownloadLink" download="qrcode.png">
+                  Descargar QR
+                </a>
+              </div>
+  
+              <!-- Detalles -->
+              <div class="col-md-6">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <strong>🆔 Nombre:</strong> {{ producto?.nombre }}
+                  </li>
+                  <li class="list-group-item">
+                    <strong>💲 Precio:</strong> {{ producto?.precio }}
+                  </li>
+                  <li class="list-group-item">
+                    <strong>🏢 Proveedor:</strong> {{ producto?.proveedor?.nombre }}
+                  </li>
+                  <li class="list-group-item">
+                    <strong>📦 Stock:</strong> {{ producto?.stock }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  

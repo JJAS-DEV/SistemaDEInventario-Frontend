@@ -1,12 +1,45 @@
 
 <div class="container mt-5">
-    <h1 class="mb-4 text-center text-primary fw-bold">📦 Lista de Productos</h1>
   
+    <h1 class="mb-4 text-center text-primary fw-bold">📦 Lista de Productos</h1>
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control"
+        (input)="escucharInput($event)"
+        placeholder="🔎 Buscar producto..."
+      />
+
+      <button class="btn btn-danger btn-sm" (click)="scanearcodigo()">
+        scanear codigo
+      </button>
+      @if(scanear){
+
+
+        <ngx-scanner-qrcode #action="scanner"></ngx-scanner-qrcode>
+
+        <!-- Resultado del escaneo -->
+        <p>Resultado: {{scannedData}}</p>
+        
+        
+        
+        <!-- Botón para iniciar/detener escaneo -->
+        <button (click)="action.isStart ? action.stop() : action.start()">
+          {{ action.isStart ? 'Detener' : 'Iniciar escaneo' }}
+        </button>
+      }
+
+
+
+      
+      <p class="mt-2 text-muted">Texto ingresado: {{ buscador }}</p>
+    </div>
     <div class="d-flex justify-content-end mb-3">
       <button type="button" class="btn btn-success" [routerLink]="['/entradaproducto']">
         ➕ Crear entrada
       </button>
     </div>
+    
   
     @if(productos.length == 0) {
     <div class="alert alert-warning shadow-sm rounded-4">⚠️ No hay registros de productos en el sistema.</div>
@@ -22,6 +55,8 @@
             <th>📦 Stock</th>
             <th>🗑️ Eliminar</th>
             <th>✏️ Editar</th>
+
+            <th>🆔 Codigo Producto</th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +77,12 @@
                 Editar
               </button>
             </td>
+
+            <td>
+              <button class="btn btn-info btn-sm" [routerLink]="['/productos/detalle', producto.codigo_producto]">
+                detalle Producto
+              </button>
+            </td>
           </tr>
           }
         </tbody>
@@ -52,7 +93,7 @@
                 [length]="productos.length"
                 [pageSize]="pageSize"
                 [pageIndex]="pageIndex"
-                (page)="cambiarPagina($event)"
+                (page)="cambiarPagina($event,productos)"
                 showFirstLastButtons>
               </mat-paginator>
             </td>

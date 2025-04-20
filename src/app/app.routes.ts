@@ -17,6 +17,7 @@ import { SalidadProductoComponent } from './components/producto/salidad-producto
 import { CrearSalidadComponent } from './components/producto/salidad-producto/crearSalidad/crear-salidad/crear-salidad.component';
 import { DetallesSalidasComponent } from './components/producto/salidad-producto/detalles/detalles-salidas/detalles-salidas.component';
 import { PruebaScanerComponent } from './components/prueba/prueba-scaner/prueba-scaner.component';
+import { DetallesproductosComponent } from './components/producto/detalles/detallesproductos/detallesproductos.component';
 
 export const routes: Routes = [
   
@@ -128,7 +129,10 @@ component:EntradasComponent
         component:DetallesSalidasComponent,
         
         },
-
+        {path:'productos/detalle/:id',
+          component:DetallesproductosComponent,
+          
+          },
         {path:'salidadProdutos/pruebaScarner',
           component:PruebaScanerComponent,
           
