@@ -11,10 +11,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 
 
+
 @Component({
   selector: 'app-producto',
   standalone: true,
-  imports: [RouterModule, MatPaginatorModule, NgxScannerQrcodeComponent,ReactiveFormsModule],
+  imports: [RouterModule, MatPaginatorModule, NgxScannerQrcodeComponent, ReactiveFormsModule],
   templateUrl: './producto.component.html',
   styleUrl: './producto.component.css'
 })
@@ -23,9 +24,11 @@ export class ProductoComponent implements OnInit, AfterViewInit {
   productosPaginados: any[] = [];
   pageIndex = 0;
   pageSize = 5;
+  escanerActivo: boolean = false; // Controla la visibilidad del escáner
 
   @ViewChild('action', { static: false }) action!: NgxScannerQrcodeComponent;
   scannedData: string | null = null;
+
   constructor(private service: ProductoService,
     private router: Router,
     private route: ActivatedRoute,
@@ -42,9 +45,24 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     this.action.data.subscribe((data: any) => {
       try {
         const contenido = JSON.parse(data[0].value); // convierte el string a objeto
-        this.scannedData = contenido.nombre; // extrae solo el nombre
+        this.scannedData = contenido.codigo;
+
+     
+     
         console.log('Nombre escaneado:', this.scannedData);
-        this.buscador=this.scannedData!;
+        this.buscador = this.scannedData!;
+
+        this.service.buscarProductosByCodigo(this.scannedData!).subscribe(productos => {
+          this.productos = []
+          this.productos.push(productos)
+
+          this.productosPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
+
+
+
+          // Si ya tienes proveedores, actualiza la paginación inmediatamente
+
+        });
       } catch (e) {
         console.error('QR inválido o no contiene un objeto JSON válido:', e);
         this.scannedData = 'QR no válido';
@@ -74,6 +92,7 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
   }
   buscador: string = '';
+
 
   escucharInput(event: any): void {
     this.buscador = event.target.value; // Asigna el valor del input al texto
@@ -138,16 +157,15 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
   //escanear codigo
 
-scanear:boolean=false
-  scanearcodigo(): void{
+  scanear: boolean = false
 
-    if(this.scanear)
-    {
-      this.scanear=false;
-    }else{
-      this.scanear=true;
+
+
+  scanearcodigo():void{
+    if(this.scanear){
+      this.scanear=false
     }
-
+    this.scanear=true
   }
-
 }
+

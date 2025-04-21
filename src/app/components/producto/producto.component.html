@@ -6,28 +6,44 @@
       <input
         type="text"
         class="form-control"
+        value={{buscador}}
         (input)="escucharInput($event)"
         placeholder="🔎 Buscar producto..."
       />
 
-      <button class="btn btn-danger btn-sm" (click)="scanearcodigo()">
-        scanear codigo
-      </button>
-      @if(scanear){
+      <div class="container mt-4">
 
+        <!-- Contenedor del escáner -->
+        <div class="card p-4 shadow-sm" [hidden]="!escanerActivo">
+          <div class="d-flex justify-content-center mb-3">
+            <ngx-scanner-qrcode #action="scanner"></ngx-scanner-qrcode>
+          </div>
+      
+          <p class="text-center fs-5 text-primary fw-semibold">
+            Resultado: {{ scannedData }}
+          </p>
+      
+          <div class="text-center">
+            <button class="btn btn-outline-primary" (click)="action.isStart ? action.stop() : action.start()">
+              {{ action.isStart ? '🛑 Detener escaneo' : '▶️ Iniciar escaneo de codigo QR' }}
+            </button>
+          </div>
+        </div>
+      
+        <!-- Botones Mostrar / Ocultar -->
+        <div class="text-center mt-3">
+          <button class="btn btn-success me-2" (click)="escanerActivo = true">
+            ✅ Escánear con  codigo QR
+          </button>
+          <button class="btn btn-danger" (click)="escanerActivo = false">
+            ❌ Ocultar Escáner
+          </button>
+        </div>
+      
+      </div>
 
-        <ngx-scanner-qrcode #action="scanner"></ngx-scanner-qrcode>
-
-        <!-- Resultado del escaneo -->
-        <p>Resultado: {{scannedData}}</p>
-        
-        
-        
-        <!-- Botón para iniciar/detener escaneo -->
-        <button (click)="action.isStart ? action.stop() : action.start()">
-          {{ action.isStart ? 'Detener' : 'Iniciar escaneo' }}
-        </button>
-      }
+       
+      
 
 
 
