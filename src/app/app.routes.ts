@@ -46,19 +46,16 @@ export const routes: Routes = [
 {
     path:'users/create',
     component:UserFormComponent,
-    canActivate:[authGuard]
 
 },
 {
     path:'users/edit/:id',
     component:UserFormComponent,
-    canActivate:[authGuard]
     
 },
 {
 path:'proveedor/edit/:id',
 component:FormProvedor,
-canActivate:[authGuard]
 
 },
 
@@ -69,21 +66,26 @@ canActivate:[authGuard]
 },
 {
   path:'provedores',
-  component:ProvedoresComponent
+  component:ProvedoresComponent,
+  canActivate: [authGuard]
 },
 
 {
   path: 'forbidden',
   component:Forbidden403Component
+
+  
 },
 {
   path: 'proveedor/form',
-  component:FormProvedor
+  component:FormProvedor,
+  canActivate: [authGuard]
 },
 
 {
   path: 'productos',
-  component:ProductoComponent
+  component:ProductoComponent,
+  canActivate: [authGuard]
 },
 {
   path: 'producto/form',

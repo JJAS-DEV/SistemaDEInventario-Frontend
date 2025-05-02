@@ -9,6 +9,8 @@ import { ServicespaginadoService } from './entrada-productos/services/servicespa
 import { LOAD_WASM, NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AuthService } from '../../services/auth.service';
+import { Role } from '../../models/Role';
 
 
 
@@ -34,13 +36,15 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private sharingData: ProveedorSharingDatosService,
     private servicepaginado: ServicespaginadoService,
-    private sanitizer: DomSanitizer
-
+    private sanitizer: DomSanitizer, 
+    private authService:AuthService
   ) {
     LOAD_WASM('assets/wasm/ngx-scanner-qrcode.wasm').subscribe();
+    this.roles=authService.getRoles();
 
 
   }
+  roles:Role[];
   ngAfterViewInit(): void {
     this.action.data.subscribe((data: any) => {
       try {

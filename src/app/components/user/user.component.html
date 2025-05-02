@@ -41,11 +41,7 @@
             <td>{{ user.username }}</td>
             @if (admin) {
             <td>
-              @if(user.admin){
-              <span class="badge bg-danger">Admin</span>
-              }@else {
-              <span class="badge bg-secondary">Usuario</span>
-              }
+             
             </td>
             <td>
               <button class="btn btn-danger btn-sm" (click)="onRemoveUser(user.id)">

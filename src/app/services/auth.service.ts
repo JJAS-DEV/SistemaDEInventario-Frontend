@@ -16,7 +16,7 @@ export class AuthService {
 
   private _user: any = {
     isAuth: false,
-    isAdmin: false,
+    roles: [],
     user: undefined
   }
 
@@ -44,6 +44,10 @@ export class AuthService {
   set token(token: string) {
     this._token = token;
     sessionStorage.setItem('token', token);
+    const decodedToken = this.getPayload(token);
+    this._user.roles = decodedToken ? decodedToken.roles.map((roles: any) => roles.authority) : [];
+    console.log("esto son los roles "+this._user.roles); 
+
   }
 
   get token() {
@@ -71,16 +75,18 @@ export class AuthService {
     return this.user.isAuth;
   }
   isauthenticated(){
-    
-
     return
+  }
+  
+  getRoles(): any[] {
+    return this._user.roles;  // Devuelve el array de roles
   }
 
   logout() {
     this._token = undefined;
     this._user = {
       isAuth: false,
-      isAdmin: false,
+      roles: [],
       user: undefined
     };
     sessionStorage.removeItem('login');

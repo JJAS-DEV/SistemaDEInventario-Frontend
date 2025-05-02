@@ -10,9 +10,15 @@
         (input)="escucharInput($event)"
         placeholder="🔎 Buscar producto..."
       />
-
+      hola
+      @for(role of roles;track $index){
+        <h1>
+          {{role.id}} {{role.name}}
+        </h1>
+hola
+      }
       <div class="container mt-4">
-
+       
         <!-- Contenedor del escáner -->
         <div class="card p-4 shadow-sm" [hidden]="!escanerActivo">
           <div class="d-flex justify-content-center mb-3">
