@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { jwtDecode } from "jwt-decode";
+import { Role } from '../models/Role';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService {
 
   private _user: any = {
     isAuth: false,
-    roles: [],
+    roles:[],
     user: undefined
   }
 
@@ -44,9 +45,7 @@ export class AuthService {
   set token(token: string) {
     this._token = token;
     sessionStorage.setItem('token', token);
-    const decodedToken = this.getPayload(token);
-    this._user.roles = decodedToken ? decodedToken.roles.map((roles: any) => roles.authority) : [];
-    console.log("esto son los roles "+this._user.roles); 
+ 
 
   }
 
@@ -78,7 +77,9 @@ export class AuthService {
     return
   }
   
-  getRoles(): any[] {
+  getRoles(): Role[] {
+    const decodedToken = this.getPayload(this._token!);
+    this._user.roles = decodedToken ? decodedToken.roles.map((roles: any) => roles.authority) : [];
     return this._user.roles;  // Devuelve el array de roles
   }
 

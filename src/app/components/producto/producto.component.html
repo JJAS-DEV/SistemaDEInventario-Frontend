@@ -10,19 +10,20 @@
         (input)="escucharInput($event)"
         placeholder="🔎 Buscar producto..."
       />
-      hola
+      
       @for(role of roles;track $index){
         <h1>
-          {{role.id}} {{role.name}}
+          {{role}}
+
+
         </h1>
-hola
       }
       <div class="container mt-4">
        
         <!-- Contenedor del escáner -->
         <div class="card p-4 shadow-sm" [hidden]="!escanerActivo">
           <div class="d-flex justify-content-center mb-3">
-            <ngx-scanner-qrcode #action="scanner"></ngx-scanner-qrcode>
+            <ngx-scanner-qrcode  class="w-100 h-100 d-block" #action="scanner"></ngx-scanner-qrcode>
           </div>
       
           <p class="text-center fs-5 text-primary fw-semibold">

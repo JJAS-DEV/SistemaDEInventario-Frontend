@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Producto } from '../../models/producto';
 import { ProductoService } from '../../services/producto.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -37,21 +37,25 @@ export class ProductoComponent implements OnInit, AfterViewInit {
     private sharingData: ProveedorSharingDatosService,
     private servicepaginado: ServicespaginadoService,
     private sanitizer: DomSanitizer, 
-    private authService:AuthService
+    private authService:AuthService,
+    private cdRef: ChangeDetectorRef
   ) {
     LOAD_WASM('assets/wasm/ngx-scanner-qrcode.wasm').subscribe();
-    this.roles=authService.getRoles();
 
+    this.roles = this.authService.getRoles();
+    
 
   }
-  roles:Role[];
+  roles:Role[]=[];
   ngAfterViewInit(): void {
+
     this.action.data.subscribe((data: any) => {
+      
       try {
         const contenido = JSON.parse(data[0].value); // convierte el string a objeto
         this.scannedData = contenido.codigo;
 
-     
+
      
         console.log('Nombre escaneado:', this.scannedData);
         this.buscador = this.scannedData!;
@@ -73,7 +77,12 @@ export class ProductoComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  ngOnInit(): void {
+  ngOnInit(): void {  setTimeout(() => {
+    this.roles = this.authService.getRoles();
+    console.log('Roles:', this.roles);
+  }, 1000);
+
+    
     this.service.findAll().subscribe(producto => {
       // Cargar los proveedores cuando la respuesta esté lista
       this.productos = producto;

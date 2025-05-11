@@ -18,6 +18,7 @@ import { CrearSalidadComponent } from './components/producto/salidad-producto/cr
 import { DetallesSalidasComponent } from './components/producto/salidad-producto/detalles/detalles-salidas/detalles-salidas.component';
 import { PruebaScanerComponent } from './components/prueba/prueba-scaner/prueba-scaner.component';
 import { DetallesproductosComponent } from './components/producto/detalles/detallesproductos/detallesproductos.component';
+import { IndexComponent } from './components/index/index.component';
 
 export const routes: Routes = [
   
@@ -67,7 +68,6 @@ component:FormProvedor,
 {
   path:'provedores',
   component:ProvedoresComponent,
-  canActivate: [authGuard]
 },
 
 {
@@ -79,13 +79,11 @@ component:FormProvedor,
 {
   path: 'proveedor/form',
   component:FormProvedor,
-  canActivate: [authGuard]
 },
 
 {
   path: 'productos',
   component:ProductoComponent,
-  canActivate: [authGuard]
 },
 {
   path: 'producto/form',
@@ -139,6 +137,13 @@ component:EntradasComponent
           component:PruebaScanerComponent,
           
           },
+          {path:'index',
+            component:IndexComponent,
+            
+            },
+  
+
+
 
 
 

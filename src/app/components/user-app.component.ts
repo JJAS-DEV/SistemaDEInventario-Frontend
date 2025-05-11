@@ -78,7 +78,7 @@ export class UserAppComponent implements OnInit {
           console.log(payload);
           this.authService.token= token;
           this.authService.user=login;
-          this.router.navigate(['/users/page/0'])
+          this.router.navigate(['index'])
          
 
         },
