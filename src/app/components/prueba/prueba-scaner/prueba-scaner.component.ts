@@ -32,11 +32,14 @@ export class PruebaScanerComponent implements  AfterViewInit  {
   }
   ngAfterViewInit(): void {
     this.action.data.subscribe((data: any) => {
-      if (data?.length > 0) {
-        // data[0].value es el valor escaneado
-        this.scannedData = data[0].value;
-        console.log('Código escaneado:', this.scannedData);
-      }
+      try {
+      const contenido = JSON.parse(data[0].value); // convierte el string a objeto
+      this.scannedData = contenido.nombre; // extrae solo el nombre
+      console.log('Nombre escaneado:', this.scannedData);
+    } catch (e) {
+      console.error('QR inválido o no contiene un objeto JSON válido:', e);
+      this.scannedData = 'QR no válido';
+    }
     });
   }
 
@@ -44,6 +47,7 @@ export class PruebaScanerComponent implements  AfterViewInit  {
   onChangeURL(url: SafeUrl) {
     this.qrCodeDownloadLink = url;  // Asignar SafeUrl
   }
+  
 
 
 

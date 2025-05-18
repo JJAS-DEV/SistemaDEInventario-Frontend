@@ -9,16 +9,14 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" [routerLink]="['/users']" [state]="{users,paginator}">👤 Usuarios</a>
         </li>
-        @if(admin){
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/users/create']" [state]="{users}">➕ Nuevo Usuario</a>
         </li>
-        }
-        @if(admin){
+        
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/salidadProductos']" [state]="{users}">📦 Salidas</a>
         </li>
-        }
+        
         @if(login.isAuth){
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/provedores']">🏢 Proveedores</a>
@@ -39,6 +37,8 @@
             <a class="nav-link" [routerLink]="['/salidadProdutos/pruebaScarner']">📥 pruebaScaner</a>
           </li>
           }
+
+        
       </ul>
       <div class="d-flex align-items-center">
         @if(login.isAuth){
