@@ -7,12 +7,12 @@ export class User{
     email!:string;
     username!:string;
     password!:string;
-    role: Role[];
+    roles: Role[];
 
     
     constructor() {
        
-        this.role = []; // Inicializamos productos como un array vacío
+        this.roles = []; // Inicializamos productos como un array vacío
       }
 
     

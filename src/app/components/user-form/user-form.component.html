@@ -113,7 +113,6 @@
         
 
     </div>
-    @if(user.id=== undefined){
     <div>
         <input
         name="password"
@@ -139,7 +138,31 @@
     
 
     </div>
-}
+  
+
+<div>
+  @for (role of availableRoles; track role.id) {
+    <label class="m-2" style="display: block">
+      <input
+        type="checkbox"
+        [value]="role.id"
+        (change)="onRoleChange(role, $event)"
+        [checked]="isSelected(role)"
+      />
+      {{ role.name }}
+    </label>
+  }
+</div>
+
+<hr />
+<p>Roles seleccionados:</p>
+<ul>
+  @for (selected of selectedRoles; track selected.id) {
+    <li>
+      {{ selected.name }}
+    </li>
+  }
+</ul>
  
     <div>
         <button type="submit" class="btn btn-primary my-2"
