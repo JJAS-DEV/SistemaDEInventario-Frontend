@@ -19,6 +19,7 @@ import { DetallesSalidasComponent } from './components/producto/salidad-producto
 import { PruebaScanerComponent } from './components/prueba/prueba-scaner/prueba-scaner.component';
 import { DetallesproductosComponent } from './components/producto/detalles/detallesproductos/detallesproductos.component';
 import { IndexComponent } from './components/index/index.component';
+import { adminguardGuard } from './guards/admin/adminguard.guard';
 
 export const routes: Routes = [
   
@@ -33,7 +34,8 @@ export const routes: Routes = [
 
 
     component:UserComponent,
-    
+        canActivate:[authGuard,adminguardGuard]
+
 
 },
 { path:'users/page/:page',
@@ -47,6 +49,7 @@ export const routes: Routes = [
 {
     path:'users/create',
     component:UserFormComponent,
+    canActivate:[authGuard,adminguardGuard]
 
 },
 {
@@ -139,7 +142,8 @@ component:EntradasComponent
           },
           {path:'index',
             component:IndexComponent,
-            
+                    canActivate:[authGuard]
+
             },
   
 

@@ -8,14 +8,14 @@ export const authGuard: CanActivateFn = (route, state) => {
   if(service.authenticated()){
     if (isTokenExpired()){
       service.logout();
-      router.navigate(['/forbidden']);
+      router.navigate(['/login']);
 
       return false;
 
     }
     return true;
   }
- router.navigate(['/forbidden']);
+ router.navigate(['/login']);
   return false;
 };
 

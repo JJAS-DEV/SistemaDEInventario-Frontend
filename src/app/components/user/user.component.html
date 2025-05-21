@@ -26,7 +26,6 @@
             <th>📧 Email</th>
             <th>🏷️ Nombre de Usuario</th>
             
-            <th>🛡️ Rol</th>
             <th>🗑️ Eliminar</th>
             <th>✏️ Editar</th>
           
@@ -40,9 +39,7 @@
             <td>{{ user.email }}</td>
             <td>{{ user.username }}</td>
           
-            <td>
-             
-            </td>
+            
             <td>
               <button class="btn btn-danger btn-sm" (click)="onRemoveUser(user.id)">
                 Eliminar
