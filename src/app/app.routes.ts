@@ -17,6 +17,10 @@ import { SalidadProductoComponent } from './components/producto/salidad-producto
 import { CrearSalidadComponent } from './components/producto/salidad-producto/crearSalidad/crear-salidad/crear-salidad.component';
 import { DetallesSalidasComponent } from './components/producto/salidad-producto/detalles/detalles-salidas/detalles-salidas.component';
 import { PruebaScanerComponent } from './components/prueba/prueba-scaner/prueba-scaner.component';
+import { DetallesproductosComponent } from './components/producto/detalles/detallesproductos/detallesproductos.component';
+import { IndexComponent } from './components/index/index.component';
+import { adminguardGuard } from './guards/admin/adminguard.guard';
+import { CreacionpdfComponent } from './components/producto/entrada-productos/creacionpdf/creacionpdf.component';
 
 export const routes: Routes = [
   
@@ -31,7 +35,8 @@ export const routes: Routes = [
 
 
     component:UserComponent,
-    
+        canActivate:[authGuard,adminguardGuard]
+
 
 },
 { path:'users/page/:page',
@@ -45,19 +50,17 @@ export const routes: Routes = [
 {
     path:'users/create',
     component:UserFormComponent,
-    canActivate:[authGuard]
+    canActivate:[authGuard,adminguardGuard]
 
 },
 {
     path:'users/edit/:id',
     component:UserFormComponent,
-    canActivate:[authGuard]
     
 },
 {
 path:'proveedor/edit/:id',
 component:FormProvedor,
-canActivate:[authGuard]
 
 },
 
@@ -68,21 +71,23 @@ canActivate:[authGuard]
 },
 {
   path:'provedores',
-  component:ProvedoresComponent
+  component:ProvedoresComponent,
 },
 
 {
   path: 'forbidden',
   component:Forbidden403Component
+
+  
 },
 {
   path: 'proveedor/form',
-  component:FormProvedor
+  component:FormProvedor,
 },
 
 {
   path: 'productos',
-  component:ProductoComponent
+  component:ProductoComponent,
 },
 {
   path: 'producto/form',
@@ -128,11 +133,25 @@ component:EntradasComponent
         component:DetallesSalidasComponent,
         
         },
-
+        {path:'productos/detalle/:id',
+          component:DetallesproductosComponent,
+          
+          },
         {path:'salidadProdutos/pruebaScarner',
           component:PruebaScanerComponent,
           
           },
+          {path:'index',
+            component:IndexComponent,
+                    canActivate:[authGuard]
+
+            },{path:'generacionPdf',
+            component:CreacionpdfComponent,
+
+            },
+  
+
+
 
 
 

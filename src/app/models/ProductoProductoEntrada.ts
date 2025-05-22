@@ -4,6 +4,8 @@ export class ProductoProductoEntrada {
     id!: number;
     producto!: Producto;
     cantidad!: number;
+    responsable!:string;
+
 
 
 }

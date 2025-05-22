@@ -8,6 +8,8 @@ import { Producto } from '../../../../../models/producto';
 import { Observable, of } from 'rxjs';
 import { ProductoService } from '../../../../../services/producto.service';
 import Swal from 'sweetalert2';
+import { entradaRequest } from '../../../../../models/entradaRequest';
+import { AuthService } from '../../../../../services/auth.service';
 
 @Component({
   selector: 'app-detalle-entrada',
@@ -31,14 +33,19 @@ export class DetalleEntradaComponent implements OnInit {
   constructor(service: EntradaProductoService, private route: ActivatedRoute,
     private productoservice:ProductoService,
            private router: Router,
+               private serviceuth:AuthService
+           
     
   ) {
     this.entrada = new EntradaProductos;
     this.service = service;
-   
+       this.responsable=serviceuth.getUsername();
+
     
 
   }
+
+  responsable!:String;
 
 
 
@@ -113,6 +120,7 @@ sepuedeEliminar(productos:EntradaProductos){
   }
 
   productosmodficados:Producto[]=[];
+  modificadoEntrada: entradaRequest= new entradaRequest;
 productod!:Producto;
    EnviarListaModificado(productosModificdos: ProductoProductoEntrada[]) {
 let verificador=true;
@@ -144,8 +152,11 @@ let verificador=true;
      productosModificdos.forEach(pr=>{
       pr.producto.stock=pr.cantidad;
       this.productosmodficados.push(pr.producto)
-     }) 
-      this.service.update(this.productosmodficados, this.idPagina).subscribe({
+      this.modificadoEntrada.productos.push(pr.producto)
+      this.modificadoEntrada.observacion=this.responsable;
+
+     })
+      this.service.update(this.modificadoEntrada, this.idPagina).subscribe({
         next: (response) => {
           console.log("✅ Actualización exitosa:", response);
           alert("Productos actualizados correctamente.");
@@ -247,8 +258,11 @@ let verificador=true;
           productosModificdos.forEach(pr=>{
             pr.producto.stock=pr.cantidad;
             this.productosmodficados.push(pr.producto)
+            this.modificadoEntrada.productos.push(pr.producto)
+            this.modificadoEntrada.observacion=this.responsable;
+
            }) 
-            this.service.update(this.productosmodficados, this.idPagina).subscribe({
+            this.service.update(this.modificadoEntrada, this.idPagina).subscribe({
               next: (response) => {
                
               },
@@ -345,7 +359,7 @@ let verificador=true;
       console.log(this.idPagina);
       console.log(this.productosmodficados)
 
-      this.service.update(this.productosmodficados, this.idPagina).subscribe({
+      this.service.update(this.modificadoEntrada, this.idPagina).subscribe({
         next: (response) => {
           console.log("✅ Actualización exitosa:", response);
           alert("Productos actualizados correctamente.");

@@ -1,12 +1,68 @@
 
 <div class="container mt-5">
-    <h1 class="mb-4 text-center text-primary fw-bold">📦 Lista de Productos</h1>
   
+    <h1 class="mb-4 text-center text-primary fw-bold">📦 Lista de Productos</h1>
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control"
+        value={{buscador}}
+        (input)="escucharInput($event)"
+        placeholder="🔎 Buscar producto..."
+      />
+      
+      @for(role of roles;track $index){
+        <h1>
+          {{role}}
+
+
+        </h1>
+      }
+      <div class="container mt-4">
+       
+        <!-- Contenedor del escáner -->
+        <div class="card p-4 shadow-sm" [hidden]="!escanerActivo">
+          <div class="d-flex justify-content-center mb-3">
+            <ngx-scanner-qrcode  class="w-100 h-100 d-block" #action="scanner"></ngx-scanner-qrcode>
+          </div>
+      
+          <p class="text-center fs-5 text-primary fw-semibold">
+            Resultado: {{ scannedData }}
+          </p>
+      
+          <div class="text-center">
+            <button class="btn btn-outline-primary" (click)="action.isStart ? action.stop() : action.start()">
+              {{ action.isStart ? '🛑 Detener escaneo' : '▶️ Iniciar escaneo de codigo QR' }}
+            </button>
+          </div>
+        </div>
+      
+        <!-- Botones Mostrar / Ocultar -->
+        <div class="text-center mt-3">
+          <button class="btn btn-success me-2" (click)="escanerActivo = true">
+            ✅ Escánear con  codigo QR
+          </button>
+          <button class="btn btn-danger" (click)="escanerActivo = false">
+            ❌ Ocultar Escáner
+          </button>
+        </div>
+      
+      </div>
+
+       
+      
+
+
+
+      
+      <p class="mt-2 text-muted">Texto ingresado: {{ buscador }}</p>
+    </div>
     <div class="d-flex justify-content-end mb-3">
       <button type="button" class="btn btn-success" [routerLink]="['/entradaproducto']">
         ➕ Crear entrada
       </button>
     </div>
+    
   
     @if(productos.length == 0) {
     <div class="alert alert-warning shadow-sm rounded-4">⚠️ No hay registros de productos en el sistema.</div>
@@ -22,6 +78,8 @@
             <th>📦 Stock</th>
             <th>🗑️ Eliminar</th>
             <th>✏️ Editar</th>
+
+            <th>🆔 Codigo Producto</th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +100,12 @@
                 Editar
               </button>
             </td>
+
+            <td>
+              <button class="btn btn-info btn-sm" [routerLink]="['/productos/detalle', producto.codigo_producto]">
+                detalle Producto
+              </button>
+            </td>
           </tr>
           }
         </tbody>
@@ -52,7 +116,7 @@
                 [length]="productos.length"
                 [pageSize]="pageSize"
                 [pageIndex]="pageIndex"
-                (page)="cambiarPagina($event)"
+                (page)="cambiarPagina($event,productos)"
                 showFirstLastButtons>
               </mat-paginator>
             </td>
