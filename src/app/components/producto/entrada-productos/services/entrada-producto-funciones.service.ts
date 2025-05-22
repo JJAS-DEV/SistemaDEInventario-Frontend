@@ -4,6 +4,7 @@ import { Producto } from '../../../../models/producto';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { EntradaProductos } from '../../../../models/productoEntrada';
+import { entradaRequest } from '../../../../models/entradaRequest';
 
 
 @Injectable({
@@ -19,7 +20,7 @@ export class EntradaProductoFuncionesService {
   ) { }
 
 
-    addUser(productos: Producto[]): void {
+    addUser(productos: entradaRequest): void {
          this.entradaService.create(productos).subscribe({
       
               next: (productonew) => {

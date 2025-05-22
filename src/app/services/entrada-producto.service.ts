@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Producto } from '../models/producto';
 import { Observable } from 'rxjs';
 import { EntradaProductos } from '../models/productoEntrada';
+import { entradaRequest } from '../models/entradaRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,12 @@ export class EntradaProductoService {
 
   constructor(private http: HttpClient) { }
 
-  create(Listproducto: Producto[]): Observable<Producto[]> {
-      return this.http.post<Producto[]>(this.url, Listproducto);
+
+    create(Listproducto: entradaRequest): Observable<entradaRequest> {
+      return this.http.post<entradaRequest>(this.url, Listproducto);
     }
+
+    
     findById(id: number): Observable<EntradaProductos> {
       return this.http.get<EntradaProductos>(`${this.url}/${id}`)
     }
@@ -23,9 +27,9 @@ export class EntradaProductoService {
     findAll(): Observable<EntradaProductos[]> {
       return this.http.get<EntradaProductos[]>(this.url)
     }
-    update(productos: Producto[], id: number): Observable<Producto[]> {
+    update(productos: entradaRequest, id: number): Observable<entradaRequest> {
      console.log( `${this.url}/${id}`);
-      return this.http.put<Producto[]>(`${this.url}/${id}`,  productos ); // Enviar el array directamente
+      return this.http.put<entradaRequest>(`${this.url}/${id}`,  productos ); // Enviar el array directamente
   }
 
   remove(id: number): Observable<void> {

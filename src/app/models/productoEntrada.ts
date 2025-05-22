@@ -6,6 +6,7 @@ export class EntradaProductos {
     proveedor!: Proveedores;
     productos!: ProductoProductoEntrada[];
     fecha!: string;
+    responsable!:string;
 
 
 }
