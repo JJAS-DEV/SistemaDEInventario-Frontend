@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import localeEs from '@angular/common/locales/es'; 
 import { registerLocaleData } from '@angular/common';
+import { PdfService } from '../../../entrada-productos/creacionpdf/creacionDepdf/pdf.service';
 // Importar el locale para español
 
 registerLocaleData(localeEs, 'es');
@@ -14,7 +15,7 @@ registerLocaleData(localeEs, 'es');
 @Component({
   selector: 'app-detalles-salidas',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule,FormsModule],
   templateUrl: './detalles-salidas.component.html',
   providers: [DatePipe,  { provide: LOCALE_ID, useValue: 'es' }]
 
@@ -23,7 +24,11 @@ export class DetallesSalidasComponent  implements OnInit {
 
   salidadProducto!:SalidadProducto;
 
-  constructor(private route: ActivatedRoute,private salidadServicesService:SalidadServicesService,private datePipe: DatePipe){
+  preciototal!:number
+
+  constructor(private route: ActivatedRoute,private salidadServicesService:SalidadServicesService,private datePipe: DatePipe,
+    private sdfService:PdfService
+  ){
 
   }
 
@@ -45,7 +50,13 @@ export class DetallesSalidasComponent  implements OnInit {
   )
 
 }
-  
+generatePDF(){
+    this.sdfService.generatePDF( this.salidadProducto.productos,"Reporte de salidad",this.salidadProducto,1);
 
+  }  
 
+calcularPrecioTotal(cantidad: number, precioUnitario: number): number {
+  if (!cantidad || !precioUnitario) return 0;
+  return cantidad * precioUnitario;
+}
 }

@@ -1,7 +1,19 @@
 <div class="container mt-5">
     <h1 class="mb-4 text-center text-primary fw-bold">📦 Lista de Entradas de Productos</h1>
-  
-    <div class="table-responsive shadow-sm rounded-4">
+<div class="mb-3 row align-items-center">
+  <label for="fechaBusqueda" class="col-sm-3 col-form-label fw-semibold">🔍 Búsqueda por fecha:</label>
+  <div class="col-sm-4">
+    <input
+      id="fechaBusqueda"
+      type="date"
+      class="form-control border-primary"
+      [(ngModel)]="fechaBusqueda"
+      (input)="filtrarPorFecha()"
+      placeholder="Selecciona una fecha"
+    />
+  </div>
+</div>
+    <div class="table-responsive shadow-sm rounded-4">.
       <table class="table table-bordered table-hover align-middle text-center">
         <thead class="table-dark">
           <tr>
@@ -11,6 +23,8 @@
             <th>🔍 Detalle</th>
           </tr>
         </thead>
+
+
   
         <tbody>
           @for (entrada of listaEntradasPaginados; track $index) {

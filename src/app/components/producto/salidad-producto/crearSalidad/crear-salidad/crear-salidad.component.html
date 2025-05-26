@@ -74,7 +74,8 @@
             <th>📦 Nombre</th>
             <th>📊 Stock</th>
             <th>🔢 Cantidad</th>
-            <th>💰 Precio</th>
+            <th>💰 Precio unitario</th>
+            <th>💰 precio total</th>
             <th>🗑️ Eliminar</th>
           </tr>
         </thead>
@@ -86,6 +87,8 @@
             <td>
               $ {{ producto.producto.precio | number: '1.0-0' }} <!-- Número formateado -->
             </td>
+            
+   <td class="text-end">$ {{ calcularPrecioTotal(producto.cantidad ,producto.producto.precio )| number: '1.0-0' }}</td>  
             <td>
               <button
                 class="btn btn-danger btn-sm"

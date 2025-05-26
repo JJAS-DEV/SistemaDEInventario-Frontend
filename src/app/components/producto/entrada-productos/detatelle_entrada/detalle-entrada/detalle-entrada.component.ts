@@ -10,6 +10,7 @@ import { ProductoService } from '../../../../../services/producto.service';
 import Swal from 'sweetalert2';
 import { entradaRequest } from '../../../../../models/entradaRequest';
 import { AuthService } from '../../../../../services/auth.service';
+import { PdfService } from '../../creacionpdf/creacionDepdf/pdf.service';
 
 @Component({
   selector: 'app-detalle-entrada',
@@ -33,7 +34,8 @@ export class DetalleEntradaComponent implements OnInit {
   constructor(service: EntradaProductoService, private route: ActivatedRoute,
     private productoservice:ProductoService,
            private router: Router,
-               private serviceuth:AuthService
+               private serviceuth:AuthService,
+               private sdfService:PdfService
            
     
   ) {
@@ -45,7 +47,7 @@ export class DetalleEntradaComponent implements OnInit {
 
   }
 
-  responsable!:String;
+  responsable!:string;
 
 
 
@@ -409,4 +411,8 @@ let verificador=true;
   }
 
 
+  generatePDF(){
+    this.sdfService.generatePDF( this.entrada.productos,"Reporte de Entrada",this.entrada,0);
+
+  }
 }

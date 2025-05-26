@@ -7,12 +7,13 @@ import { CommonModule } from '@angular/common';
 import { ServicespaginadoService } from '../../services/servicespaginado.service';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-entradas',
   standalone: true,
-  imports: [CommonModule,MatPaginatorModule,RouterModule ],
+  imports: [CommonModule,MatPaginatorModule,RouterModule, FormsModule ],
   templateUrl: './entradas.component.html',
   providers: [DatePipe]
 
@@ -25,6 +26,9 @@ export class EntradasComponent implements OnInit {
   pageIndex = 0;
   pageSize = 5;
   listaEntradasPaginados: any[] = [];
+
+
+
 
 
   constructor(entradaProductoService: EntradaProductoFuncionesService, service: EntradaProductoService
@@ -57,10 +61,9 @@ export class EntradasComponent implements OnInit {
       this.listaEntrada.forEach(entrda => {
         this.datePipe.transform(entrda.fecha, 'dd/MM/yyyy HH:mm:ss');
       }
-
       )
 
-
+alert(listaEntrada[0].fecha)
 
 
     })
@@ -71,6 +74,33 @@ export class EntradasComponent implements OnInit {
 
   }
 
+
+fechaBusqueda: string = '';
+
+filtrarPorFecha() {
+ let itemsFiltrados = this.listaEntrada;
+
+  if (!this.fechaBusqueda) {
+    itemsFiltrados = this.listaEntrada;
+    return;
+  }
+
+  itemsFiltrados = this.listaEntrada.filter(item => {
+    if (!item.fecha) return false;
+
+    const fechaSolo = item.fecha.split('T')[0].trim();
+    return fechaSolo === this.fechaBusqueda.trim();
+  });
+
+
+
+ 
+
+
+
+
+
+}
 
 
 }

@@ -115,7 +115,10 @@ this.salidadProducto.usuarioResponsable=authService.getUsername();
 
 }
 
-
+calcularPrecioTotal(cantidad: number, precioUnitario: number): number {
+  if (!cantidad || !precioUnitario) return 0;
+  return cantidad * precioUnitario;
+}
 cambiarPagina(event: any, lista: any[]) {
 this.servicepaginado.cambiarPagina(event, lista);
 

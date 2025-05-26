@@ -1,7 +1,17 @@
 
 <div class="container mt-5">
     <h1 class="mb-4 text-center text-primary fw-bold">📋 Lista de Salida de Productos</h1>
-  
+  <label for="fechaBusqueda" class="col-sm-3 col-form-label fw-semibold">🔍 Búsqueda por fecha:</label>
+  <div class="col-sm-4">
+    <input
+      id="fechaBusqueda"
+      type="date"
+      class="form-control border-primary"
+      [(ngModel)]="fechaBusqueda"
+      (input)="filtrarPorFecha()"
+      placeholder="Selecciona una fecha"
+    />
+  </div>
     <div class="d-flex justify-content-end mb-3">
       <button type="button" class="btn btn-success" [routerLink]="['/crar-salidadProductos']">
         ➕ Crear Salida

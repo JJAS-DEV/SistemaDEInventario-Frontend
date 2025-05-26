@@ -15,6 +15,8 @@ import autoTable from 'jspdf-autotable';
 })
 
 export class CreacionpdfComponent  {
+
+  
     generatePDF() {
     const doc = new jsPDF();
     let currentY = 20; // posición vertical inicial

@@ -3,7 +3,8 @@
     <div class="card shadow-lg rounded-4">
       <div class="card-body">
         <h1 class="card-title text-center mb-4">📦 Detalles de Salida de Productos</h1>
-  
+            <button (click)="generatePDF()">Generar PDF</button>
+
         <div class="mb-3">
           <h5><strong>👤 Usuario Responsable:</strong> <span class="text-primary">{{ salidadProducto.usuarioResponsable }}</span></h5>
           <h5><strong>📝 Motivo:</strong> <span class="text-secondary">{{ salidadProducto.motivo }}</span></h5>
@@ -23,7 +24,8 @@
               <th>🧾 Nombre</th>
               <th>📦 Stock Disponible</th>
               <th>📤 Cantidad que Salió</th>
-              <th>💰 Precio</th>
+              <th>💰 Precio unitario</th>
+              <th>💰 precio total</th>
             </tr>
           </thead>
           <tbody>
@@ -33,6 +35,9 @@
                 <td class="text-center">{{ productos.producto.stock }}</td>
                 <td class="text-center">{{ productos.cantidad }}</td>
                 <td class="text-end">$ {{ productos.producto.precio | number: '1.0-0' }}</td>
+             <td class="text-end">$ {{ calcularPrecioTotal(productos.cantidad ,productos.producto.precio )| number: '1.0-0' }}</td>
+
+
               </tr>
             }
           </tbody>
