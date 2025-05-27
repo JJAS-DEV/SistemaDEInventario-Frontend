@@ -10,7 +10,7 @@
     </div>
     <button (click)="generatePDF()">Generar PDF</button>
 
-  
+    <h1>{{calcularTotalPrecio(entrada.productos)}}</h1>
     <div class="table-responsive shadow-sm rounded-4">
       <table class="table table-bordered table-hover align-middle text-center">
         <thead class="table-dark">
@@ -19,7 +19,8 @@
             <th>📦 Producto</th>
             <th>📦 Stock</th>
             <th>📥 Entrada</th>
-            <th>💲 Precio</th>
+            <th>💲 Precio unitario</th>
+            <th>💲 Precio total</th>
             @if (modificar) {
               <th>🔁 Stock Modificado</th>
               <th>🗑️ Eliminar</th>
@@ -35,7 +36,10 @@
             <td>{{ producto.producto.stock }}</td>
             <td>{{ buscarProducto(producto.producto.id) }}</td>
             <td>{{ producto.producto.precio }}</td>
-  
+<td>
+  {{ calcularPrecioTotal(getCantidadProducto(producto.producto.id), producto.producto.precio)  }}
+</td>
+
             @if (modificar) {
               @if (buscarProducto(producto.producto.id)!<=producto.producto.stock) {
                 <td>

@@ -5,6 +5,11 @@ export class ProductoProductoEntrada {
     producto!: Producto;
     cantidad!: number;
     responsable!:string;
+    totalEngeneral!:number;
+    totalPorProducto!:number;
+
+
+
 
 
 

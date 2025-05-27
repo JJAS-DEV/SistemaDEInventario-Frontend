@@ -7,6 +7,9 @@ export class EntradaProductos {
     productos!: ProductoProductoEntrada[];
     fecha!: string;
     responsable!:string;
+    totalEngeneral!:number;
+
+
 
 
 }

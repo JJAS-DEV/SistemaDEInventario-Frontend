@@ -10,7 +10,7 @@ export class ServicespaginadoService {
   producto: Producto = new Producto();
   proveedores: Proveedores[] = [];
   pageIndex = 0;
-  pageSize = 10;
+  pageSize = 5;
   proveedoresPaginados: any[] = [];
   productos: Producto[] = [];
 
