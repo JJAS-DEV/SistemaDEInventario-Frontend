@@ -8,6 +8,8 @@ export class EntradaProductos {
     fecha!: string;
     responsable!:string;
     totalEngeneral!:number;
+    totalPorProducto!:number;
+
 
 
 

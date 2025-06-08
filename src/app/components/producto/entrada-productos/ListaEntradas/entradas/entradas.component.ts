@@ -63,7 +63,6 @@ export class EntradasComponent implements OnInit {
       }
       )
 
-alert(listaEntrada[0].fecha)
 
 
     })
@@ -78,13 +77,18 @@ alert(listaEntrada[0].fecha)
 fechaBusqueda: string = '';
 
 filtrarPorFecha() {
- let itemsFiltrados = this.listaEntrada;
 
-  if (!this.fechaBusqueda) {
+  alert(this.fechaBusqueda)
+
+ let itemsFiltrados = this.listaEntrada;
+ console.log(this.fechaBusqueda)
+ console.log('Valor de fechaBusqueda:', this.fechaBusqueda);
+console.log('Tipo de fechaBusqueda:', typeof this.fechaBusqueda);
+  if (!this.fechaBusqueda.trim()) {
     itemsFiltrados = this.listaEntrada;
     return;
   }
-
+ 
   itemsFiltrados = this.listaEntrada.filter(item => {
     if (!item.fecha) return false;
 
@@ -92,15 +96,18 @@ filtrarPorFecha() {
     return fechaSolo === this.fechaBusqueda.trim();
   });
 
+// Una vez ya filtrado, actualizamos la paginación
+this.listaEntradasPaginados = this.servicepaginado.actualizarPaginacion(itemsFiltrados);
 
-
- 
-
-
-
+}
+limpiarFecha(){
+  this.listaEntradasPaginados = this.servicepaginado.actualizarPaginacion(this.listaEntrada);
 
 
 }
+
+
+  
 
 
 }

@@ -152,12 +152,12 @@
                         {{bucarStockexistente(producto.id)}}
                     </td>
 
-                    
-                    <input placeholder="number" type="number" #stockInput
-                    class="form-control my-2" min="1">
+
+                    <input placeholder="number" type="number" #stockInput class="form-control my-2" min="1">
 
                     <td>
-                        <button class=" btn btn-primary btn-sm" (click)="agregarProductoAlista(producto,stockInput.value)">
+                        <button class=" btn btn-primary btn-sm"
+                            (click)="agregarProductoAlista(producto,stockInput.value)">
                             selccionar
                         </button>
                     </td>
@@ -170,7 +170,6 @@
 
 
                 <mat-paginator [length]="productos.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
-
                     (page)="cambiarPagina($event, productos)" showFirstLastButtons>
 
                 </mat-paginator>
@@ -188,7 +187,8 @@
                 <div style="display: flex;">
 
                     <h5 class="card-title"> producto nuevo </h5>
-                        <button class="btn-close" style="margin-left: 92%" aria-label="Close" (click)="cerraformularioProducto()"></button>
+                    <button class="btn-close" style="margin-left: 92%" aria-label="Close"
+                        (click)="cerraformularioProducto()"></button>
 
 
                 </div>
@@ -294,8 +294,10 @@
                     nombre
                 </th>
                 <th>
-                    precio
+                    precio unitario
                 </th>
+
+                <th> precio total</th>
                 <th>Stock_entrada</th>
 
 
@@ -318,15 +320,14 @@
                 <td>
                     {{producto.precio}}
                 </td>
-
-
-
-
-
+                <td>
+                    {{calcularProducto(producto)}}
+                </td>
                 <td>
                     {{producto.stock}}
 
                 </td>
+
 
 
 
@@ -341,11 +342,24 @@
             </tr>
             }
         </tbody>
-        <div> <h1>responsable: {{responsable}}</h1></div>
+
         <tfoot>
-            <button class=" btn btn-primary btn-sm" (click)="crearEntrada(productos_seleccionado)">
-                enviarEntrda
-            </button>
+            <tr class="table-light">
+                <td colspan="5" class="text-end fw-bold">
+                    Precio total:
+                </td>
+                <td class="text-end fw-bold text-success">
+                    {{ calculartotalPRoducto(productos_seleccionado) | currency:'':'symbol':'1.0-0' }}
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="6" class="text-end">
+                    <button class="btn btn-primary btn-sm" (click)="crearEntrada(productos_seleccionado)">
+                        Enviar Entrada
+                    </button>
+                </td>
+            </tr>
         </tfoot>
     </table>
 </div>

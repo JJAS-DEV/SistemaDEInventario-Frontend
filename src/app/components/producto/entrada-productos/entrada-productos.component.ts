@@ -312,8 +312,9 @@ responsable!:String;
 
     this.entrada.productos=productos;
     this.entrada.observacion=this.responsable;
-
+    this.entrada.totalEngeneral=2000
     this.entradaProductosFunciones.addUser(this.entrada);
+
 
 
 
@@ -368,8 +369,21 @@ responsable!:String;
 
 
 
-
   }
+
+
+ calcularProducto(producto: Producto): number {
+  // Ejemplo: multiplicar cantidad por precio unitario
+  return producto.stock * producto.precio;
+}
+calculartotalPRoducto(producto: Producto[]): number {
+    return producto.reduce((total, producto) => {
+    return total + (producto.stock * producto.precio);
+  }, 0);
+
+}
+
+
 
   cerraformularioProducto(){
     alert("entro aqui")

@@ -11,11 +11,12 @@ import Swal from 'sweetalert2';
 import { entradaRequest } from '../../../../../models/entradaRequest';
 import { AuthService } from '../../../../../services/auth.service';
 import { PdfService } from '../../creacionpdf/creacionDepdf/pdf.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-detalle-entrada',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule,CommonModule],
   templateUrl: './detalle-entrada.component.html',
   styleUrl: './detalle-entrada.component.css'
 })
@@ -168,7 +169,6 @@ export class DetalleEntradaComponent implements OnInit {
             this.ayuda.productos=productosModificdos
              this.modificadoEntrada.totalEngeneral = this.calcularTotalPrecio(this.ayuda.productos);
 
-            alert(this.modificadoEntrada.totalEngeneral )
 
 
             this.service.update(this.modificadoEntrada, this.idPagina).subscribe({
@@ -281,7 +281,6 @@ export class DetalleEntradaComponent implements OnInit {
             this.ayuda.productos=productosModificdos
              this.modificadoEntrada.totalEngeneral = this.calcularTotalPrecio(this.ayuda.productos);
 
-            alert(this.modificadoEntrada.totalEngeneral )
 
           this.service.update(this.modificadoEntrada, this.idPagina).subscribe({
             next: (response) => {
@@ -432,17 +431,22 @@ export class DetalleEntradaComponent implements OnInit {
 
 
   generatePDF() {
-    this.sdfService.generatePDF(this.entrada.productos, "Reporte de Entrada", this.entrada, 0);
+    this.sdfService.generatepdfDeEntrada(this.entrada);
 
   }
 
   calcularPrecioTotal(cantidad: number, precioUnitario: number): number {
     if (!cantidad || !precioUnitario) return 0;
     return cantidad * precioUnitario;
+
   }
   calcularTotalPrecio(productos: ProductoProductoEntrada[]): number {
     return productos.reduce((total, producto) => total + (this.calcularPrecioTotal(this.getCantidadProducto(producto.producto.id), producto.producto.precio) ), 0);
   }
+  buscarTotalPorProducto(productoId: number): number | null {
+  const encontrado = this.entrada.productos.find(p => p.producto.id === productoId);
+  return encontrado ? encontrado.totalPorProducto : null;
+}
 
 
 

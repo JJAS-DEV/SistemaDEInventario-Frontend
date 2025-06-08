@@ -73,7 +73,6 @@ fechaBusqueda: string = '';
 
 filtrarPorFecha() {
  let itemsFiltrados = this.salidadProducto;
-
   if (!this.fechaBusqueda) {
     itemsFiltrados = this.salidadProducto;
     return;
@@ -87,7 +86,6 @@ filtrarPorFecha() {
   });
 
 // Una vez ya filtrado, actualizamos la paginación
-alert(itemsFiltrados.length)
 this.listapaginados = this.servicepaginado.actualizarPaginacion(itemsFiltrados);
 
  

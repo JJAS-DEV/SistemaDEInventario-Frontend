@@ -25,7 +25,7 @@ export class PruebaScanerComponent implements  AfterViewInit  {
   // Mantener SafeUrl para seguridad
 
   constructor(private sanitizer: DomSanitizer) {
-    this.myAngularxQrCode = 'jonathan'; 
+    this.myAngularxQrCode = 'jonathan Ayona Ingenieria en sistemas'; 
         LOAD_WASM('assets/wasm/ngx-scanner-qrcode.wasm').subscribe();
 
     // Datos para el QR
@@ -33,12 +33,12 @@ export class PruebaScanerComponent implements  AfterViewInit  {
   ngAfterViewInit(): void {
     this.action.data.subscribe((data: any) => {
       try {
-      const contenido = JSON.parse(data[0].value); // convierte el string a objeto
-      this.scannedData = contenido.nombre; // extrae solo el nombre
+      const contenido = data[0]?.value || ''; // convierte el string a objeto
+      this.scannedData = contenido; // extrae solo el nombre
       console.log('Nombre escaneado:', this.scannedData);
     } catch (e) {
       console.error('QR inválido o no contiene un objeto JSON válido:', e);
-      this.scannedData = 'QR no válido';
+      
     }
     });
   }

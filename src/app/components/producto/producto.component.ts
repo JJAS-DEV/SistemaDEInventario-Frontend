@@ -117,13 +117,13 @@ export class ProductoComponent implements OnInit, AfterViewInit {
 
 
     this.service.buscarProductosByNombre(this.buscador).subscribe(productos => {
-      // Cargar los proveedores cuando la respuesta esté lista
+      // Cargar los productos cuando la respuesta esté lista
       this.productos = productos;
       this.productosPaginados = this.servicepaginado.actualizarPaginacion(this.productos);
 
 
 
-      // Si ya tienes proveedores, actualiza la paginación inmediatamente
+      // Si ya tienes productos, actualiza la paginación inmediatamente
 
     });
 

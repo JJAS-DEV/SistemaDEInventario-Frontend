@@ -10,20 +10,13 @@
         (input)="escucharInput($event)"
         placeholder="🔎 Buscar producto..."
       />
-      
-      @for(role of roles;track $index){
-        <h1>
-          {{role}}
-
-
-        </h1>
-      }
+     
       <div class="container mt-4">
        
-        <!-- Contenedor del escáner -->
+       <!--  Contenedor del escáner -->
         <div class="card p-4 shadow-sm" [hidden]="!escanerActivo">
           <div class="d-flex justify-content-center mb-3">
-            <ngx-scanner-qrcode  class="w-100 h-100 d-block" #action="scanner"></ngx-scanner-qrcode>
+            <ngx-scanner-qrcode  class="w-25 h-25 d-block" #action="scanner"></ngx-scanner-qrcode>
           </div>
       
           <p class="text-center fs-5 text-primary fw-semibold">
@@ -37,7 +30,7 @@
           </div>
         </div>
       
-         <!--Botones Mostrar / Ocultar--> 
+      <!--   Botones Mostrar / Ocultar-->
         <div class="text-center mt-3">
           <button class="btn btn-success me-2" (click)="escanerActivo = true">
             ✅ Escánear con  codigo QR
@@ -49,7 +42,7 @@
       
       </div>
 
-       
+    
       
 
 

@@ -20,7 +20,6 @@ import { PruebaScanerComponent } from './components/prueba/prueba-scaner/prueba-
 import { DetallesproductosComponent } from './components/producto/detalles/detallesproductos/detallesproductos.component';
 import { IndexComponent } from './components/index/index.component';
 import { adminguardGuard } from './guards/admin/adminguard.guard';
-import { CreacionpdfComponent } from './components/producto/entrada-productos/creacionpdf/creacionpdf.component';
 
 export const routes: Routes = [
   
@@ -145,10 +144,7 @@ component:EntradasComponent
             component:IndexComponent,
                     canActivate:[authGuard]
 
-            },{path:'generacionPdf',
-            component:CreacionpdfComponent,
-
-            },
+            }
   
 
 
@@ -158,7 +154,7 @@ component:EntradasComponent
 
 
         
-
+,
 
 
 
