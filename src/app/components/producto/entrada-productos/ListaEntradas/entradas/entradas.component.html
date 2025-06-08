@@ -1,57 +1,48 @@
 <div class="container mt-5">
-    <h1 class="mb-4 text-center text-primary fw-bold">📦 Lista de Entradas de Productos</h1>
-<div class="mb-3 row align-items-center">
-  <label for="fechaBusqueda" class="col-sm-3 col-form-label fw-semibold">🔍 Búsqueda por fecha:</label>
-  <div class="col-sm-4 d-flex align-items-center gap-2">
-    <input
-      id="fechaBusqueda"
-      type="date"
-      class="form-control border-primary"
-      [(ngModel)]="fechaBusqueda"
-      (input)="filtrarPorFecha()"
-      placeholder="Selecciona una fecha"
-    />
+  <h1 class="mb-4 text-center text-primary fw-bold">📦 Lista de Entradas de Productos</h1>
+  <div class="mb-3 row align-items-center">
+    <label for="fechaBusqueda" class="col-sm-3 col-form-label fw-semibold">🔍 Búsqueda por fecha:</label>
+    <div class="col-sm-4 d-flex align-items-center gap-2">
+      <input id="fechaBusqueda" type="date" class="form-control border-primary" [(ngModel)]="fechaBusqueda"
+        (input)="filtrarPorFecha()" placeholder="Selecciona una fecha" />
       <button class="btn btn-info btn-sm" (click)="limpiarFecha()">mostror todas las entradas</button>
 
 
-  
+
+    </div>
+
   </div>
-  
-</div>
-    <div class="table-responsive shadow-sm rounded-4">.
-      <table class="table table-bordered table-hover align-middle text-center">
-        <thead class="table-dark">
-          <tr>
-            <th>🆔 ID</th>
-            <th>🏢 Proveedor</th>
-            <th>📅 Fecha</th>
-            <th>🔍 Detalle</th>
-          </tr>
-        </thead>
+  <div class="table-responsive shadow-sm rounded-4">.
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>🆔 ID</th>
+          <th>🏢 Proveedor</th>
+          <th>📅 Fecha</th>
+          <th>🔍 Detalle</th>
+        </tr>
+      </thead>
 
 
-  
-        <tbody>
-          @for (entrada of listaEntradasPaginados; track $index) {
-          <tr>
-            <td>{{ entrada.id }}</td>
-            <td>{{ entrada.proveedor.nombre }}</td>
-            <td>{{ entrada.fecha | date: 'medium' }}</td>
-            <td>
-              <button
-                class="btn btn-info btn-sm"
-                [routerLink]="['/entradaproducto/detalle', entrada.id]"
-              >
-                Ver Detalle
-              </button>
-            </td>
-          </tr>
-          }
-        </tbody>
-  
-        <tfoot>
-          <tr>
-            <td colspan="4">
+
+      <tbody>
+        @for (entrada of listaEntradasPaginados; track $index) {
+        <tr>
+          <td>{{ entrada.id }}</td>
+          <td>{{ entrada.proveedor.nombre }}</td>
+          <td>{{formatearFecha(entrada)}}</td>
+          <td>
+            <button class="btn btn-info btn-sm" [routerLink]="['/entradaproducto/detalle', entrada.id]">
+              Ver Detalle
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+
+      <tfoot>
+        <tr>
+          <!--    <td colspan="4">
               <mat-paginator
                 [length]="listaEntrada.length"
                 [pageSize]="pageSize"
@@ -60,9 +51,27 @@
                 showFirstLastButtons
               >
               </mat-paginator>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+            </td> -->
+
+        <tr>
+          @if(filtrado){
+
+          <td colspan="6" class="text-center">
+            <mat-paginator [length]="listaEntradafiltrado.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
+              (page)="cambiarPagina($event, listaEntradafiltrado)" showFirstLastButtons>
+            </mat-paginator>
+          </td>
+          }@else {
+
+          <td colspan="6" class="text-center">
+            <mat-paginator [length]="listaEntrada.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
+              (page)="cambiarPagina($event, listaEntrada)" showFirstLastButtons>
+            </mat-paginator>
+          </td>
+          }
+        </tr>
+        
+      </tfoot>
+    </table>
   </div>
+</div>

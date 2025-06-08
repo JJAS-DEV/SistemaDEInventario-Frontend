@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-entradas',
   standalone: true,
-  imports: [CommonModule,MatPaginatorModule,RouterModule, FormsModule ],
+  imports: [CommonModule, MatPaginatorModule, RouterModule, FormsModule],
   templateUrl: './entradas.component.html',
   providers: [DatePipe]
 
@@ -24,6 +24,8 @@ export class EntradasComponent implements OnInit {
   listaEntrada: EntradaProductos[] = [];
   service: EntradaProductoService;
   pageIndex = 0;
+
+  
   pageSize = 5;
   listaEntradasPaginados: any[] = [];
 
@@ -33,22 +35,22 @@ export class EntradasComponent implements OnInit {
 
   constructor(entradaProductoService: EntradaProductoFuncionesService, service: EntradaProductoService
     , private datePipe: DatePipe,
-        private servicepaginado: ServicespaginadoService,
-               private router: Router,
-                  private route : ActivatedRoute,
-        
-    
+    private servicepaginado: ServicespaginadoService,
+    private router: Router,
+    private route: ActivatedRoute,
+
+
   ) {
     this.entradaProductoService = entradaProductoService;
     this.service = service;
 
-    this.service.findAll().subscribe(listaEntrada=>{
-      this.listaEntrada=listaEntrada;
+    this.service.findAll().subscribe(listaEntrada => {
+      this.listaEntrada = listaEntrada;
       this.listaEntradasPaginados = this.servicepaginado.actualizarPaginacion(this.listaEntrada);
-     
-    
-    
-     } )
+
+
+
+    })
 
   }
   fecha: string = "";
@@ -74,34 +76,52 @@ export class EntradasComponent implements OnInit {
   }
 
 
-fechaBusqueda: string = '';
-
-filtrarPorFecha() {
+  fechaBusqueda: string = '';
 
 
- let itemsFiltrados = this.listaEntrada;
- console.log(this.fechaBusqueda)
- console.log('Valor de fechaBusqueda:', this.fechaBusqueda);
-console.log('Tipo de fechaBusqueda:', typeof this.fechaBusqueda);
-  if (!this.fechaBusqueda.trim()) {
-    itemsFiltrados = this.listaEntrada;
-    return;
+    listaEntradafiltrado: EntradaProductos[] = [];
+    filtrado:boolean=false;
+
+  filtrarPorFecha() {
+        this.filtrado=true;
+
+    let itemsFiltrados = this.listaEntrada;
+
+    if (!this.fechaBusqueda.trim()) {
+      this.listaEntradasPaginados = this.servicepaginado.actualizarPaginacion(this.listaEntrada);
+      return;
+    }
+
+    // Convertir la fecha de búsqueda y formatearla a YYYY-MM-DD
+    const fechaBusquedaFormateada = new Date(this.fechaBusqueda).toISOString().split('T')[0];
+
+
+    itemsFiltrados = this.listaEntrada.filter(item => {
+      let fechaOriginal = new Date(item.fecha).toISOString().split('T')[0];
+
+      if (fechaOriginal === fechaBusquedaFormateada) {
+        // Aquí va tu condición
+        return true;  // Se guarda en itemsFiltrados
+      }
+      return false;  // No se guarda
+    });
+
+
+    this.listaEntradafiltrado=itemsFiltrados;
+
+
+
+
+    this.listaEntradasPaginados = this.servicepaginado.actualizarPaginacion(itemsFiltrados);
   }
- 
-  itemsFiltrados = this.listaEntrada.filter(item => {
-    if (!item.fecha) return false;
 
-    const fechaSolo = item.fecha.split('T')[0].trim();
-    return fechaSolo === this.fechaBusqueda.trim();
-  });
-
-// Una vez ya filtrado, actualizamos la paginación
-this.listaEntradasPaginados = this.servicepaginado.actualizarPaginacion(itemsFiltrados);
-
-}
-limpiarFecha(){
-  window.location.reload();
+  limpiarFecha() {
+    window.location.reload();
 
 
-}
+  }
+  formatearFecha(entrada: EntradaProductos) {
+    return new Date(entrada.fecha).toISOString().split('T')[0];
+
+  }
 }

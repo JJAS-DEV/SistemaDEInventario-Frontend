@@ -1,71 +1,73 @@
-
 <div class="container mt-5">
-    <h1 class="mb-4 text-center text-primary fw-bold">📋 Lista de Salida de Productos</h1>
+  <h1 class="mb-4 text-center text-primary fw-bold">📋 Lista de Salida de Productos</h1>
   <label for="fechaBusqueda" class="col-sm-3 col-form-label fw-semibold">🔍 Búsqueda por fecha:</label>
   <div class="col-sm-4">
-    <input
-      id="fechaBusqueda"
-      type="date"
-      class="form-control border-primary"
-      [(ngModel)]="fechaBusqueda"
-      (input)="filtrarPorFecha()"
-      placeholder="Selecciona una fecha"
-    />
+    <input id="fechaBusqueda" type="date" class="form-control border-primary" [(ngModel)]="fechaBusqueda"
+      (input)="filtrarPorFecha()" placeholder="Selecciona una fecha" />
   </div>
-    <div class="d-flex justify-content-end mb-3">
-      <button type="button" class="btn btn-success" [routerLink]="['/crar-salidadProductos']">
-        ➕ Crear Salida
-        
-      </button>
-    </div>
-  
-    <div class="table-responsive shadow-sm rounded-4">
-      <table class="table table-bordered table-hover align-middle text-center">
-        <thead class="table-dark">
-          <tr>
-            <th>📅 Fecha</th>
-            <th>📝 Motivo</th>
-            <th>💬 Observaciones</th>
-            <th>👤 Usuario Responsable</th>
-            <th>🔍 Detalle</th>
-            <th>📝 Modificar</th>
-            <th>🗑️ Eliminar</th>           
-        </thead>
-        <tbody>
-          @for (listapaginadoss of listapaginados; track $index) {
-          <tr>
-            <td>{{ listapaginadoss.fecha | date: 'medium' }}</td>
-            <td>{{ listapaginadoss.motivo }}</td>
-            <td>{{ listapaginadoss.observaciones }}</td>
-            <td>{{ listapaginadoss.usuarioResponsable }}</td>
-            <td>
-              <button class="btn btn-info btn-sm" [routerLink]="['/salidadProdutos/detalle/', listapaginadoss.id]">
-                Detalle
-              </button>
-            </td>
-            <td> <button class="btn btn-info btn-sm" [routerLink]="['/crar-salidadProductos', listapaginadoss.id]">
+  <div class="d-flex justify-content-end mb-3">
+    <button type="button" class="btn btn-success me-2" [routerLink]="['/crar-salidadProductos']">
+  ➕ Crear Salida
+</button>
+
+<button class="btn btn-info btn-sm" (click)="limpiarFecha()">
+  Mostrar todas las salidas
+</button>
+  </div>
+
+  <div class="table-responsive shadow-sm rounded-4">
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>📅 Fecha</th>
+          <th>📝 Motivo</th>
+          <th>💬 Observaciones</th>
+          <th>👤 Usuario Responsable</th>
+          <th>🔍 Detalle</th>
+          <th>📝 Modificar</th>
+          <th>🗑️ Eliminar</th>
+      </thead>
+      <tbody>
+        @for (listapaginadoss of listapaginados; track $index) {
+        <tr>
+          <td>{{formatearFecha(listapaginadoss)}}</td>
+          <td>{{ listapaginadoss.motivo }}</td>
+          <td>{{ listapaginadoss.observaciones }}</td>
+          <td>{{ listapaginadoss.usuarioResponsable }}</td>
+          <td>
+            <button class="btn btn-info btn-sm" [routerLink]="['/salidadProdutos/detalle/', listapaginadoss.id]">
+              Detalle
+            </button>
+          </td>
+          <td> <button class="btn btn-info btn-sm" [routerLink]="['/crar-salidadProductos', listapaginadoss.id]">
               modificar
             </button></td>
-            <td> <button class="btn btn-info btn-sm" (click)="onRemoveUser(listapaginadoss.id)" >
+          <td> <button class="btn btn-info btn-sm" (click)="onRemoveUser(listapaginadoss.id)">
               eliminar
             </button></td>
-          </tr>
+        </tr>
+        }
+      </tbody>
+
+      <tfoot>
+        <tr>
+          @if(filtrado){
+
+          <td colspan="6" class="text-center">
+            <mat-paginator [length]="salidadProductofiltrado.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
+              (page)="cambiarPagina($event, salidadProductofiltrado)" showFirstLastButtons>
+            </mat-paginator>
+          </td>
+          }@else {
+
+          <td colspan="6" class="text-center">
+            <mat-paginator [length]="salidadProducto.length" [pageSize]="pageSize" [pageIndex]="pageIndex"
+              (page)="cambiarPagina($event, salidadProducto)" showFirstLastButtons>
+            </mat-paginator>
+          </td>
           }
-        </tbody>
-  
-        <tfoot>
-          <tr>
-            <td colspan="6" class="text-center">
-              <mat-paginator
-                [length]="salidadProducto.length"
-                [pageSize]="pageSize"
-                [pageIndex]="pageIndex"
-                (page)="cambiarPagina($event, salidadProducto)"
-                showFirstLastButtons>
-              </mat-paginator>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+        </tr>
+      </tfoot>
+    </table>
   </div>
+</div>

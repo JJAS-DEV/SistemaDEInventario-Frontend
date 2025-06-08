@@ -31,8 +31,11 @@ export class SalidadProductoComponent implements OnInit {
     
 
   }
+
+    salidadProductofiltrado:SalidadProducto[]=[];
+
   
-  
+salidadProductofiltrados:SalidadProducto[]=[];  
   ngOnInit(): void {
     this.getSalidas();
 
@@ -70,8 +73,10 @@ export class SalidadProductoComponent implements OnInit {
   }
 
 fechaBusqueda: string = '';
-
+    
+filtrado:boolean=false;
 filtrarPorFecha() {
+this.filtrado=true;
  let itemsFiltrados = this.salidadProducto;
   if (!this.fechaBusqueda) {
     itemsFiltrados = this.salidadProducto;
@@ -84,8 +89,10 @@ filtrarPorFecha() {
     const fechaSolo = item.fecha.split('T')[0].trim();
     return fechaSolo === this.fechaBusqueda.trim();
   });
+  this.salidadProductofiltrado=itemsFiltrados;
 
 // Una vez ya filtrado, actualizamos la paginación
+
 this.listapaginados = this.servicepaginado.actualizarPaginacion(itemsFiltrados);
 
  
@@ -95,6 +102,18 @@ this.listapaginados = this.servicepaginado.actualizarPaginacion(itemsFiltrados);
 
 
 }
-  
+
+formatearFecha( salidadProducto:SalidadProducto){
+  return new Date(salidadProducto.fecha).toISOString().split('T')[0];
+
+}
+
+ limpiarFecha() {
+    window.location.reload();
+
+
+  }
+
+
 
 }
