@@ -19,6 +19,7 @@
           <th>🆔 ID</th>
           <th>🏢 Proveedor</th>
           <th>📅 Fecha</th>
+          <th>responsable</th>
           <th>🔍 Detalle</th>
         </tr>
       </thead>
@@ -31,6 +32,8 @@
           <td>{{ entrada.id }}</td>
           <td>{{ entrada.proveedor.nombre }}</td>
           <td>{{formatearFecha(entrada)}}</td>
+          <td>{{entrada.responsable}}</td>
+
           <td>
             <button class="btn btn-info btn-sm" [routerLink]="['/entradaproducto/detalle', entrada.id]">
               Ver Detalle
@@ -70,7 +73,7 @@
           </td>
           }
         </tr>
-        
+
       </tfoot>
     </table>
   </div>
