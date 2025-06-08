@@ -79,8 +79,6 @@ this.salidadProducto.usuarioResponsable=authService.getUsername();
 
     this.listapaginados = this.servicepaginado.actualizarPaginacion( this.productos);
 
-
-   
       this.productoService.buscarProductosByNombre(this.buscador).subscribe(productos => {
         // Cargar los proveedores cuando la respuesta esté lista
         this.productos = productos;
@@ -91,28 +89,6 @@ this.salidadProducto.usuarioResponsable=authService.getUsername();
         // Si ya tienes proveedores, actualiza la paginación inmediatamente
       
       });
-
-   
-    
-
-
-
-
-
-      
-
-
-   
-
-
-    
-
-
-
-
-
-
-
 }
 
 calcularPrecioTotal(cantidad: number, precioUnitario: number): number {
@@ -126,7 +102,7 @@ this.servicepaginado.cambiarPagina(event, lista);
 }
 
 agregarProductoAlista(productos: Producto, stock_entrada:any) {
-
+this.buscador=""
 
   alert("entro Aquii"+ productos.nombre+" "+stock_entrada  )
   console.log(this.salidadProducto)
@@ -167,10 +143,13 @@ if(productos.stock<verificando){
   } else {
     alert("entro Aqui en no existe")
 
+let productoss!: ProductoSalidad
 
     this.salidadProducto.productos.push({
       producto: productos,
-      cantidad: Number(stock_entrada)
+      cantidad: Number(stock_entrada),
+        totalPorPRoducto: productos.precio * Number(stock_entrada)
+
     });
   }
 
@@ -178,7 +157,6 @@ if(productos.stock<verificando){
 
   eliminarProducto(nombreProducto: string) {
     alert(nombreProducto)
-
 
     this.salidadProducto.productos = this.salidadProducto.productos.filter(producto => producto.producto.nombre !== nombreProducto);
   }

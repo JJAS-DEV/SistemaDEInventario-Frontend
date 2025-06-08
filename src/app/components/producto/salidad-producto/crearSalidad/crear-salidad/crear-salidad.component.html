@@ -72,7 +72,6 @@
         <thead class="table-dark">
           <tr>
             <th>📦 Nombre</th>
-            <th>📊 Stock</th>
             <th>🔢 Cantidad</th>
             <th>💰 Precio unitario</th>
             <th>💰 precio total</th>
@@ -82,7 +81,6 @@
         <tbody>
           <tr *ngFor="let producto of salidadProducto.productos; let i = index">
             <td>{{ producto.producto.nombre }}</td>
-            <td>{{ producto.producto.stock }}</td>
             <td>{{ producto.cantidad }}</td>
             <td>
               $ {{ producto.producto.precio | number: '1.0-0' }} <!-- Número formateado -->
@@ -130,17 +128,12 @@
     </form>
   </div>
   <div>
-    @if(salidadProducto.id){
 
 
       <button class=" btn btn-primary btn-sm" (click)="crearSalidad(salidadProducto)">
       Registrar Salidad
     </button>
-    }@else{
-      <button class=" btn btn-primary btn-sm" (click)="crearSalidad(salidadProducto)">
-        modificar Salidad</button>
-    
-    }
+  
   </div>
 
 

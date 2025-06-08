@@ -51,7 +51,7 @@ export class DetallesSalidasComponent  implements OnInit {
 
 }
 generatePDF(){
-    this.sdfService.generatePDF( this.salidadProducto.productos,"Reporte de salidad",this.salidadProducto,1);
+    this.sdfService.generatepdfDeSalidad(this.salidadProducto)
 
   }  
 

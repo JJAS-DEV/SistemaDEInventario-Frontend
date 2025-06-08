@@ -78,7 +78,6 @@ fechaBusqueda: string = '';
 
 filtrarPorFecha() {
 
-  alert(this.fechaBusqueda)
 
  let itemsFiltrados = this.listaEntrada;
  console.log(this.fechaBusqueda)
@@ -101,13 +100,8 @@ this.listaEntradasPaginados = this.servicepaginado.actualizarPaginacion(itemsFil
 
 }
 limpiarFecha(){
-  this.listaEntradasPaginados = this.servicepaginado.actualizarPaginacion(this.listaEntrada);
+  window.location.reload();
 
 
 }
-
-
-  
-
-
 }
