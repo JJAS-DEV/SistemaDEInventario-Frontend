@@ -51,7 +51,12 @@ export class ProductoService {
       params: {name}
     });
   }
-  
+
+  buscarProductosByCodigo(codigo: string): Observable<any> {
+    return this.http.get<any>(`${this.url}/buscarXcodigo`, {
+      params: {codigo}
+    });
+  }  
 
 
 }

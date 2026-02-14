@@ -20,15 +20,8 @@ export class AuthComponent {
   constructor ( private  shariongData: SharingDataService , private authService:AuthService,private router:Router){
     this.user= new User();
     if(this.authService.user.isAuth){
-      this.router.navigate(['/ListaDeEntradas']) 
-      
+      this.router.navigate(['/index'])       
     }
-    
-
-    
-
-    
-
   }
  
 

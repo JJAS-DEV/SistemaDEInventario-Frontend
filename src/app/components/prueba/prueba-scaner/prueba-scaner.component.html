@@ -6,14 +6,14 @@
 </qrcode>
 
 <!-- Solo mostrar el enlace de descarga si se ha generado el QR -->
-<a  [href]="qrCodeDownloadLink" download="qrcode.png">Descargar QR</a>
+<!--<a  [href]="qrCodeDownloadLink" download="qrcode.png">Descargar QR</a> -->
 
 
 
 <ngx-scanner-qrcode #action="scanner"></ngx-scanner-qrcode>
 
 <!-- Resultado del escaneo -->
-<p>Resultado: {{  scannedData}}</p>
+<p>Resultado: {{scannedData}}</p>
 
 
 

@@ -78,7 +78,7 @@ export class UserAppComponent implements OnInit {
           console.log(payload);
           this.authService.token= token;
           this.authService.user=login;
-          this.router.navigate(['/users/page/0'])
+          this.router.navigate(['index'])
          
 
         },
@@ -160,7 +160,7 @@ export class UserAppComponent implements OnInit {
             
       Swal.fire({
         title: "actualizado",
-        text: "Usuario"+userUpdate.name+" editado con exito ",
+        text: "Usuario "+userUpdate.name+" editado con exito ",
         icon: "success"
       });
           },
@@ -202,7 +202,7 @@ export class UserAppComponent implements OnInit {
           this.store.dispatch(add({userNew}));
           Swal.fire({
             title: "guardado",
-            text: "Usuario"+userNew.name+" guardado con exito ",
+            text: "Usuario "+userNew.name+" guardado con exito ",
             icon: "success"
           });
           this.router.navigate(['/users']),{

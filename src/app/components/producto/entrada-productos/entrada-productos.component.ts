@@ -14,6 +14,8 @@ import { ServicespaginadoService } from './services/servicespaginado.service';
 import Swal from 'sweetalert2';
 import { EntradaProductoService } from '../../../services/entrada-producto.service';
 import { EntradaProductoFuncionesService } from './services/entrada-producto-funciones.service';
+import { entradaRequest } from '../../../models/entradaRequest';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-entrada-productos',
@@ -37,7 +39,7 @@ export class EntradaProductosComponent implements OnInit {
   private entradaProductoService = EntradaProductoService;
 
 
-
+responsable!:String;
   constructor(
     private productoService: ProductoService,
     private route: ActivatedRoute,
@@ -45,11 +47,14 @@ export class EntradaProductosComponent implements OnInit {
     private service: ProducFormserviceService,
     private serviceprovedor: ProvedorserviceService,
     private servicepaginado: ServicespaginadoService,
-    private entradaProductosFunciones: EntradaProductoFuncionesService
+    private entradaProductosFunciones: EntradaProductoFuncionesService,
+    private serviceuth:AuthService
 
 
 
   ) {
+    this.responsable=serviceuth.getUsername();
+
     this.producto = new Producto();
     this.proveedoresPaginados = this.servicepaginado.actualizarPaginacion(this.proveedores);
 
@@ -301,11 +306,15 @@ export class EntradaProductosComponent implements OnInit {
 
 
   }
+    entrada:entradaRequest= new entradaRequest();
 
   crearEntrada(productos: Producto[]) {
 
+    this.entrada.productos=productos;
+    this.entrada.observacion=this.responsable;
+    this.entrada.totalEngeneral=2000
+    this.entradaProductosFunciones.addUser(this.entrada);
 
-    this.entradaProductosFunciones.addUser(productos);
 
 
 
@@ -360,8 +369,21 @@ export class EntradaProductosComponent implements OnInit {
 
 
 
-
   }
+
+
+ calcularProducto(producto: Producto): number {
+  // Ejemplo: multiplicar cantidad por precio unitario
+  return producto.stock * producto.precio;
+}
+calculartotalPRoducto(producto: Producto[]): number {
+    return producto.reduce((total, producto) => {
+    return total + (producto.stock * producto.precio);
+  }, 0);
+
+}
+
+
 
   cerraformularioProducto(){
     alert("entro aqui")

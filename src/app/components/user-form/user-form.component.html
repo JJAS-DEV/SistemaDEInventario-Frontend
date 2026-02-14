@@ -4,7 +4,7 @@
     <div class="card-dialog">
       <div class="card-content">
         <div class="card-header">
-          <h5 class="card-title">form    {{(user.id>0)? 'update':'create'}}         </h5>
+          <h5 class="card-title">form{{(user.id>0)? 'update':'create'}}         </h5>
         </div>
         <div class="card-body">
             
@@ -113,7 +113,6 @@
         
 
     </div>
-    @if(user.id=== undefined){
     <div>
         <input
         name="password"
@@ -139,14 +138,32 @@
     
 
     </div>
-}
-    <div class="form-check">
-    <input type="checkbox"
-    [(ngModel)]="user.admin"
-    name="admin"
-    class="form-check-input" >
-    <label class="form-check-label"> admin</label>
-    </div>
+  
+
+<div>
+  @for (role of availableRoles; track role.id) {
+    <label class="m-2" style="display: block">
+      <input
+        type="checkbox"
+        [value]="role.id"
+        (change)="onRoleChange(role, $event)"
+        [checked]="isSelected(role)"
+      />
+      {{ role.name }}
+    </label>
+  }
+</div>
+
+<hr />
+<p>Roles seleccionados:</p>
+<ul>
+  @for (selected of selectedRoles; track selected.id) {
+    <li>
+      {{ selected.name }}
+    </li>
+  }
+</ul>
+ 
     <div>
         <button type="submit" class="btn btn-primary my-2"
         

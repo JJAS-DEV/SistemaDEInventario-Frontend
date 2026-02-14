@@ -6,12 +6,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { SalidadServiceService } from './crearSalidad/service/salidad-service.service';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-salidad-producto',
   standalone: true,
-  imports: [MatPaginatorModule,CommonModule,RouterModule],
+  imports: [CommonModule,MatPaginatorModule,RouterModule, FormsModule],
   templateUrl: './salidad-producto.component.html',
   providers: [DatePipe]
   
@@ -22,7 +23,7 @@ export class SalidadProductoComponent implements OnInit {
   pageIndex = 0;
   pageSize = 5;
   listapaginados: any[] = [];
-
+  preciototla!:number;
   constructor(private salidadServicesService:SalidadServicesService, private servicepaginado: ServicespaginadoService,private datePipe: DatePipe
   ,private router: Router,private SalidadServiceServices:SalidadServiceService
 
@@ -30,8 +31,11 @@ export class SalidadProductoComponent implements OnInit {
     
 
   }
+
+    salidadProductofiltrado:SalidadProducto[]=[];
+
   
-  
+salidadProductofiltrados:SalidadProducto[]=[];  
   ngOnInit(): void {
     this.getSalidas();
 
@@ -68,6 +72,48 @@ export class SalidadProductoComponent implements OnInit {
     this.SalidadServiceServices.removeProveedor(id);
   }
 
-  
+fechaBusqueda: string = '';
+    
+filtrado:boolean=false;
+filtrarPorFecha() {
+this.filtrado=true;
+ let itemsFiltrados = this.salidadProducto;
+  if (!this.fechaBusqueda) {
+    itemsFiltrados = this.salidadProducto;
+    return;
+  }
+
+  itemsFiltrados = this.salidadProducto.filter(item => {
+    if (!item.fecha) return false;
+
+    const fechaSolo = item.fecha.split('T')[0].trim();
+    return fechaSolo === this.fechaBusqueda.trim();
+  });
+  this.salidadProductofiltrado=itemsFiltrados;
+
+// Una vez ya filtrado, actualizamos la paginación
+
+this.listapaginados = this.servicepaginado.actualizarPaginacion(itemsFiltrados);
+
+ 
+
+
+
+
+
+}
+
+formatearFecha( salidadProducto:SalidadProducto){
+  return new Date(salidadProducto.fecha).toISOString().split('T')[0];
+
+}
+
+ limpiarFecha() {
+    window.location.reload();
+
+
+  }
+
+
 
 }

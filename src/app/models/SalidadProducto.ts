@@ -7,6 +7,8 @@ export class SalidadProducto {
     motivo!: string;
     observaciones!: string;
     productos: ProductoSalidad[];
+    totalGeneral!: number; // <-- esta propiedad es requerida
+
 
     constructor() {
        
